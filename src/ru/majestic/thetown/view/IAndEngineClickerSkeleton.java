@@ -19,7 +19,7 @@ public class IAndEngineClickerSkeleton extends Sprite implements IClicker {
    @Override
    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
    {
-       if (pSceneTouchEvent.isActionDown())
+       if (pSceneTouchEvent.isActionUp())
        {
           onClickerClickedListener.onClickerClicked(this);
        }

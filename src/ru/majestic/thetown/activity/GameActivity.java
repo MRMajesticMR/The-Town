@@ -5,8 +5,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import android.util.Log;
-
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
@@ -43,7 +41,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-		GameManager.getInstance().load();
+		GameManager.getInstance().load(this);
 	   ResourceManager.getInstance().loadResources(this, getEngine());
 	   
 	   foodClicker = new FoodClicker();
@@ -75,6 +73,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   goldCountView.attachToScene(scene);
 	   woodCountView.attachToScene(scene);
 	   
+	   updateCountViewers();
+	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
@@ -89,6 +89,18 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          GameManager.getInstance().addWood(1);
          woodCountView.changeCount(GameManager.getInstance().getWoodCount());
       }            
+   }
+   
+   @Override
+   public void onDestroy() {
+      super.onDestroy();
+      GameManager.getInstance().save(this);
+   }
+   
+   private void updateCountViewers() {
+      foodCountView.changeCount(GameManager.getInstance().getFoodCount());
+      goldCountView.changeCount(GameManager.getInstance().getGoldCount());
+      woodCountView.changeCount(GameManager.getInstance().getWoodCount());
    }
     
 }
