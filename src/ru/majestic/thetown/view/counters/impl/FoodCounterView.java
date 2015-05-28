@@ -6,7 +6,7 @@ import ru.majestic.thetown.view.counters.IAndEngineCountViewSkeleton;
 public class FoodCounterView extends IAndEngineCountViewSkeleton {
 
    public FoodCounterView() {
-      super(10, 10, ResourceManager.getInstance().getFoodClickerBgndTextureRegion());
+      super(10, 10, ResourceManager.getInstance().getFoodIconTextureRegion());
    }
 
 }

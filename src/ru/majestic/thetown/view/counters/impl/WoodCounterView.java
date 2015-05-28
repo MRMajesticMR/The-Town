@@ -6,7 +6,7 @@ import ru.majestic.thetown.view.counters.IAndEngineCountViewSkeleton;
 public class WoodCounterView extends IAndEngineCountViewSkeleton {
 
    public WoodCounterView() {
-      super(330, 10, ResourceManager.getInstance().getFoodClickerBgndTextureRegion());
+      super(330, 10, ResourceManager.getInstance().getWoodIconTextureRegion());
    }
 
 }
