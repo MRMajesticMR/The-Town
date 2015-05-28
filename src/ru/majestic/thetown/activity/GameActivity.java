@@ -10,7 +10,8 @@ import android.util.Log;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
-import ru.majestic.thetown.game.GameManager;
+import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClicker;
 import ru.majestic.thetown.view.clickers.impl.FoodClicker;
@@ -31,6 +32,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnMenuButtonClickedListener {
 
 	private Camera 	camera;
+	
+	private IGameManager gameManager;
 	
 	private IClicker foodClicker;
 	private IClicker woodClicker;
@@ -56,7 +59,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-		GameManager.getInstance().load(this);
+	   gameManager = new GameManager();
+	   gameManager.load(this);
+	   
 	   ResourceManager.getInstance().loadResources(this, getEngine());
 	   
 	   foodClicker = new FoodClicker();
@@ -123,26 +128,26 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onClickerClicked(IClicker clicker) {
       if(clicker == foodClicker) {
-         GameManager.getInstance().addFood(1);
-         foodCountView.changeCount(GameManager.getInstance().getFoodCount());
+         gameManager.addFood(1);
+         foodCountView.changeCount(gameManager.getFoodCount());
       }
       
       if(clicker == woodClicker) {
-         GameManager.getInstance().addWood(1);
-         woodCountView.changeCount(GameManager.getInstance().getWoodCount());
+         gameManager.addWood(1);
+         woodCountView.changeCount(gameManager.getWoodCount());
       }            
    }
    
    @Override
    public void onDestroy() {
       super.onDestroy();
-      GameManager.getInstance().save(this);
+      gameManager.save(this);
    }
    
    private void updateCountViewers() {
-      foodCountView.changeCount(GameManager.getInstance().getFoodCount());
-      goldCountView.changeCount(GameManager.getInstance().getGoldCount());
-      woodCountView.changeCount(GameManager.getInstance().getWoodCount());
+      foodCountView.changeCount(gameManager.getFoodCount());
+      goldCountView.changeCount(gameManager.getGoldCount());
+      woodCountView.changeCount(gameManager.getWoodCount());
    }
 
    @Override

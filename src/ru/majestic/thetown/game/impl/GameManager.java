@@ -1,12 +1,11 @@
-package ru.majestic.thetown.game;
+package ru.majestic.thetown.game.impl;
 
+import ru.majestic.thetown.game.IGameManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class GameManager {
-
-   private static GameManager instance;
+public class GameManager implements IGameManager {
    
    private static final String PREFFS_NAME = "THE_TOWN_PREFFS";
    
@@ -18,16 +17,7 @@ public class GameManager {
    private int woodCount;
    private int goldCount;
    
-   private GameManager() {
-      
-   }
-   
-   public static GameManager getInstance() {
-      if(instance == null)
-         instance = new GameManager();
-      return instance;
-   }
-   
+   @Override
    public void load(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       
@@ -36,6 +26,7 @@ public class GameManager {
       woodCount = prefs.getInt(PREFF_KEY_WOOD, 0);      
    }
    
+   @Override
    public void save(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       Editor editor = prefs.edit();
@@ -45,22 +36,27 @@ public class GameManager {
       editor.commit();
    }
    
+   @Override
    public void addWood(int wood) {
       woodCount += wood;
    }
    
+   @Override
    public void addFood(int food) {
       foodCount += food;
    }
 
+   @Override
    public int getFoodCount() {
       return foodCount;
    }
 
+   @Override
    public int getWoodCount() {
       return woodCount;
    }
 
+   @Override
    public int getGoldCount() {
       return goldCount;
    }
