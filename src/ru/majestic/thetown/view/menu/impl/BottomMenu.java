@@ -22,7 +22,7 @@ public class BottomMenu extends Rectangle implements IBottomMenu {
    public BottomMenu() {
       super(0, TheTownCamera.CAMERA_HEIGHT - MENU_HEIGHT, TheTownCamera.CAMERA_WIDTH, MENU_HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      setColor(1, 0, 0);
+      setAlpha(0.0f);
       
       buttons = new ArrayList<IMenuButton>();
    }

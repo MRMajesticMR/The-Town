@@ -22,8 +22,11 @@ public class ResourceManager {
    
    private BitmapTextureAtlas clickersBitmapTextureAtlas;
    
-   private BitmapTextureAtlas fontTexture;
+   private BitmapTextureAtlas countersFontTextureAtlas;
+   private BitmapTextureAtlas menuFontTextureAtlas;
+   
    private Font               countersFont;
+   private Font               menuButtonsFont;
    
    private ResourceManager() {
       
@@ -49,12 +52,17 @@ public class ResourceManager {
    }
    
    private void loadFonts() {
-      fontTexture = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      countersFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      menuFontTextureAtlas       = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      
+      countersFont      = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
+      menuButtonsFont   = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 26, true, Color.BLACK);
 
-      countersFont = new Font(engine.getFontManager(), fontTexture, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
-
-      engine.getTextureManager().loadTexture(fontTexture);
+      engine.getTextureManager().loadTexture(countersFontTextureAtlas);
+      engine.getTextureManager().loadTexture(menuFontTextureAtlas);      
+      
       engine.getFontManager().loadFont(countersFont);
+      engine.getFontManager().loadFont(menuButtonsFont);
    }
    
    public Engine getEngine() {
@@ -72,4 +80,10 @@ public class ResourceManager {
    public Font getCountersFont() {
       return countersFont;
    }
+
+   public Font getMenuButtonsFont() {
+      return menuButtonsFont;
+   }
+   
+   
 }
