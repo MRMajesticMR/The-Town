@@ -47,6 +47,11 @@ public class TextMenuButton extends Rectangle implements IMenuButton {
    public void registerTouchArea(Scene scene) {      
       scene.registerTouchArea(this);
    }
+   
+   @Override
+   public void unregisterTouchArea(Scene scene) {
+      scene.unregisterTouchArea(this);
+   }
 
    @Override
    public void attachToParent(Entity parent) {      
@@ -75,6 +80,6 @@ public class TextMenuButton extends Rectangle implements IMenuButton {
    private void setNewTextPosition() {
       menuText.setX((this.getWidth() - menuText.getWidth()) / 2);
       menuText.setY((getHeight() - menuText.getHeight()) / 2);
-   }
+   }   
 
 }

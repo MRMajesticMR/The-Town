@@ -43,4 +43,9 @@ public class IAndEngineClickerSkeleton extends Sprite implements IClicker {
       scene.registerTouchArea(this);      
    }
 
+   @Override
+   public void unregisterTouchArea(Scene scene) {
+      scene.unregisterTouchArea(this);
+   }
+
 }

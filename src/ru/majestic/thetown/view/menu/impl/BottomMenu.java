@@ -34,7 +34,7 @@ public class BottomMenu extends Rectangle implements IBottomMenu {
          
          float buttonWidth = getButtonsWidth();
          
-         button.setButtonHeight(getHeight());
+         button.setButtonHeight(getHeight() - BUTTONS_PADDING);
          button.setButtonWidth(buttonWidth);
          button.setButtonX(BUTTONS_PADDING + (buttonWidth + BUTTONS_PADDING) * i);
          

@@ -9,8 +9,14 @@ public interface IGameManager {
    
    public void addWood(int wood);
    public void addFood(int food);
+   
+   public void upFoodClickerLvl();
+   public void upWoodClickerLvl();
+   
    public int getFoodCount();
    public int getWoodCount();
    public int getGoldCount();
    
+   public int getFoodClickerLvl();
+   public int getWoodClickerLvl();
 }
