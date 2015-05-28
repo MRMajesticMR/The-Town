@@ -1,4 +1,6 @@
-package ru.majestic.thetown.view;
+package ru.majestic.thetown.view.counters;
+
+import ru.majestic.thetown.view.IView;
 
 public interface ICountView extends IView {
 

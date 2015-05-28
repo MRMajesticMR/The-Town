@@ -1,7 +1,7 @@
-package ru.majestic.thetown.view;
+package ru.majestic.thetown.view.counters;
 
+import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
-import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -30,8 +30,8 @@ public abstract class IAndEngineCountViewSkeleton extends Rectangle implements I
    
    
    @Override
-   public void attachToScene(Scene scene) {
-      scene.attachChild(this);            
+   public void attachToParent(Entity parent) {
+      parent.attachChild(this);            
    }
 
 

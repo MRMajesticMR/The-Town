@@ -1,7 +1,7 @@
-package ru.majestic.thetown.view.impl.counters;
+package ru.majestic.thetown.view.counters.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.IAndEngineCountViewSkeleton;
+import ru.majestic.thetown.view.counters.IAndEngineCountViewSkeleton;
 
 public class WoodCounterView extends IAndEngineCountViewSkeleton {
 

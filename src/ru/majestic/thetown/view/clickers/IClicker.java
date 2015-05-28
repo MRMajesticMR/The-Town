@@ -1,8 +1,9 @@
-package ru.majestic.thetown.view;
+package ru.majestic.thetown.view.clickers;
 
+import ru.majestic.thetown.view.IClickableView;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 
-public interface IClicker extends IView {
+public interface IClicker extends IClickableView {
 
    public static final int CLICKER_WIDTH_AND_HEIGHT = 200;   
    

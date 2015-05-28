@@ -10,14 +10,18 @@ import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
 import ru.majestic.thetown.game.GameManager;
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.IClicker;
-import ru.majestic.thetown.view.ICountView;
-import ru.majestic.thetown.view.impl.FoodClicker;
-import ru.majestic.thetown.view.impl.WoodClicker;
-import ru.majestic.thetown.view.impl.counters.FoodCounterView;
-import ru.majestic.thetown.view.impl.counters.GoldCounterView;
-import ru.majestic.thetown.view.impl.counters.WoodCounterView;
+import ru.majestic.thetown.view.clickers.IClicker;
+import ru.majestic.thetown.view.clickers.impl.FoodClicker;
+import ru.majestic.thetown.view.clickers.impl.WoodClicker;
+import ru.majestic.thetown.view.counters.ICountView;
+import ru.majestic.thetown.view.counters.impl.FoodCounterView;
+import ru.majestic.thetown.view.counters.impl.GoldCounterView;
+import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
+import ru.majestic.thetown.view.menu.IBottomMenu;
+import ru.majestic.thetown.view.menu.buttons.IMenuButton;
+import ru.majestic.thetown.view.menu.buttons.impl.TextMenuButton;
+import ru.majestic.thetown.view.menu.impl.BottomMenu;
 
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener {
@@ -30,6 +34,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private ICountView foodCountView;
 	private ICountView goldCountView;
 	private ICountView woodCountView;   
+	
+	private IBottomMenu bottomMenu;
+	
+	private IMenuButton upgradeClickersMenuBtn;
+	private IMenuButton buyPeopleMenuBtn;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -51,8 +60,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   goldCountView = new GoldCounterView();
 	   woodCountView = new WoodCounterView();
 	   
+	   bottomMenu = new BottomMenu();
+	   
+	   upgradeClickersMenuBtn    = new TextMenuButton();	   	   
+	   buyPeopleMenuBtn          = new TextMenuButton();
+	   
 	   foodClicker.setOnClickerClickedListener(this);
-	   woodClicker.setOnClickerClickedListener(this);
+	   woodClicker.setOnClickerClickedListener(this);	   	   
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -66,12 +80,23 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	@Override
 	public void onPopulateScene(Scene scene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
 		
-	   foodClicker.attachToScene(scene);
-	   woodClicker.attachToScene(scene);	  
+	   foodClicker.attachToParent(scene);
+	   woodClicker.attachToParent(scene);	  
 	   
-	   foodCountView.attachToScene(scene);
-	   goldCountView.attachToScene(scene);
-	   woodCountView.attachToScene(scene);
+	   foodCountView.attachToParent(scene);
+	   goldCountView.attachToParent(scene);
+	   woodCountView.attachToParent(scene);
+	   
+	   bottomMenu.addIMenuButton(upgradeClickersMenuBtn);
+	   bottomMenu.addIMenuButton(buyPeopleMenuBtn);
+	   
+	   bottomMenu.attachToParent(scene);
+	   
+	   foodClicker.registerTouchArea(scene);
+	   woodClicker.registerTouchArea(scene);
+	   
+	   upgradeClickersMenuBtn.registerTouchArea(scene);
+	   buyPeopleMenuBtn.registerTouchArea(scene);
 	   
 	   updateCountViewers();
 	   

@@ -1,5 +1,6 @@
-package ru.majestic.thetown.view;
+package ru.majestic.thetown.view.clickers;
 
+import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -32,9 +33,14 @@ public class IAndEngineClickerSkeleton extends Sprite implements IClicker {
 	}
 
    @Override
-   public void attachToScene(Scene scene) {
-      scene.attachChild(this);
-      scene.registerTouchArea(this);
+   public void attachToParent(Entity parent) {
+      parent.attachChild(this);
+      
+   }
+
+   @Override
+   public void registerTouchArea(Scene scene) {
+      scene.registerTouchArea(this);      
    }
 
 }
