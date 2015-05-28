@@ -41,9 +41,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private IBottomMenu bottomMenu;
 	
-	private IMenuButton upgradeClickersMenuBtn;
-	private IMenuButton buyPeopleMenuBtn;
-	
+	private IMenuButton buyClickersUpgradeMenuBtn;
+   private IMenuButton buyPeopleMenuBtn;
+   private IMenuButton buyBuildingsMenuBtn;
+   private IMenuButton buyGoldMenuBtn;
+   
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		
@@ -66,14 +68,18 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   bottomMenu = new BottomMenu();
 	   
-	   upgradeClickersMenuBtn    = new TextMenuButton("Clickers");	   	   
+	   buyClickersUpgradeMenuBtn    = new TextMenuButton("Clickers");	   	   
 	   buyPeopleMenuBtn          = new TextMenuButton("Workers");
+	   buyBuildingsMenuBtn       = new TextMenuButton("Buildings");
+	   buyGoldMenuBtn            = new TextMenuButton("Gold");
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	   	   
 	   
-	   upgradeClickersMenuBtn.setOnMenuButtonClickedListener(this);
+	   buyClickersUpgradeMenuBtn.setOnMenuButtonClickedListener(this);
 	   buyPeopleMenuBtn.setOnMenuButtonClickedListener(this);
+	   buyBuildingsMenuBtn.setOnMenuButtonClickedListener(this);
+	   buyGoldMenuBtn.setOnMenuButtonClickedListener(this);
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -94,16 +100,20 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   goldCountView.attachToParent(scene);
 	   woodCountView.attachToParent(scene);
 	   
-	   bottomMenu.addIMenuButton(upgradeClickersMenuBtn);
-	   bottomMenu.addIMenuButton(buyPeopleMenuBtn);
+	   bottomMenu.addIMenuButton(buyClickersUpgradeMenuBtn);
+	   bottomMenu.addIMenuButton(buyPeopleMenuBtn);	   
+	   bottomMenu.addIMenuButton(buyBuildingsMenuBtn);
+	   bottomMenu.addIMenuButton(buyGoldMenuBtn);
 	   
 	   bottomMenu.attachToParent(scene);
 	   
 	   foodClicker.registerTouchArea(scene);
 	   woodClicker.registerTouchArea(scene);
 	   
-	   upgradeClickersMenuBtn.registerTouchArea(scene);
+	   buyClickersUpgradeMenuBtn.registerTouchArea(scene);
 	   buyPeopleMenuBtn.registerTouchArea(scene);
+	   buyBuildingsMenuBtn.registerTouchArea(scene);
+	   buyGoldMenuBtn.registerTouchArea(scene);
 	   
 	   updateCountViewers();
 	   
@@ -137,13 +147,23 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onMenuButtonClicked(IMenuButton menuButton) {
-      if(menuButton == upgradeClickersMenuBtn) {
+      if(menuButton == buyClickersUpgradeMenuBtn) {
          Log.i("MENU_BUTTONS", "Clickers");
          return;
       }
       
       if(menuButton == buyPeopleMenuBtn) {
          Log.i("MENU_BUTTONS", "Workers");
+         return;
+      }
+      
+      if(menuButton == buyBuildingsMenuBtn) {
+         Log.i("MENU_BUTTONS", "Buildings");
+         return;
+      }
+      
+      if(menuButton == buyGoldMenuBtn) {
+         Log.i("MENU_BUTTONS", "Gold");
          return;
       }
       
