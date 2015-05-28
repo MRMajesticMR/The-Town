@@ -3,16 +3,35 @@ package ru.majestic.thetown.view.menu.buttons.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.input.touch.TouchEvent;
 
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.menu.buttons.IMenuButton;
+import ru.majestic.thetown.view.menu.buttons.listeners.OnMenuButtonClickedListener;
 
 public class TextMenuButton extends Rectangle implements IMenuButton {
 
-   public TextMenuButton() {
+   private OnMenuButtonClickedListener onMenuButtonClickedListener;
+   
+   public TextMenuButton(String text) {
       super(0, 0, 0, 0, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setColor(0, 0, 1);
+   }
+   
+   @Override
+   public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
+   {
+       if (pSceneTouchEvent.isActionDown())
+       {
+          onMenuButtonClickedListener.onMenuButtonClicked(this);
+       }
+       return true;
+   };
+   
+   @Override
+   public void setOnMenuButtonClickedListener(OnMenuButtonClickedListener onMenuButtonClickedListener) {
+      this.onMenuButtonClickedListener = onMenuButtonClickedListener;
    }
 
    @Override
@@ -38,6 +57,6 @@ public class TextMenuButton extends Rectangle implements IMenuButton {
    @Override
    public void setButtonX(float x) {
       setX(x);      
-   }
+   }   
 
 }

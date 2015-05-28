@@ -5,6 +5,8 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.util.Log;
+
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
@@ -21,10 +23,12 @@ import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IBottomMenu;
 import ru.majestic.thetown.view.menu.buttons.IMenuButton;
 import ru.majestic.thetown.view.menu.buttons.impl.TextMenuButton;
+import ru.majestic.thetown.view.menu.buttons.listeners.OnMenuButtonClickedListener;
 import ru.majestic.thetown.view.menu.impl.BottomMenu;
 
 
-public class GameActivity extends BaseGameActivity implements OnClickerClickedListener {
+public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
+                                                              OnMenuButtonClickedListener {
 
 	private Camera 	camera;
 	
@@ -62,11 +66,14 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   bottomMenu = new BottomMenu();
 	   
-	   upgradeClickersMenuBtn    = new TextMenuButton();	   	   
-	   buyPeopleMenuBtn          = new TextMenuButton();
+	   upgradeClickersMenuBtn    = new TextMenuButton("Clickers");	   	   
+	   buyPeopleMenuBtn          = new TextMenuButton("Workers");
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	   	   
+	   
+	   upgradeClickersMenuBtn.setOnMenuButtonClickedListener(this);
+	   buyPeopleMenuBtn.setOnMenuButtonClickedListener(this);
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -126,6 +133,20 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodCountView.changeCount(GameManager.getInstance().getFoodCount());
       goldCountView.changeCount(GameManager.getInstance().getGoldCount());
       woodCountView.changeCount(GameManager.getInstance().getWoodCount());
+   }
+
+   @Override
+   public void onMenuButtonClicked(IMenuButton menuButton) {
+      if(menuButton == upgradeClickersMenuBtn) {
+         Log.i("MENU_BUTTONS", "Clickers");
+         return;
+      }
+      
+      if(menuButton == buyPeopleMenuBtn) {
+         Log.i("MENU_BUTTONS", "Workers");
+         return;
+      }
+      
    }
     
 }
