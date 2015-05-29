@@ -5,8 +5,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import android.util.Log;
-
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
@@ -22,16 +20,17 @@ import ru.majestic.thetown.view.counters.impl.FoodCounterView;
 import ru.majestic.thetown.view.counters.impl.GoldCounterView;
 import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
-import ru.majestic.thetown.view.dialogs.clickers.IClickersShopDialog;
-import ru.majestic.thetown.view.dialogs.clickers.impl.ClickersShopDialog;
 import ru.majestic.thetown.view.dialogs.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
+import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IBottomMenu;
 import ru.majestic.thetown.view.menu.buttons.IMenuButton;
 import ru.majestic.thetown.view.menu.buttons.impl.TextMenuButton;
 import ru.majestic.thetown.view.menu.buttons.listeners.OnMenuButtonClickedListener;
 import ru.majestic.thetown.view.menu.impl.BottomMenu;
+import android.util.Log;
 
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
@@ -58,7 +57,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    private IMenuButton buyBuildingsMenuBtn;
    private IMenuButton buyGoldMenuBtn;
    
-   private IClickersShopDialog clickersShopDialog;
+   private ClickersShopDialog   clickersShopDialog;
+   private BuildingsShopDialog  buildingsShopDialog;
    
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -89,7 +89,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   buyBuildingsMenuBtn          = new TextMenuButton("Buildings");
 	   buyGoldMenuBtn               = new TextMenuButton("Gold");
 	   
-	   clickersShopDialog           = new ClickersShopDialog();	   
+	   clickersShopDialog           = new ClickersShopDialog();
+	   buildingsShopDialog          = new BuildingsShopDialog();
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	   	   
@@ -101,6 +102,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   clickersShopDialog.setOnDialogClosedListener(this);
 	   clickersShopDialog.setClickersShopDialogActionsListener(this);
+	   
+	   buildingsShopDialog.setOnDialogClosedListener(this);
+	   
 	   clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
 	   clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());      
 	   
@@ -132,6 +136,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   bottomMenu.attachToParent(scene);
 	   
 	   clickersShopDialog.attachToParent(scene);
+	   buildingsShopDialog.attachToParent(scene);
 	   
 	   foodClicker.registerTouchArea(scene);
 	   woodClicker.registerTouchArea(scene);
@@ -197,7 +202,16 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       }
       
       if(menuButton == buyBuildingsMenuBtn) {
-         Log.i("MENU_BUTTONS", "Buildings");
+         foodClicker.unregisterTouchArea(scene);
+         woodClicker.unregisterTouchArea(scene);
+         
+         buyClickersUpgradeMenuBtn.unregisterTouchArea(scene);          
+         buyPeopleMenuBtn.unregisterTouchArea(scene);
+         buyBuildingsMenuBtn.unregisterTouchArea(scene);
+         buyGoldMenuBtn.unregisterTouchArea(scene);
+         
+         buildingsShopDialog.registerTouchArea(scene);
+         buildingsShopDialog.show();         
          return;
       }
       

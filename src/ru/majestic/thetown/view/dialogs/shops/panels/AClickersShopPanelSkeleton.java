@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.dialogs.clickers;
+package ru.majestic.thetown.view.dialogs.shops.panels;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
