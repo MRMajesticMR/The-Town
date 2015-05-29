@@ -28,14 +28,14 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
       foodClickersShopPanel   = new FoodClickersShopPanel();
       woodClickersShopPanel   = new WoodClickersShopPanel();
       
-      foodClickersShopPanel.setHeight(getHeight() - (PADDING + PADDING_TOP));
+      foodClickersShopPanel.setHeight(194);
       foodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       foodClickersShopPanel.setX(PADDING);
       foodClickersShopPanel.setY(PADDING_TOP);            
       
       foodClickersShopPanel.setClickersShopPanelActionsListener(this);
       
-      woodClickersShopPanel.setHeight(getHeight() - (PADDING + PADDING_TOP));
+      woodClickersShopPanel.setHeight(194);
       woodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       woodClickersShopPanel.setX((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3));
       woodClickersShopPanel.setY(PADDING_TOP);            
