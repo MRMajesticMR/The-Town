@@ -9,7 +9,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 
-public class IAndEngineClickerSkeleton extends Sprite implements IClicker {
+public class IAndEngineClickerSkeleton extends Sprite implements IClickerView {
 
    protected OnClickerClickedListener onClickerClickedListener;
    

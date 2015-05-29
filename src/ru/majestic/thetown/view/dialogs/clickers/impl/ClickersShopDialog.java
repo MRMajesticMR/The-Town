@@ -13,10 +13,13 @@ import ru.majestic.thetown.view.dialogs.buttons.impl.SimpleCloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.listeners.OnCloseDialogButtonClickedListener;
 import ru.majestic.thetown.view.dialogs.clickers.IClickersShopDialog;
 import ru.majestic.thetown.view.dialogs.clickers.IClickersShopPanel;
+import ru.majestic.thetown.view.dialogs.listeners.ClickersShopDialogActionsListener;
+import ru.majestic.thetown.view.dialogs.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 
 public class ClickersShopDialog extends Rectangle implements IClickersShopDialog,
-                                                             OnCloseDialogButtonClickedListener {
+                                                             OnCloseDialogButtonClickedListener,
+                                                             ClickersShopPanelActionsListener {
    
    private static final int MARGIN_TOP_BOTTOM = 60;
    private static final int MARGIN_LEFT_RIGHT = 30;
@@ -24,13 +27,14 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
    private static final int PADDING_TOP   = 50;
    private static final int PADDING       = 10;
    
-   private OnDialogClosedListener onDialogClosedListener;
+   private OnDialogClosedListener            onDialogClosedListener;
+   private ClickersShopDialogActionsListener clickersShopDialogActionsListener;
    
    private ICloseDialogButton closeDialogButton;
    private IClickersShopPanel foodClickersShopPanel;
    private IClickersShopPanel woodClickersShopPanel;   
    
-   public ClickersShopDialog(IGameManager gameManager) {
+   public ClickersShopDialog() {
       super(MARGIN_LEFT_RIGHT, MARGIN_TOP_BOTTOM, TheTownCamera.CAMERA_WIDTH - (MARGIN_LEFT_RIGHT * 2), TheTownCamera.CAMERA_HEIGHT - (MARGIN_TOP_BOTTOM * 2), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setColor(1, 0, 0);                  
@@ -43,20 +47,16 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
       foodClickersShopPanel.setHeight(getHeight() - (PADDING + PADDING_TOP));
       foodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       foodClickersShopPanel.setX(PADDING);
-      foodClickersShopPanel.setY(PADDING_TOP);
+      foodClickersShopPanel.setY(PADDING_TOP);            
       
-      foodClickersShopPanel.showCurrentClickerLvl(gameManager.getFoodClickerLvl());
-      foodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getFoodClickerLvl()));
-      foodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl()));
+      foodClickersShopPanel.setClickersShopPanelActionsListener(this);
       
       woodClickersShopPanel.setHeight(getHeight() - (PADDING + PADDING_TOP));
       woodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       woodClickersShopPanel.setX((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3));
-      woodClickersShopPanel.setY(PADDING_TOP);
+      woodClickersShopPanel.setY(PADDING_TOP);            
       
-      woodClickersShopPanel.showCurrentClickerLvl(gameManager.getWoodClickerLvl());
-      woodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getWoodClickerLvl()));
-      woodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl()));
+      woodClickersShopPanel.setClickersShopPanelActionsListener(this);
       
       closeDialogButton.setOnCloseDialogButtonClickedListener(this);      
       
@@ -102,6 +102,39 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
    @Override
    public void onCloseDialogButtonClicked() {
       onDialogClosedListener.onDialogClosed(this);
-   }   
+   }
+
+   @Override
+   public void onUpdateButtonClicked(IClickersShopPanel clickersShopPanel) {
+      if(clickersShopPanel == foodClickersShopPanel) {
+         clickersShopDialogActionsListener.onUpgradeFoodClickerClicked();
+         return;
+      }
+      
+      if(clickersShopPanel == woodClickersShopPanel) {
+         clickersShopDialogActionsListener.onUpgradeWoodClickerClicked();
+         return;
+      }
+      
+   }
+   
+   @Override
+   public void setClickersShopDialogActionsListener(ClickersShopDialogActionsListener clickersShopDialogActionsListener) {
+      this.clickersShopDialogActionsListener = clickersShopDialogActionsListener;
+   }
+
+   @Override
+   public void onFoodClickerLvlChanged(int newLvl) {
+      foodClickersShopPanel.showCurrentClickerLvl(newLvl);
+      foodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(newLvl));
+      foodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(newLvl));      
+   }
+
+   @Override
+   public void onWoodClickerLvlChanged(int newLvl) {
+      woodClickersShopPanel.showCurrentClickerLvl(newLvl);
+      woodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(newLvl));
+      woodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(newLvl));      
+   }
 
 }

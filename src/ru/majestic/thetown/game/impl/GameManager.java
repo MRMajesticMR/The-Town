@@ -94,5 +94,15 @@ public class GameManager implements IGameManager {
    public int getWoodClickerLvl() {
       return woodClickerLvl;
    }
+
+   @Override
+   public void removeWood(int wood) {
+      woodCount -= wood;
+   }
+
+   @Override
+   public void removeFood(int food) {
+      foodCount -= food;      
+   }
    
 }

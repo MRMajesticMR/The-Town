@@ -10,6 +10,9 @@ public interface IGameManager {
    public void addWood(int wood);
    public void addFood(int food);
    
+   public void removeWood(int wood);
+   public void removeFood(int food);
+   
    public void upFoodClickerLvl();
    public void upWoodClickerLvl();
    

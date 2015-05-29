@@ -14,9 +14,9 @@ import ru.majestic.thetown.game.GameManagerHelper;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.clickers.IClicker;
-import ru.majestic.thetown.view.clickers.impl.FoodClicker;
-import ru.majestic.thetown.view.clickers.impl.WoodClicker;
+import ru.majestic.thetown.view.clickers.IClickerView;
+import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
+import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
 import ru.majestic.thetown.view.counters.ICountView;
 import ru.majestic.thetown.view.counters.impl.FoodCounterView;
 import ru.majestic.thetown.view.counters.impl.GoldCounterView;
@@ -24,6 +24,7 @@ import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
 import ru.majestic.thetown.view.dialogs.clickers.IClickersShopDialog;
 import ru.majestic.thetown.view.dialogs.clickers.impl.ClickersShopDialog;
+import ru.majestic.thetown.view.dialogs.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IBottomMenu;
@@ -35,15 +36,16 @@ import ru.majestic.thetown.view.menu.impl.BottomMenu;
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
                                                               OnMenuButtonClickedListener,
-                                                              OnDialogClosedListener {
+                                                              OnDialogClosedListener,
+                                                              ClickersShopDialogActionsListener {
 
 	private Camera 	camera;
 	
 	private Scene          scene;
 	private IGameManager   gameManager;
 	
-	private IClicker foodClicker;
-	private IClicker woodClicker;
+	private IClickerView foodClicker;
+	private IClickerView woodClicker;
 	
 	private ICountView foodCountView;
 	private ICountView goldCountView;
@@ -73,8 +75,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   ResourceManager.getInstance().loadResources(this, getEngine());
 	   
-	   foodClicker = new FoodClicker();
-	   woodClicker = new WoodClicker();
+	   foodClicker = new FoodClickerView();
+	   woodClicker = new WoodClickerView();
 	   
 	   foodCountView = new FoodCounterView();
 	   goldCountView = new GoldCounterView();
@@ -87,7 +89,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   buyBuildingsMenuBtn          = new TextMenuButton("Buildings");
 	   buyGoldMenuBtn               = new TextMenuButton("Gold");
 	   
-	   clickersShopDialog           = new ClickersShopDialog(gameManager);	   
+	   clickersShopDialog           = new ClickersShopDialog();	   
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	   	   
@@ -98,6 +100,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   buyGoldMenuBtn.setOnMenuButtonClickedListener(this);
 	   
 	   clickersShopDialog.setOnDialogClosedListener(this);
+	   clickersShopDialog.setClickersShopDialogActionsListener(this);
+	   clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
+	   clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());      
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -142,7 +147,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	}
 
    @Override
-   public void onClickerClicked(IClicker clicker) {
+   public void onClickerClicked(IClickerView clicker) {
       if(clicker == foodClicker) {         
          gameManager.addFood(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getFoodClickerLvl()));
          
@@ -215,6 +220,28 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       buyPeopleMenuBtn.registerTouchArea(scene);
       buyBuildingsMenuBtn.registerTouchArea(scene);
       buyGoldMenuBtn.registerTouchArea(scene);      
+   }
+
+   @Override
+   public void onUpgradeFoodClickerClicked() {
+      if(gameManager.getWoodCount() >= GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl())) {
+         gameManager.removeWood(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl()));
+         gameManager.upFoodClickerLvl();
+         
+         updateCountViewers();
+         clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
+      }
+   }
+
+   @Override
+   public void onUpgradeWoodClickerClicked() {
+      if(gameManager.getFoodCount() >= GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl())) {
+         gameManager.removeFood(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl()));
+         gameManager.upWoodClickerLvl();
+         
+         updateCountViewers();
+         clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());
+      }
    }
     
 }

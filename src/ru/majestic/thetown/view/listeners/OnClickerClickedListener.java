@@ -1,9 +1,9 @@
 package ru.majestic.thetown.view.listeners;
 
-import ru.majestic.thetown.view.clickers.IClicker;
+import ru.majestic.thetown.view.clickers.IClickerView;
 
 public interface OnClickerClickedListener {
 
-	public void onClickerClicked(IClicker clicker);
+	public void onClickerClicked(IClickerView clicker);
 	
 }

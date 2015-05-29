@@ -4,6 +4,7 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -11,7 +12,8 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.listeners.ClickersShopPanelActionsListener;
 
-public abstract class AClickersShopPanelSkeleton extends Rectangle implements IClickersShopPanel {
+public abstract class AClickersShopPanelSkeleton extends Rectangle implements IClickersShopPanel,
+                                                                              OnClickListener {
 
    private static final int PANEL_PADDING = 10;
    
@@ -42,6 +44,8 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
       
       upgradeBtn.setWidth(40);
       upgradeBtn.setHeight(40);            
+      
+      upgradeBtn.setOnClickListener(this);
       
       attachChild(panelTitle);
       attachChild(currentLvlTxt);
@@ -108,6 +112,14 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
    @Override
    public void showUpgradePrice(int upgradePrice) {
       upgradePriceTxt.setText(String.valueOf(upgradePrice));
+   }
+
+   @Override
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      if(pButtonSprite == upgradeBtn) {
+         clickersShopPanelActionsListener.onUpdateButtonClicked(this);
+         return;
+      }
    }
 
 }
