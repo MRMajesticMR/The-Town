@@ -5,6 +5,8 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
+import ru.majestic.thetown.game.GameManagerHelper;
+import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.impl.SimpleCloseDialogButton;
@@ -28,7 +30,7 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
    private IClickersShopPanel foodClickersShopPanel;
    private IClickersShopPanel woodClickersShopPanel;   
    
-   public ClickersShopDialog() {
+   public ClickersShopDialog(IGameManager gameManager) {
       super(MARGIN_LEFT_RIGHT, MARGIN_TOP_BOTTOM, TheTownCamera.CAMERA_WIDTH - (MARGIN_LEFT_RIGHT * 2), TheTownCamera.CAMERA_HEIGHT - (MARGIN_TOP_BOTTOM * 2), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setColor(1, 0, 0);                  
@@ -43,10 +45,18 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
       foodClickersShopPanel.setX(PADDING);
       foodClickersShopPanel.setY(PADDING_TOP);
       
+      foodClickersShopPanel.showCurrentClickerLvl(gameManager.getFoodClickerLvl());
+      foodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getFoodClickerLvl()));
+      foodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl()));
+      
       woodClickersShopPanel.setHeight(getHeight() - (PADDING + PADDING_TOP));
       woodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       woodClickersShopPanel.setX((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3));
-      woodClickersShopPanel.setY(PADDING_TOP);      
+      woodClickersShopPanel.setY(PADDING_TOP);
+      
+      woodClickersShopPanel.showCurrentClickerLvl(gameManager.getWoodClickerLvl());
+      woodClickersShopPanel.showCurrentClickerResourcesPerClick(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getWoodClickerLvl()));
+      woodClickersShopPanel.showUpgradePrice(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl()));
       
       closeDialogButton.setOnCloseDialogButtonClickedListener(this);      
       
@@ -73,11 +83,15 @@ public class ClickersShopDialog extends Rectangle implements IClickersShopDialog
    @Override
    public void registerTouchArea(Scene scene) {
       closeDialogButton.registerTouchArea(scene);
+      foodClickersShopPanel.registerTouchArea(scene);
+      woodClickersShopPanel.registerTouchArea(scene);
    }
 
    @Override
    public void unregisterTouchArea(Scene scene) {
       closeDialogButton.unregisterTouchArea(scene);
+      foodClickersShopPanel.unregisterTouchArea(scene);
+      woodClickersShopPanel.unregisterTouchArea(scene);
    }
 
    @Override

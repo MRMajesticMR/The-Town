@@ -10,6 +10,7 @@ import android.util.Log;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
+import ru.majestic.thetown.game.GameManagerHelper;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.resources.ResourceManager;
@@ -86,7 +87,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   buyBuildingsMenuBtn          = new TextMenuButton("Buildings");
 	   buyGoldMenuBtn               = new TextMenuButton("Gold");
 	   
-	   clickersShopDialog           = new ClickersShopDialog();	   
+	   clickersShopDialog           = new ClickersShopDialog(gameManager);	   
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	   	   
@@ -143,13 +144,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onClickerClicked(IClicker clicker) {
       if(clicker == foodClicker) {         
-         gameManager.addFood(1 + (int) Math.round(Math.pow(gameManager.getFoodClickerLvl() * gameManager.getFoodClickerLvl(), 1.1d)));
+         gameManager.addFood(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getFoodClickerLvl()));
          
          foodCountView.changeCount(gameManager.getFoodCount());
       }
       
       if(clicker == woodClicker) {
-         gameManager.addWood(1 + (int) Math.round(Math.pow(gameManager.getWoodClickerLvl() * gameManager.getWoodClickerLvl(), 1.1d)));
+         gameManager.addWood(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getWoodClickerLvl()));
          
          woodCountView.changeCount(gameManager.getWoodCount());
       }            

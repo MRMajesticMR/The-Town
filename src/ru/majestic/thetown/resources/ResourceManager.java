@@ -6,6 +6,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.color.Color;
 
 import android.content.Context;
@@ -28,10 +29,14 @@ public class ResourceManager {
    private ITextureRegion  woodIconTextureRegion;
    private ITextureRegion  goldIconTextureRegion;
    
+   private BitmapTextureAtlas    plusBtnTextureAtlas;
+   
+   private ITiledTextureRegion   plusBtnTextureRegion;
+   
    private BitmapTextureAtlas shopTitleFontTextureAtlas;
    private BitmapTextureAtlas countersFontTextureAtlas;
    private BitmapTextureAtlas menuFontTextureAtlas;
-   private BitmapTextureAtlas shopTextFontTextureAtlas;
+   private BitmapTextureAtlas shopTextFontTextureAtlas;      
    
    private Font               shopTitleFont;
    private Font               countersFont;
@@ -62,8 +67,13 @@ public class ResourceManager {
       woodIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/wood_icon.png", 128, 0);
       goldIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/gold_icon.png", 0, 128);
             
+      plusBtnTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 128, 64);
+      
+      plusBtnTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(plusBtnTextureAtlas, context, "gfx/buttons/plus_btn.png", 0, 0, 2, 1);
+      
       clickersBitmapTextureAtlas.load();
       iconsBitmapTextureAtlas.load();
+      plusBtnTextureAtlas.load();
       
       loadFonts();
    }
@@ -129,7 +139,9 @@ public class ResourceManager {
    public ITextureRegion getGoldIconTextureRegion() {
       return goldIconTextureRegion;
    }
-   
-   
+
+   public ITiledTextureRegion getPlusBtnTextureRegion() {
+      return plusBtnTextureRegion;
+   }
    
 }

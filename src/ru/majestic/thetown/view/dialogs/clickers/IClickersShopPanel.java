@@ -7,4 +7,8 @@ public interface IClickersShopPanel extends IClickableView {
 
    public void setClickersShopPanelActionsListener(ClickersShopPanelActionsListener clickersShopPanelActionsListener);
    
+   public void showCurrentClickerLvl(int newLvl);
+   public void showCurrentClickerResourcesPerClick(int resourcesPerClick);
+   public void showUpgradePrice(int upgradePrice);
+   
 }
