@@ -80,6 +80,15 @@ public class TextMenuButton extends Rectangle implements IMenuButton {
    private void setNewTextPosition() {
       menuText.setX((this.getWidth() - menuText.getWidth()) / 2);
       menuText.setY((getHeight() - menuText.getHeight()) / 2);
+   }
+
+   @Override
+   public void setActive(boolean active) {
+      if(active) {
+         setColor(1, 0, 0);
+      } else {
+         setColor(0, 0, 1);
+      }
    }   
 
 }

@@ -7,6 +7,8 @@ public interface IMenuButton extends IClickableView {
 
    public void setOnMenuButtonClickedListener(OnMenuButtonClickedListener onMenuButtonClickedListener);
    
+   public void setActive         (boolean active);
+   
    public void setButtonWidth    (float width);
    public void setButtonHeight   (float height);
    public void setButtonX        (float x);
