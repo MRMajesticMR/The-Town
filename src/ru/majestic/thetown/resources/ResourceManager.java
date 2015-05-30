@@ -28,6 +28,7 @@ public class ResourceManager {
    private ITextureRegion  foodIconTextureRegion;
    private ITextureRegion  woodIconTextureRegion;
    private ITextureRegion  goldIconTextureRegion;
+   private ITextureRegion  homeIconTextureRegion;
    
    private BitmapTextureAtlas    plusBtnTextureAtlas;
    
@@ -66,7 +67,8 @@ public class ResourceManager {
       foodIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/food_icon.png", 0, 0);
       woodIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/wood_icon.png", 128, 0);
       goldIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/gold_icon.png", 0, 128);
-            
+      homeIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/home_icon.png", 128, 128);
+      
       plusBtnTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 128, 64);
       
       plusBtnTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(plusBtnTextureAtlas, context, "gfx/buttons/plus_btn.png", 0, 0, 2, 1);
@@ -143,5 +145,8 @@ public class ResourceManager {
    public ITiledTextureRegion getPlusBtnTextureRegion() {
       return plusBtnTextureRegion;
    }
-   
+
+   public ITextureRegion getHomeIconTextureRegion() {
+      return homeIconTextureRegion;
+   }   
 }

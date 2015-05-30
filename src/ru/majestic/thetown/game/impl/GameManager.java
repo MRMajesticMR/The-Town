@@ -9,9 +9,11 @@ public class GameManager implements IGameManager {
    
    private static final String PREFFS_NAME = "THE_TOWN_PREFFS";
    
-   private static final String PREFF_KEY_FOOD = "PREFF_KEY_FOOD";
-   private static final String PREFF_KEY_GOLD = "PREFF_KEY_GOLD";
-   private static final String PREFF_KEY_WOOD = "PREFF_KEY_WOOD";
+   private static final String PREFF_KEY_FOOD            = "PREFF_KEY_FOOD";
+   private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";
+   private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
+   private static final String PREFF_KEY_HOME_COUNT      = "PREFF_KEY_HOME_COUNT";
+   private static final String PREFF_KEY_HOME_MAX_COUNT  = "PREFF_KEY_HOME_MAX_COUNT";
    
    private static final String PREFF_KEY_FOOD_CLICKER_LVL = "PREFF_KEY_FOOD_CLICKER_LVL";
    private static final String PREFF_KEY_WOOD_CLICKER_LVL = "PREFF_KEY_WOOD_CLICKER_LVL";
@@ -19,6 +21,8 @@ public class GameManager implements IGameManager {
    private int foodCount;
    private int woodCount;
    private int goldCount;
+   private int homeCount;
+   private int homeMaxCount;
    
    private int foodClickerLvl;
    private int woodClickerLvl;
@@ -27,9 +31,11 @@ public class GameManager implements IGameManager {
    public void load(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       
-      foodCount = prefs.getInt(PREFF_KEY_FOOD, 0);
-      goldCount = prefs.getInt(PREFF_KEY_GOLD, 0);
-      woodCount = prefs.getInt(PREFF_KEY_WOOD, 0);
+      foodCount      = prefs.getInt(PREFF_KEY_FOOD, 0);
+      goldCount      = prefs.getInt(PREFF_KEY_GOLD, 0);
+      woodCount      = prefs.getInt(PREFF_KEY_WOOD, 0);
+      homeCount      = prefs.getInt(PREFF_KEY_HOME_COUNT, 0);
+      homeMaxCount   = prefs.getInt(PREFF_KEY_HOME_MAX_COUNT, 0);
       
       foodClickerLvl = prefs.getInt(PREFF_KEY_FOOD_CLICKER_LVL, 1);
       woodClickerLvl = prefs.getInt(PREFF_KEY_WOOD_CLICKER_LVL, 1);      
@@ -43,6 +49,8 @@ public class GameManager implements IGameManager {
       editor.putInt(PREFF_KEY_FOOD, getFoodCount());
       editor.putInt(PREFF_KEY_GOLD, getGoldCount());
       editor.putInt(PREFF_KEY_WOOD, getWoodCount());
+      editor.putInt(PREFF_KEY_HOME_COUNT, getHomeCount());
+      editor.putInt(PREFF_KEY_HOME_MAX_COUNT, getHomeMaxCount());      
       
       editor.putInt(PREFF_KEY_FOOD_CLICKER_LVL, getFoodClickerLvl());
       editor.putInt(PREFF_KEY_WOOD_CLICKER_LVL, getWoodClickerLvl());
@@ -103,6 +111,16 @@ public class GameManager implements IGameManager {
    @Override
    public void removeFood(int food) {
       foodCount -= food;      
+   }
+
+   @Override
+   public int getHomeMaxCount() {
+      return homeMaxCount;
+   }
+
+   @Override
+   public int getHomeCount() {
+      return homeCount;
    }
    
 }

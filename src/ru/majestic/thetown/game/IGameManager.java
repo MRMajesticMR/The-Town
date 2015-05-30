@@ -16,9 +16,11 @@ public interface IGameManager {
    public void upFoodClickerLvl();
    public void upWoodClickerLvl();
    
-   public int getFoodCount();
-   public int getWoodCount();
-   public int getGoldCount();
+   public int getFoodCount    ();
+   public int getWoodCount    ();
+   public int getGoldCount    ();
+   public int getHomeMaxCount ();
+   public int getHomeCount    ();
    
    public int getFoodClickerLvl();
    public int getWoodClickerLvl();

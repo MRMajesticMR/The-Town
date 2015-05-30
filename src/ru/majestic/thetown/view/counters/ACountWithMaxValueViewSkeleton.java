@@ -8,21 +8,24 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.resources.ResourceManager;
 
-public abstract class IAndEngineCountViewSkeleton extends Rectangle implements ICountView {
+public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountWithMaxValueView {
 
    private static final int WIDTH   = 140;
    private static final int HEIGHT  = 40;   
    
+   private int value;
+   private int maxValue;
+   
    private Text   countText;
    private Sprite counterImage;
    
-   public IAndEngineCountViewSkeleton(float pX, float pY, ITextureRegion imageTexture) {
+   public ACountWithMaxValueViewSkeleton(float pX, float pY, ITextureRegion imageTexture) {
       super(pX, pY, WIDTH, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setAlpha(0.0f);
       
-      countText = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "      ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      counterImage = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText      = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "00000/00000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      counterImage   = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);
       attachChild(counterImage);
@@ -37,8 +40,19 @@ public abstract class IAndEngineCountViewSkeleton extends Rectangle implements I
 
    @Override
    public void changeCount(int newValue) {
-      countText.setText(String.valueOf(newValue));
+      value = newValue;
+      updateView();
       
+   }
+
+   @Override
+   public void onMaxValueChanged(int maxValue) {
+      this.maxValue = maxValue;
+      updateView();
+   }
+   
+   private void updateView() {
+      countText.setText(value + "/" + maxValue);
    }
 
 }

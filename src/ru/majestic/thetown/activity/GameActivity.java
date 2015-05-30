@@ -16,8 +16,10 @@ import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
 import ru.majestic.thetown.view.counters.ICountView;
+import ru.majestic.thetown.view.counters.ICountWithMaxValueView;
 import ru.majestic.thetown.view.counters.impl.FoodCounterView;
 import ru.majestic.thetown.view.counters.impl.GoldCounterView;
+import ru.majestic.thetown.view.counters.impl.HomeCounterView;
 import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
 import ru.majestic.thetown.view.dialogs.listeners.ClickersShopDialogActionsListener;
@@ -48,7 +50,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private ICountView foodCountView;
 	private ICountView goldCountView;
-	private ICountView woodCountView;   
+	private ICountView woodCountView;  
+	
+	private ICountWithMaxValueView homeCountView;
 	
 	private IShopsMenu shopsMenu;		
    
@@ -78,6 +82,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   foodCountView = new FoodCounterView();
 	   goldCountView = new GoldCounterView();
 	   woodCountView = new WoodCounterView();
+	   homeCountView = new HomeCounterView();
 	   
 	   shopsMenu = new ShopsMenu();	   	   
 	   
@@ -99,7 +104,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   clickersShopDialog.setClickersShopDialogActionsListener(this);	   
 	   
 	   clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
-	   clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());      
+	   clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());
+	   
+	   homeCountView.changeCount(gameManager.getHomeCount());
+	   homeCountView.onMaxValueChanged(gameManager.getHomeMaxCount());	   
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -119,7 +127,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   foodCountView.attachToParent(scene);
 	   goldCountView.attachToParent(scene);
-	   woodCountView.attachToParent(scene);	   	   
+	   woodCountView.attachToParent(scene);	   
+	   homeCountView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
 	   
