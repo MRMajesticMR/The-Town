@@ -13,7 +13,7 @@ import ru.majestic.thetown.view.menu.buttons.IMenuButton;
 
 public class BottomMenu extends Rectangle implements IBottomMenu {
 
-   private static final int MENU_HEIGHT = 80;
+   private static final int MENU_HEIGHT = 60;
    
    private static final int BUTTONS_PADDING = 5;
    

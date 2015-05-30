@@ -176,6 +176,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodCountView.changeCount(gameManager.getFoodCount());
       goldCountView.changeCount(gameManager.getGoldCount());
       woodCountView.changeCount(gameManager.getWoodCount());
+      
+      clickersShopDialog.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
    }
 
    @Override
@@ -191,6 +193,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          buyGoldMenuBtn.unregisterTouchArea(scene);
          
          clickersShopDialog.registerTouchArea(scene);
+         clickersShopDialog.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
          clickersShopDialog.show();         
          
          return;
@@ -211,6 +214,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          buyGoldMenuBtn.unregisterTouchArea(scene);
          
          buildingsShopDialog.registerTouchArea(scene);
+         buildingsShopDialog.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
          buildingsShopDialog.show();         
          return;
       }
@@ -243,7 +247,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          gameManager.upFoodClickerLvl();
          
          updateCountViewers();
-         clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
+         clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());         
       }
    }
 

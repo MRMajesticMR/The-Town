@@ -10,24 +10,29 @@ import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.impl.SimpleCloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.listeners.OnCloseDialogButtonClickedListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.IResourcesShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.impl.ResourcesShopPanel;
 
 public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCloseDialogButtonClickedListener {
 
-   private static final int MARGIN_TOP_BOTTOM = 60;
-   private static final int MARGIN_LEFT_RIGHT = 30;
+   private static final int MARGIN_BOTTOM = 65;
    
    private OnDialogClosedListener onDialogClosedListener;        
    
-   private ICloseDialogButton closeDialogButton;
+   private ICloseDialogButton    closeDialogButton;
+   private IResourcesShopPanel   resourcesShopPanel;
    
    public AShopDialog() {
-      super(MARGIN_LEFT_RIGHT, MARGIN_TOP_BOTTOM, TheTownCamera.CAMERA_WIDTH - (MARGIN_LEFT_RIGHT * 2), TheTownCamera.CAMERA_HEIGHT - (MARGIN_TOP_BOTTOM * 2), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      super(0, 0, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT - MARGIN_BOTTOM, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       setColor(0, 0, 1);
       setVisible(false);
       
       closeDialogButton = new SimpleCloseDialogButton(this);     
       closeDialogButton.setOnCloseDialogButtonClickedListener(this);      
       closeDialogButton.attachToParent(this);
+      
+      resourcesShopPanel = new ResourcesShopPanel(this);
+      resourcesShopPanel.attachToParent(this);
    }
    
    @Override
@@ -63,6 +68,11 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    @Override
    public void onCloseDialogButtonClicked() {
       onDialogClosedListener.onDialogClosed(this);      
+   }
+
+   @Override
+   public void onResourceCountChanged(int food, int gold, int wood) {
+      resourcesShopPanel.onResourcesChanged(food, gold, wood);
    }
 
 }
