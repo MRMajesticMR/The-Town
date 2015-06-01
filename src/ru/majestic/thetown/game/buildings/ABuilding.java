@@ -2,6 +2,9 @@ package ru.majestic.thetown.game.buildings;
 
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 public abstract class ABuilding implements IBuilding {
 
    private String          title;
@@ -60,4 +63,16 @@ public abstract class ABuilding implements IBuilding {
       currentCount += count;
    }
    
+   @Override
+   public void save(Editor prefsEditor) {
+      prefsEditor.putInt(getSaveDataCurrentCount(), getCurrentCount());
+   }
+
+   @Override
+   public void load(SharedPreferences prefs) {
+      currentCount = prefs.getInt(getSaveDataCurrentCount(), 0);
+   }
+   
+   
+   protected abstract String getSaveDataCurrentCount();
 }

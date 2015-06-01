@@ -15,8 +15,9 @@ import ru.majestic.thetown.view.dialogs.shops.panels.buildings.listeners.Buildin
 
 public class BuildingShopPanel extends Rectangle implements IBuildingShopPanel, OnClickListener {
 
-   protected static final int HEIGHT   = 80;   
-   protected static final int PADDING  = 4;    
+   public static final int HEIGHT   = 80;
+   
+   private static final int PADDING  = 4;    
    
    private IBuilding                         building;
    private BuildingShopPanelActionListener   buildingShopPanelActionListener;

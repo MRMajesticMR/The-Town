@@ -3,7 +3,6 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
-import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
@@ -14,20 +13,22 @@ import ru.majestic.thetown.view.dialogs.shops.panels.buildings.listeners.Buildin
 
 public class BuildingsShopDialog extends AShopDialog implements BuildingShopPanelActionListener {
    
-   private IBuildingShopPanel[] buildingBuyPanels;
+   private static final int PANELS_COUNT = 5;
    
+   private static final int PANELS_SPACE = 4;
+   
+   private IBuildingShopPanel[] buildingBuyPanels;   
    private BuildingsShopDialogActionListeners buildingsShopDialogActionListeners;
    
    public BuildingsShopDialog(IGameManager gameManager) {
       super(gameManager);
       
-      buildingBuyPanels = new IBuildingShopPanel[1];
+      buildingBuyPanels = new IBuildingShopPanel[PANELS_COUNT];
       
-      buildingBuyPanels[0] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, PADDING_TOP, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(IBuildingsManager.BUILDING_TYPE_TENT));
-      
-      for(IBuildingShopPanel buildingShopPanel: buildingBuyPanels) {
-         buildingShopPanel.update();
-         buildingShopPanel.setBuildingShopPanelActionListener(this);
+      for(int buildingIndex = 0; buildingIndex < buildingBuyPanels.length; buildingIndex++) {
+         buildingBuyPanels[buildingIndex] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, PADDING_TOP + (buildingIndex * (BuildingShopPanel.HEIGHT + PANELS_SPACE)), (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(buildingIndex));
+         buildingBuyPanels[buildingIndex].update();
+         buildingBuyPanels[buildingIndex].setBuildingShopPanelActionListener(this);
       }
    }   
    
