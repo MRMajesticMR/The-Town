@@ -169,8 +169,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    }
    
    @Override
-   public void onDestroy() {
-      super.onDestroy();
+   public void onStop() {
+      super.onStop();
       gameManager.save(this);
    }
    
