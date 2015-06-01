@@ -1,19 +1,25 @@
-package ru.majestic.thetown.view.dialogs.shops.panels.buildings;
+package ru.majestic.thetown.view.dialogs.shops.panels.buildings.impl;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
-import ru.majestic.thetown.game.homes.IBuilding;
+import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.view.dialogs.shops.panels.buildings.IBuildingShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.buildings.listeners.BuildingShopPanelActionListener;
 
-public class ABuildingShopPanel extends Rectangle implements IBuildingShopPanel {
+public class BuildingShopPanel extends Rectangle implements IBuildingShopPanel, OnClickListener {
 
    protected static final int HEIGHT   = 80;   
    protected static final int PADDING  = 4;    
+   
+   private IBuilding                         building;
+   private BuildingShopPanelActionListener   buildingShopPanelActionListener;
    
    private Sprite buildingImage;
    private Text   buildingTitle;
@@ -27,14 +33,15 @@ public class ABuildingShopPanel extends Rectangle implements IBuildingShopPanel 
    private Text   priceText;
    private Sprite priceImage;
    
-   private Text            buildingsCount;
+   private Text            buildingsCount;   
+   private ButtonSprite    buyButton;         
    
-   private ButtonSprite    buyButton;   
    
-   
-   public ABuildingShopPanel(int x, int y, int width, IBuilding building) {
+   public BuildingShopPanel(int x, int y, int width, IBuilding building) {
       super(x, y, width, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       setColor(1, 0, 0);
+      
+      this.building = building;
       
       buildingImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), building.getBuildingImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       buildingTitle  = new Text(buildingImage.getX() + buildingImage.getHeight() + 4, PADDING, ResourceManager.getInstance().getShopBuildingsTitleFont(), building.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -54,9 +61,9 @@ public class ABuildingShopPanel extends Rectangle implements IBuildingShopPanel 
       buyButton.setX(getWidth() - PADDING - buyButton.getWidth());
       buyButton.setY(getHeight() - PADDING - buyButton.getHeight());
       
-      buildingsCount = new Text(0, PADDING, ResourceManager.getInstance().getShopTitleFont(), String.valueOf(building.getCurrentCount()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      buildingsCount = new Text(0, PADDING, ResourceManager.getInstance().getShopTitleFont(), "99999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
-      
+            
       attachChild(buildingImage);
       attachChild(buildingTitle);
       
@@ -71,21 +78,42 @@ public class ABuildingShopPanel extends Rectangle implements IBuildingShopPanel 
       
       attachChild(buyButton);
       attachChild(buildingsCount);
+      
+      buyButton.setOnClickListener(this);
    }
 
    @Override
    public void registerTouchArea(Scene scene) {
-      // TODO Auto-generated method stub      
+      scene.registerTouchArea(buyButton);
    }
 
    @Override
    public void unregisterTouchArea(Scene scene) {
-      // TODO Auto-generated method stub      
+      scene.unregisterTouchArea(buyButton);
    }
 
    @Override
    public void attachToParent(Entity parent) {
       parent.attachChild(this);
+   }
+
+   @Override
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      if(pButtonSprite == buyButton) {
+         buildingShopPanelActionListener.onBuyButtonClicked(building);
+         return;
+      }
+   }
+
+   @Override
+   public void setBuildingShopPanelActionListener(BuildingShopPanelActionListener buildingShopPanelActionListener) {
+      this.buildingShopPanelActionListener = buildingShopPanelActionListener;
+   }
+
+   @Override
+   public void update() {
+      buildingsCount.setText(String.valueOf(building.getCurrentCount()));
+      buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
    }
 
 }

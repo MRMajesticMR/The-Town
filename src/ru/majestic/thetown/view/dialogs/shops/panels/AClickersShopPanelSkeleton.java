@@ -10,7 +10,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.dialogs.listeners.ClickersShopPanelActionsListener;
+import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 
 public abstract class AClickersShopPanelSkeleton extends Rectangle implements IClickersShopPanel,
                                                                               OnClickListener {

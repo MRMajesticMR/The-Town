@@ -4,9 +4,9 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.game.GameManagerHelper;
-import ru.majestic.thetown.view.dialogs.listeners.ClickersShopDialogActionsListener;
-import ru.majestic.thetown.view.dialogs.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
+import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.IClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.impl.FoodClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.impl.WoodClickersShopPanel;

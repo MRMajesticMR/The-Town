@@ -19,7 +19,7 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    protected static final int PADDING_TOP             = 46;
    protected static final int PADDINGS_LEFT_RIGHT     = 4;
    
-   private OnDialogClosedListener onDialogClosedListener;        
+   private OnDialogClosedListener onDialogClosedListener;    
    
    private ICloseDialogButton    closeDialogButton;
    private IResourcesShopPanel   resourcesShopPanel;

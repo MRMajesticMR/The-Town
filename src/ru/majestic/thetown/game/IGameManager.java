@@ -19,9 +19,10 @@ public interface IGameManager {
    public int getFoodCount    ();
    public int getWoodCount    ();
    public int getGoldCount    ();
-   public int getHomeMaxCount ();
    public int getHomeCount    ();
    
    public int getFoodClickerLvl();
    public int getWoodClickerLvl();
+   
+   public IBuildingsManager getBuildingsManager();
 }

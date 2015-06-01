@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.dialogs.listeners;
+package ru.majestic.thetown.view.dialogs.shops.listeners;
 
 public interface ClickersShopDialogActionsListener {
 

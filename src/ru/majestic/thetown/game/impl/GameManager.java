@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game.impl;
 
+import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.IGameManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +14,6 @@ public class GameManager implements IGameManager {
    private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";
    private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
    private static final String PREFF_KEY_HOME_COUNT      = "PREFF_KEY_HOME_COUNT";
-   private static final String PREFF_KEY_HOME_MAX_COUNT  = "PREFF_KEY_HOME_MAX_COUNT";
    
    private static final String PREFF_KEY_FOOD_CLICKER_LVL = "PREFF_KEY_FOOD_CLICKER_LVL";
    private static final String PREFF_KEY_WOOD_CLICKER_LVL = "PREFF_KEY_WOOD_CLICKER_LVL";
@@ -22,10 +22,15 @@ public class GameManager implements IGameManager {
    private int woodCount;
    private int goldCount;
    private int homeCount;
-   private int homeMaxCount;
    
    private int foodClickerLvl;
    private int woodClickerLvl;
+   
+   private IBuildingsManager  buildingsManager;
+   
+   public GameManager() {
+      buildingsManager = new BuildingsManager();
+   }
    
    @Override
    public void load(Context context) {
@@ -35,10 +40,11 @@ public class GameManager implements IGameManager {
       goldCount      = prefs.getInt(PREFF_KEY_GOLD, 0);
       woodCount      = prefs.getInt(PREFF_KEY_WOOD, 0);
       homeCount      = prefs.getInt(PREFF_KEY_HOME_COUNT, 0);
-      homeMaxCount   = prefs.getInt(PREFF_KEY_HOME_MAX_COUNT, 0);
       
       foodClickerLvl = prefs.getInt(PREFF_KEY_FOOD_CLICKER_LVL, 1);
-      woodClickerLvl = prefs.getInt(PREFF_KEY_WOOD_CLICKER_LVL, 1);      
+      woodClickerLvl = prefs.getInt(PREFF_KEY_WOOD_CLICKER_LVL, 1);     
+      
+      buildingsManager.load(prefs);
    }
    
    @Override
@@ -49,11 +55,12 @@ public class GameManager implements IGameManager {
       editor.putInt(PREFF_KEY_FOOD, getFoodCount());
       editor.putInt(PREFF_KEY_GOLD, getGoldCount());
       editor.putInt(PREFF_KEY_WOOD, getWoodCount());
-      editor.putInt(PREFF_KEY_HOME_COUNT, getHomeCount());
-      editor.putInt(PREFF_KEY_HOME_MAX_COUNT, getHomeMaxCount());      
+      editor.putInt(PREFF_KEY_HOME_COUNT, getHomeCount());    
       
       editor.putInt(PREFF_KEY_FOOD_CLICKER_LVL, getFoodClickerLvl());
       editor.putInt(PREFF_KEY_WOOD_CLICKER_LVL, getWoodClickerLvl());
+      
+      buildingsManager.save(editor);
       
       editor.commit();
    }
@@ -114,13 +121,13 @@ public class GameManager implements IGameManager {
    }
 
    @Override
-   public int getHomeMaxCount() {
-      return homeMaxCount;
+   public int getHomeCount() {
+      return homeCount;
    }
 
    @Override
-   public int getHomeCount() {
-      return homeCount;
+   public IBuildingsManager getBuildingsManager() {
+      return buildingsManager;
    }
    
 }

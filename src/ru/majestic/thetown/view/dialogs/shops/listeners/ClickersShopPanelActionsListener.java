@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.dialogs.listeners;
+package ru.majestic.thetown.view.dialogs.shops.listeners;
 
 import ru.majestic.thetown.view.dialogs.shops.panels.IClickersShopPanel;
 
