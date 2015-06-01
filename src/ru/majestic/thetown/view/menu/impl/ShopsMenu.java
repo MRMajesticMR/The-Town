@@ -20,10 +20,10 @@ public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClic
    
    private static final int BUTTONS_COUNT = 4;
    
-   private static final int BUTTONS_INDEX_CLICKERS = 0;
-   private static final int BUTTONS_INDEX_WORKERS = 1;
-   private static final int BUTTONS_INDEX_BUILDINGS = 2;
-   private static final int BUTTONS_INDEX_GOLD = 3;
+   private static final int BUTTONS_INDEX_CLICKERS    = 0;
+   private static final int BUTTONS_INDEX_BUILDINGS   = 1;
+   private static final int BUTTONS_INDEX_WORKERS     = 2;   
+   private static final int BUTTONS_INDEX_GOLD        = 3;
    
    private OnShopsMenuButtonClickedListener onShopsMenuButtonClickedListener;
    
@@ -36,9 +36,9 @@ public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClic
       
       buttons = new IMenuButton[BUTTONS_COUNT];
       
-      buttons[BUTTONS_INDEX_CLICKERS]    = new TextMenuButton("Clickers");          
-      buttons[BUTTONS_INDEX_WORKERS]     = new TextMenuButton("Workers");
+      buttons[BUTTONS_INDEX_CLICKERS]    = new TextMenuButton("Clickers");
       buttons[BUTTONS_INDEX_BUILDINGS]   = new TextMenuButton("Buildings");
+      buttons[BUTTONS_INDEX_WORKERS]     = new TextMenuButton("Workers");      
       buttons[BUTTONS_INDEX_GOLD]        = new TextMenuButton("Gold");
       
       for(IMenuButton button: buttons)

@@ -60,8 +60,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private IShopsMenu shopsMenu;		
    
    private ClickersShopDialog    clickersShopDialog;
-   private WorkersShopDialog     workersShopDialog;
    private BuildingsShopDialog   buildingsShopDialog;
+   private WorkersShopDialog     workersShopDialog;   
    private GoldShopDialog        goldShopDialog;
    
 	@Override
@@ -90,8 +90,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   shopsMenu = new ShopsMenu();	   	   
 	   
 	   clickersShopDialog           = new ClickersShopDialog();
-	   workersShopDialog            = new WorkersShopDialog();
 	   buildingsShopDialog          = new BuildingsShopDialog(gameManager.getBuildingsManager());
+	   workersShopDialog            = new WorkersShopDialog();	   
 	   goldShopDialog               = new GoldShopDialog();
 	   
 	   foodClicker.setOnClickerClickedListener(this);
