@@ -9,6 +9,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 
@@ -19,6 +20,8 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
    
    private ClickersShopPanelActionsListener clickersShopPanelActionsListener;
    
+   private IClicker clicker;
+   
    private final Text         panelTitle;
    private final Text         currentLvlTxt;
    private final Text         perClickResourceTxt;
@@ -28,10 +31,12 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
    private final Sprite       upgradePriceIcon;
    
    
-   public AClickersShopPanelSkeleton(String title, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
+   public AClickersShopPanelSkeleton(IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
       super(0, 0, 0, 0, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      panelTitle              = new Text(0, 0, ResourceManager.getInstance().getShopTitleFont(), title, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
+      this.clicker = clicker;
+      
+      panelTitle              = new Text(0, 0, ResourceManager.getInstance().getShopTitleFont(), clicker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       currentLvlTxt           = new Text(0, 0, ResourceManager.getInstance().getShopTextFont(), "LVL: 1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       perClickResourceTxt    = new Text(0, 0, ResourceManager.getInstance().getShopTextFont(), "100000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -100,26 +105,19 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
    }
 
    @Override
-   public void showCurrentClickerLvl(int newLvl) {
-      currentLvlTxt.setText("LVL: " + newLvl);
-   }
-
-   @Override
-   public void showCurrentClickerResourcesPerClick(int resourcesPerClick) {
-      perClickResourceTxt.setText(resourcesPerClick + " pC");
-   }
-
-   @Override
-   public void showUpgradePrice(int upgradePrice) {
-      upgradePriceTxt.setText(String.valueOf(upgradePrice));
-   }
-
-   @Override
    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
       if(pButtonSprite == upgradeBtn) {
-         clickersShopPanelActionsListener.onUpdateButtonClicked(this);
+         clickersShopPanelActionsListener.onUpdateButtonClicked(clicker);
          return;
       }
+   }
+   
+   @Override
+   public void update() {
+      currentLvlTxt.setText("LVL: " + clicker.getCurrentLvl());
+      perClickResourceTxt.setText(clicker.getResourcesPerClick() + " pC");
+      upgradePriceTxt.setText(String.valueOf(clicker.getUpgradePrice()));
+      
    }
 
 }

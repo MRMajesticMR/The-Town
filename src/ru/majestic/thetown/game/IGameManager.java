@@ -13,16 +13,11 @@ public interface IGameManager {
    public void removeWood(int wood);
    public void removeFood(int food);
    
-   public void upFoodClickerLvl();
-   public void upWoodClickerLvl();
-   
    public int getFoodCount    ();
    public int getWoodCount    ();
    public int getGoldCount    ();
    public int getHomeCount    ();
    
-   public int getFoodClickerLvl();
-   public int getWoodClickerLvl();
-   
-   public IBuildingsManager getBuildingsManager();
+   public IBuildingsManager   getBuildingsManager  ();
+   public IClickersManager    getClickersManager   ();
 }

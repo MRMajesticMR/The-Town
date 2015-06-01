@@ -1,9 +1,9 @@
 package ru.majestic.thetown.view.dialogs.shops.listeners;
 
-import ru.majestic.thetown.view.dialogs.shops.panels.IClickersShopPanel;
+import ru.majestic.thetown.game.clickers.IClicker;
 
 public interface ClickersShopPanelActionsListener {
 
-   public void onUpdateButtonClicked(IClickersShopPanel clickersShopPanel);
+   public void onUpdateButtonClicked(IClicker clicker);
    
 }

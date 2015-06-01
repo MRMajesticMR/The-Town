@@ -8,9 +8,12 @@ import org.andengine.ui.activity.BaseGameActivity;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
-import ru.majestic.thetown.game.GameManagerHelper;
+import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
+import ru.majestic.thetown.game.clickers.IClicker;
+import ru.majestic.thetown.game.clickers.impl.FoodClicker;
+import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
@@ -140,13 +143,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onClickerClicked(IClickerView clicker) {
       if(clicker == foodClicker) {         
-         gameManager.addFood(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getFoodClickerLvl()));
+         gameManager.addFood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
          
          foodCountView.changeCount(gameManager.getFoodCount());
       }
       
       if(clicker == woodClicker) {
-         gameManager.addWood(GameManagerHelper.calculateResourcesPerClickFromLvl(gameManager.getWoodClickerLvl()));
+         gameManager.addWood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
          
          woodCountView.changeCount(gameManager.getWoodCount());
       }            
@@ -162,28 +165,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodCountView.changeCount(gameManager.getFoodCount());
       goldCountView.changeCount(gameManager.getGoldCount());
       woodCountView.changeCount(gameManager.getWoodCount());
-   }
-
-   @Override
-   public void onUpgradeFoodClickerClicked() {
-      if(gameManager.getWoodCount() >= GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl())) {
-         gameManager.removeWood(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getFoodClickerLvl()));
-         gameManager.upFoodClickerLvl();
-         
-         updateCountViewers();
-         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();         
-      }
-   }
-
-   @Override
-   public void onUpgradeWoodClickerClicked() {
-      if(gameManager.getFoodCount() >= GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl())) {
-         gameManager.removeFood(GameManagerHelper.calculateUpgradeCostFromLvl(gameManager.getWoodClickerLvl()));
-         gameManager.upWoodClickerLvl();
-         
-         updateCountViewers();
-         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
-      }
    }
 
    @Override
@@ -231,5 +212,25 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       } else {
          super.onBackPressed();
       }
+   }
+
+   @Override
+   public void onUpgradeClickerButtonClicked(IClicker clicker) {
+      if(clicker instanceof FoodClicker) {
+         if(gameManager.getWoodCount() >= clicker.getUpgradePrice()) {
+            gameManager.removeWood(clicker.getUpgradePrice());
+            clicker.upgrade();                        
+         }
+      }
+      
+      if(clicker instanceof WoodClicker) {
+         if(gameManager.getFoodCount() >= clicker.getUpgradePrice()) {
+            gameManager.removeFood(clicker.getUpgradePrice());
+            clicker.upgrade();                        
+         }
+      }
+      
+      updateCountViewers();
+      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
    }
 }

@@ -1,6 +1,7 @@
 package ru.majestic.thetown.game.impl;
 
 import ru.majestic.thetown.game.IBuildingsManager;
+import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,21 +16,17 @@ public class GameManager implements IGameManager {
    private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
    private static final String PREFF_KEY_HOME_COUNT      = "PREFF_KEY_HOME_COUNT";
    
-   private static final String PREFF_KEY_FOOD_CLICKER_LVL = "PREFF_KEY_FOOD_CLICKER_LVL";
-   private static final String PREFF_KEY_WOOD_CLICKER_LVL = "PREFF_KEY_WOOD_CLICKER_LVL";
-   
    private int foodCount;
    private int woodCount;
    private int goldCount;
    private int homeCount;
    
-   private int foodClickerLvl;
-   private int woodClickerLvl;
-   
    private IBuildingsManager  buildingsManager;
+   private IClickersManager   clickersManager;
    
    public GameManager() {
-      buildingsManager = new BuildingsManager();
+      buildingsManager  = new BuildingsManager();
+      clickersManager   = new ClickersManager();
    }
    
    @Override
@@ -41,10 +38,8 @@ public class GameManager implements IGameManager {
       woodCount      = prefs.getInt(PREFF_KEY_WOOD, 0);
       homeCount      = prefs.getInt(PREFF_KEY_HOME_COUNT, 0);
       
-      foodClickerLvl = prefs.getInt(PREFF_KEY_FOOD_CLICKER_LVL, 1);
-      woodClickerLvl = prefs.getInt(PREFF_KEY_WOOD_CLICKER_LVL, 1);     
-      
       buildingsManager.load(prefs);
+      clickersManager.load(prefs);
    }
    
    @Override
@@ -57,10 +52,8 @@ public class GameManager implements IGameManager {
       editor.putInt(PREFF_KEY_WOOD, getWoodCount());
       editor.putInt(PREFF_KEY_HOME_COUNT, getHomeCount());    
       
-      editor.putInt(PREFF_KEY_FOOD_CLICKER_LVL, getFoodClickerLvl());
-      editor.putInt(PREFF_KEY_WOOD_CLICKER_LVL, getWoodClickerLvl());
-      
       buildingsManager.save(editor);
+      clickersManager.save(editor);
       
       editor.commit();
    }
@@ -91,26 +84,6 @@ public class GameManager implements IGameManager {
    }
 
    @Override
-   public void upFoodClickerLvl() {
-      this.foodClickerLvl++;
-   }
-
-   @Override
-   public void upWoodClickerLvl() {
-      this.woodClickerLvl++;      
-   }
-
-   @Override
-   public int getFoodClickerLvl() {
-      return foodClickerLvl;
-   }
-
-   @Override
-   public int getWoodClickerLvl() {
-      return woodClickerLvl;
-   }
-
-   @Override
    public void removeWood(int wood) {
       woodCount -= wood;
    }
@@ -128,6 +101,11 @@ public class GameManager implements IGameManager {
    @Override
    public IBuildingsManager getBuildingsManager() {
       return buildingsManager;
+   }
+
+   @Override
+   public IClickersManager getClickersManager() {
+      return clickersManager;
    }
    
 }
