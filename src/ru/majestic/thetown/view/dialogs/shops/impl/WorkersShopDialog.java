@@ -3,12 +3,13 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
+import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 
 public class WorkersShopDialog extends AShopDialog {
    
-   public WorkersShopDialog() {
-      super();
+   public WorkersShopDialog(IGameManager gameManager) {
+      super(gameManager);
       
    }   
    

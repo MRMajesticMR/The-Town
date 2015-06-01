@@ -7,7 +7,8 @@ public interface IDialog extends IClickableView {
 
    public void setOnDialogClosedListener(OnDialogClosedListener onDialogClosedListener);
    
-   public void show  ();
-   public void hide  ();
+   public void    show  ();
+   public void    hide  ();
+   public boolean isVisible();   
    
 }

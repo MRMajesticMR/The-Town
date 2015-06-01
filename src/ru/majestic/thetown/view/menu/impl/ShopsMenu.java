@@ -82,19 +82,12 @@ public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClic
       clearAllSelection();
       
       menuButton.setActive(true);
-      
-      if(menuButton == buttons[BUTTONS_INDEX_CLICKERS])
-         onShopsMenuButtonClickedListener.onNeedOpenShopDialog(OnShopsMenuButtonClickedListener.ShopType.CLICKERS);
-      
-      if(menuButton == buttons[BUTTONS_INDEX_WORKERS])
-         onShopsMenuButtonClickedListener.onNeedOpenShopDialog(OnShopsMenuButtonClickedListener.ShopType.WORKERS);
-      
-      if(menuButton == buttons[BUTTONS_INDEX_BUILDINGS])
-         onShopsMenuButtonClickedListener.onNeedOpenShopDialog(OnShopsMenuButtonClickedListener.ShopType.BUILDINGS);
-      
-      if(menuButton == buttons[BUTTONS_INDEX_GOLD])
-         onShopsMenuButtonClickedListener.onNeedOpenShopDialog(OnShopsMenuButtonClickedListener.ShopType.GOLD);
-         
+      for(int menuIndex = 0; menuIndex < buttons.length; menuIndex++) {
+         if(menuButton == buttons[menuIndex]) {
+            onShopsMenuButtonClickedListener.onNeedOpenShopDialog(menuIndex);
+            return;
+         }
+      }             
    }
 
    @Override

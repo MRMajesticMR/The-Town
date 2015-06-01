@@ -4,6 +4,7 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.game.IBuildingsManager;
+import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActionListeners;
@@ -17,12 +18,12 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
    
    private BuildingsShopDialogActionListeners buildingsShopDialogActionListeners;
    
-   public BuildingsShopDialog(IBuildingsManager buildingsManager) {
-      super();
+   public BuildingsShopDialog(IGameManager gameManager) {
+      super(gameManager);
       
       buildingBuyPanels = new IBuildingShopPanel[1];
       
-      buildingBuyPanels[0] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, PADDING_TOP, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), buildingsManager.getBuilding(IBuildingsManager.BUILDING_TYPE_TENT));
+      buildingBuyPanels[0] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, PADDING_TOP, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(IBuildingsManager.BUILDING_TYPE_TENT));
       
       for(IBuildingShopPanel buildingShopPanel: buildingBuyPanels) {
          buildingShopPanel.update();
@@ -30,7 +31,9 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
       }
    }   
    
+   @Override
    public void update() {
+      super.update();
       for(IBuildingShopPanel buildingShopPanel: buildingBuyPanels) {
          buildingShopPanel.update();
       }

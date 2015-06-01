@@ -23,14 +23,13 @@ import ru.majestic.thetown.view.counters.impl.GoldCounterView;
 import ru.majestic.thetown.view.counters.impl.HomeCounterView;
 import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
-import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
-import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
-import ru.majestic.thetown.view.dialogs.shops.impl.GoldShopDialog;
-import ru.majestic.thetown.view.dialogs.shops.impl.WorkersShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.impl.ShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActionListeners;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
+import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
 import ru.majestic.thetown.view.menu.impl.ShopsMenu;
@@ -38,7 +37,7 @@ import ru.majestic.thetown.view.menu.listeners.OnShopsMenuButtonClickedListener;
 
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
-                                                              OnDialogClosedListener,
+                                                              OnShopsCloseButtonCLickedListener,
                                                               ClickersShopDialogActionsListener,
                                                               OnShopsMenuButtonClickedListener,
                                                               BuildingsShopDialogActionListeners {
@@ -58,11 +57,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private ICountWithMaxValueView homeCountView;
 	
 	private IShopsMenu shopsMenu;		
-   
-   private ClickersShopDialog    clickersShopDialog;
-   private BuildingsShopDialog   buildingsShopDialog;
-   private WorkersShopDialog     workersShopDialog;   
-   private GoldShopDialog        goldShopDialog;
+	private IShopsDialogsManager shopsDialogManager;
    
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -87,30 +82,22 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   woodCountView = new WoodCounterView();
 	   homeCountView = new HomeCounterView();
 	   
-	   shopsMenu = new ShopsMenu();	   	   
+	   shopsMenu = new ShopsMenu();	   	
 	   
-	   clickersShopDialog           = new ClickersShopDialog();
-	   buildingsShopDialog          = new BuildingsShopDialog(gameManager.getBuildingsManager());
-	   workersShopDialog            = new WorkersShopDialog();	   
-	   goldShopDialog               = new GoldShopDialog();
+	   shopsDialogManager = new ShopsDialogsManager(gameManager);
 	   
 	   foodClicker.setOnClickerClickedListener(this);
 	   woodClicker.setOnClickerClickedListener(this);	
 	   
 	   shopsMenu.setOnShopsMenuButtonClickedListener(this);
 	   
-	   clickersShopDialog.setOnDialogClosedListener(this);
-	   workersShopDialog.setOnDialogClosedListener(this);
-	   buildingsShopDialog.setOnDialogClosedListener(this);
-	   goldShopDialog.setOnDialogClosedListener(this);	   
-	     
-	   clickersShopDialog.setClickersShopDialogActionsListener(this);	   
+	   shopsDialogManager.setOnShopsCloseButtonClickedListener(this);
+	     	   	   	  
+	   ClickersShopDialog clickersShopDialog = (ClickersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS);
+	   clickersShopDialog.setClickersShopDialogActionsListener(this);
 	   
-	   clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());
-	   clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());
-	   
-	   buildingsShopDialog.setBuildingsShopDialogActionListeners(this);
-	   buildingsShopDialog.update();
+	   BuildingsShopDialog buildingsShopDialog = (BuildingsShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS);
+	   buildingsShopDialog.setBuildingsShopDialogActionListeners(this);	   
 	   
 	   homeCountView.changeCount(gameManager.getHomeCount());
 	   homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
@@ -138,10 +125,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   shopsMenu.attachToParent(scene);
 	   
-	   clickersShopDialog.attachToParent(scene);
-	   workersShopDialog.attachToParent(scene);
-	   buildingsShopDialog.attachToParent(scene);
-	   goldShopDialog.attachToParent(scene);
+	   shopsDialogManager.attachToScene(scene);
 	   
 	   foodClicker.registerTouchArea(scene);
 	   woodClicker.registerTouchArea(scene);
@@ -178,17 +162,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodCountView.changeCount(gameManager.getFoodCount());
       goldCountView.changeCount(gameManager.getGoldCount());
       woodCountView.changeCount(gameManager.getWoodCount());
-      
-      clickersShopDialog.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
-   }
-
-   @Override
-   public void onDialogClosed(IDialog dialog) {
-      closeDialog(dialog);      
-      shopsMenu.clearAllSelection();
-      
-      foodClicker.registerTouchArea(scene);
-      woodClicker.registerTouchArea(scene);      
    }
 
    @Override
@@ -198,7 +171,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          gameManager.upFoodClickerLvl();
          
          updateCountViewers();
-         clickersShopDialog.onFoodClickerLvlChanged(gameManager.getFoodClickerLvl());         
+         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();         
       }
    }
 
@@ -209,46 +182,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          gameManager.upWoodClickerLvl();
          
          updateCountViewers();
-         clickersShopDialog.onWoodClickerLvlChanged(gameManager.getWoodClickerLvl());
+         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
       }
    }
 
    @Override
-   public void onNeedOpenShopDialog(ShopType shopType) {
+   public void onNeedOpenShopDialog(int shopType) {
       
-      closeDialog(clickersShopDialog);
-      closeDialog(workersShopDialog);
-      closeDialog(buildingsShopDialog);
-      closeDialog(goldShopDialog);
-      
-      IShopDialog selectedShop = null;
-      
-      switch(shopType) {
-      case CLICKERS:
-         selectedShop = clickersShopDialog;
-         break;
-      case WORKERS:
-         selectedShop = workersShopDialog;
-         break;
-      case BUILDINGS:
-         selectedShop = buildingsShopDialog;
-         break;
-      case GOLD:
-         selectedShop = goldShopDialog;
-         break;
-      }                 
+      shopsDialogManager.openShop(shopType, scene);
       
       foodClicker.unregisterTouchArea(scene);
       woodClicker.unregisterTouchArea(scene);
-      
-      selectedShop.registerTouchArea(scene);
-      selectedShop.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
-      selectedShop.show();
-   }
-   
-   private void closeDialog(IDialog dialog) {
-      dialog.unregisterTouchArea(scene);
-      dialog.hide();
    }
 
    @Override
@@ -257,11 +201,35 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          gameManager.removeWood(building.getWoodCost());
          building.buy();
          
-         updateCountViewers();
-         buildingsShopDialog.onResourceCountChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
+         updateCountViewers();         
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
-         buildingsShopDialog.update();
+         
+         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS).update();
       }
    }
+
+   @Override
+   public void onShopsCloseButtonClicked(IDialog dialog) {
+      dialog.hide();
+      dialog.unregisterTouchArea(scene);      
+      
+      shopsMenu.clearAllSelection();
+      
+      foodClicker.registerTouchArea(scene);
+      woodClicker.registerTouchArea(scene);
+   }
     
+   @Override
+   public void onBackPressed() {
+      if(shopsDialogManager.hasOpenedShop()) {
+         shopsDialogManager.closeShop(shopsDialogManager.getOpenedShopIndex(), scene);
+         
+         shopsMenu.clearAllSelection();
+         
+         foodClicker.registerTouchArea(scene);
+         woodClicker.registerTouchArea(scene);
+      } else {
+         super.onBackPressed();
+      }
+   }
 }

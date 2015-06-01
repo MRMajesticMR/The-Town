@@ -5,6 +5,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
+import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.impl.SimpleCloseDialogButton;
@@ -23,9 +24,12 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    
    private ICloseDialogButton    closeDialogButton;
    private IResourcesShopPanel   resourcesShopPanel;
+   protected IGameManager        gameManager;
    
-   public AShopDialog() {
-      super(0, 0, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT - MARGIN_BOTTOM, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+   public AShopDialog(IGameManager gameManager) {
+      super(0, 0, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT - MARGIN_BOTTOM, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      this.gameManager = gameManager;
+      
       setColor(0, 0, 1);
       setVisible(false);
       
@@ -71,10 +75,10 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    public void onCloseDialogButtonClicked() {
       onDialogClosedListener.onDialogClosed(this);      
    }
-
+   
    @Override
-   public void onResourceCountChanged(int food, int gold, int wood) {
-      resourcesShopPanel.onResourcesChanged(food, gold, wood);
+   public void update() {
+      resourcesShopPanel.onResourcesChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
    }
 
 }
