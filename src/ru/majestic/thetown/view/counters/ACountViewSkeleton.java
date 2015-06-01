@@ -21,8 +21,8 @@ public abstract class ACountViewSkeleton extends Rectangle implements ICountView
       
       setAlpha(0.0f);
       
-      countText = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "      ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      counterImage = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText      = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "      ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      counterImage   = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);
       attachChild(counterImage);

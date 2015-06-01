@@ -15,7 +15,9 @@ import ru.majestic.thetown.view.dialogs.shops.panels.impl.ResourcesShopPanel;
 
 public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCloseDialogButtonClickedListener {
 
-   private static final int MARGIN_BOTTOM = 65;
+   protected static final int MARGIN_BOTTOM           = 65;
+   protected static final int PADDING_TOP             = 46;
+   protected static final int PADDINGS_LEFT_RIGHT     = 4;
    
    private OnDialogClosedListener onDialogClosedListener;        
    

@@ -1,9 +1,9 @@
 package ru.majestic.thetown.view.clickers.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.clickers.IAndEngineClickerSkeleton;
+import ru.majestic.thetown.view.clickers.AAndEngineClickerSkeleton;
 
-public class FoodClickerView extends IAndEngineClickerSkeleton {
+public class FoodClickerView extends AAndEngineClickerSkeleton {
 
    private static final int X = 20;
    private static final int Y = 500;   

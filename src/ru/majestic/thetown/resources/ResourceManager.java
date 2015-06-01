@@ -34,15 +34,26 @@ public class ResourceManager {
    
    private ITiledTextureRegion   plusBtnTextureRegion;
    
+   private BitmapTextureAtlas    buildingShopPanelIconsTextureAtlas;
+   
+   private ITextureRegion        expIconTextureRegion;
+   private ITiledTextureRegion   buyBtnTextureRegion;
+   
    private BitmapTextureAtlas shopTitleFontTextureAtlas;
    private BitmapTextureAtlas countersFontTextureAtlas;
    private BitmapTextureAtlas menuFontTextureAtlas;
-   private BitmapTextureAtlas shopTextFontTextureAtlas;      
+   private BitmapTextureAtlas shopTextFontTextureAtlas;
+   
+   private BitmapTextureAtlas shopBuildingsTitleFontTextureAtlas;
+   private BitmapTextureAtlas shopBuildingsTextFontTextureAtlas;
    
    private Font               shopTitleFont;
    private Font               countersFont;
    private Font               menuButtonsFont;
    private Font               shopTextFont;
+   
+   private Font               shopBuildingsTitleFont;
+   private Font               shopBuildingsTextFont;
    
    private ResourceManager() {
       
@@ -73,33 +84,47 @@ public class ResourceManager {
       
       plusBtnTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(plusBtnTextureAtlas, context, "gfx/buttons/plus_btn.png", 0, 0, 2, 1);
       
+      buildingShopPanelIconsTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256);
+      
+      buyBtnTextureRegion                 = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/buttons/buy_btn.png", 0, 0, 2, 1);
+      expIconTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/exp_icon.png", 128, 0);
+      
       clickersBitmapTextureAtlas.load();
       iconsBitmapTextureAtlas.load();
       plusBtnTextureAtlas.load();
+      buildingShopPanelIconsTextureAtlas.load();
       
       loadFonts();
    }
    
    private void loadFonts() {
-      shopTitleFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-      countersFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-      menuFontTextureAtlas       = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-      shopTextFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      shopTitleFontTextureAtlas           = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      countersFontTextureAtlas            = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      menuFontTextureAtlas                = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      shopTextFontTextureAtlas            = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      shopBuildingsTitleFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      shopBuildingsTextFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
-      shopTitleFont     = new Font(engine.getFontManager(), shopTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
-      countersFont      = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
-      menuButtonsFont   = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 26, true, Color.BLACK);
-      shopTextFont      = new Font(engine.getFontManager(), shopTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 22, true, Color.BLACK);
+      shopTitleFont           = new Font(engine.getFontManager(), shopTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
+      countersFont            = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
+      menuButtonsFont         = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 26, true, Color.BLACK);
+      shopTextFont            = new Font(engine.getFontManager(), shopTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 18, true, Color.BLACK);
+      shopBuildingsTitleFont  = new Font(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 24, true, Color.BLACK);
+      shopBuildingsTextFont   = new Font(engine.getFontManager(), shopBuildingsTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 20, true, Color.BLACK);
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
       engine.getTextureManager().loadTexture(menuFontTextureAtlas);
       engine.getTextureManager().loadTexture(shopTextFontTextureAtlas);
-      
+      engine.getTextureManager().loadTexture(shopBuildingsTitleFontTextureAtlas);
+      engine.getTextureManager().loadTexture(shopBuildingsTextFontTextureAtlas);
+            
       engine.getFontManager().loadFont(shopTitleFont);
       engine.getFontManager().loadFont(countersFont);
       engine.getFontManager().loadFont(menuButtonsFont);
       engine.getFontManager().loadFont(shopTextFont);
+      engine.getFontManager().loadFont(shopBuildingsTitleFont);
+      engine.getFontManager().loadFont(shopBuildingsTextFont);
    }
    
    public Engine getEngine() {
@@ -148,5 +173,24 @@ public class ResourceManager {
 
    public ITextureRegion getHomeIconTextureRegion() {
       return homeIconTextureRegion;
+   }
+
+   public Font getShopBuildingsTitleFont() {
+      return shopBuildingsTitleFont;
+   }
+
+   public ITextureRegion getExpIconTextureRegion() {
+      return expIconTextureRegion;
+   }
+
+   public Font getShopBuildingsTextFont() {
+      return shopBuildingsTextFont;
+   }
+
+   public ITiledTextureRegion getBuyBtnTextureRegion() {
+      return buyBtnTextureRegion;
    }   
+   
+   
+   
 }

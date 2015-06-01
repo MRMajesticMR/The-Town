@@ -9,11 +9,11 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 
-public class IAndEngineClickerSkeleton extends Sprite implements IClickerView {
+public class AAndEngineClickerSkeleton extends Sprite implements IClickerView {
 
    protected OnClickerClickedListener onClickerClickedListener;
    
-   public IAndEngineClickerSkeleton(float x, float y, float width, float height, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
+   public AAndEngineClickerSkeleton(float x, float y, float width, float height, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
       super(x, y, width, height, pTextureRegion, pVertexBufferObjectManager);
    }   
    
