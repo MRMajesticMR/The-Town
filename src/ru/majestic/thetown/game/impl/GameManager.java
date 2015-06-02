@@ -3,6 +3,8 @@ package ru.majestic.thetown.game.impl;
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.town.ITown;
+import ru.majestic.thetown.game.town.impl.Town;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -23,10 +25,12 @@ public class GameManager implements IGameManager {
    
    private IBuildingsManager  buildingsManager;
    private IClickersManager   clickersManager;
+   private ITown              town;
    
    public GameManager() {
       buildingsManager  = new BuildingsManager();
       clickersManager   = new ClickersManager();
+      town              = new Town();
    }
    
    @Override
@@ -40,6 +44,7 @@ public class GameManager implements IGameManager {
       
       buildingsManager.load(prefs);
       clickersManager.load(prefs);
+      town.load(prefs);
    }
    
    @Override
@@ -54,6 +59,7 @@ public class GameManager implements IGameManager {
       
       buildingsManager.save(editor);
       clickersManager.save(editor);
+      town.save(editor);
       
       editor.commit();
    }
@@ -106,6 +112,11 @@ public class GameManager implements IGameManager {
    @Override
    public IClickersManager getClickersManager() {
       return clickersManager;
+   }
+
+   @Override
+   public ITown getTown() {
+      return town;
    }
    
 }

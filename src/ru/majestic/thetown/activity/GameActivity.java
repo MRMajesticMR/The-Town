@@ -15,6 +15,7 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
+import ru.majestic.thetown.game.town.impl.Town;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
@@ -37,6 +38,8 @@ import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
 import ru.majestic.thetown.view.menu.impl.ShopsMenu;
 import ru.majestic.thetown.view.menu.listeners.OnShopsMenuButtonClickedListener;
+import ru.majestic.thetown.view.town.ITownView;
+import ru.majestic.thetown.view.town.impl.SimpleTownView;
 
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
@@ -55,9 +58,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private ICountView foodCountView;
 	private ICountView goldCountView;
-	private ICountView woodCountView;  
-	
+	private ICountView woodCountView; 
 	private ICountWithMaxValueView homeCountView;
+	
+	private ITownView townView;
 	
 	private IShopsMenu shopsMenu;		
 	private IShopsDialogsManager shopsDialogManager;
@@ -84,6 +88,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   goldCountView = new GoldCounterView();
 	   woodCountView = new WoodCounterView();
 	   homeCountView = new HomeCounterView();
+	   
+	   townView      = new SimpleTownView(gameManager.getTown());
 	   
 	   shopsMenu = new ShopsMenu();	   	
 	   
@@ -125,6 +131,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   goldCountView.attachToParent(scene);
 	   woodCountView.attachToParent(scene);	   
 	   homeCountView.attachToParent(scene);
+	   
+	   townView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
 	   
@@ -180,8 +188,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onBuyBuildingAction(IBuilding building) {
       if(gameManager.getWoodCount() >= building.getWoodCost()) {
          gameManager.removeWood(building.getWoodCost());
+         gameManager.getTown().addExp(building.getExp());
+         
          building.buy();
          
+         townView.update();
          updateCountViewers();         
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
          

@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game;
 
+import ru.majestic.thetown.game.town.ITown;
 import android.content.Context;
 
 public interface IGameManager {
@@ -20,4 +21,5 @@ public interface IGameManager {
    
    public IBuildingsManager   getBuildingsManager  ();
    public IClickersManager    getClickersManager   ();
+   public ITown               getTown              ();
 }

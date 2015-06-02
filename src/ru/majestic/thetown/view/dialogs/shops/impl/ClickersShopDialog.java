@@ -9,9 +9,9 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
-import ru.majestic.thetown.view.dialogs.shops.panels.IClickersShopPanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.impl.FoodClickersShopPanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.impl.WoodClickersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.clickers.IClickersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.FoodClickersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.WoodClickersShopPanel;
 
 public class ClickersShopDialog extends AShopDialog implements ClickersShopPanelActionsListener {
    
