@@ -3,15 +3,19 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.ISelectWorkerClassShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.SelectWorkerClassShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.WorkersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerClassShopSelectedListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.WorkerShopPanelActionListener;
 
-public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopSelectedListener {
+public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopSelectedListener,
+                                                              WorkerShopPanelActionListener {
 
    private static final int TOTAL_SHOPS_PANEL_COUNT = 3;
    
@@ -19,11 +23,18 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
    private static final int SHOP_INDEX_FOOD         = 1;   
    private static final int SHOP_INDEX_DEFENECE     = 2;
    
+   private     WorkersShopDialogActionListener        workersShopDialogActionListener;
+   
    private     ISelectWorkerClassShopPanel            selectWorkerClassShopPanel;
    protected   IWorkersShopPanel[]                    shopPanels;
    
-   public WorkersShopDialog(IGameManager gameManager) {
+   private     Scene                                  scene;
+   private     int                                    lastSelectedShopPanel;
+   
+   public WorkersShopDialog(IGameManager gameManager, Scene scene) {
       super(gameManager);
+      
+      this.scene = scene;
       
       selectWorkerClassShopPanel = new SelectWorkerClassShopPanel(this);
       selectWorkerClassShopPanel.setOnWorkerClassShopSelectedListener(this);
@@ -36,11 +47,28 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
       shopPanels[SHOP_INDEX_DEFENECE]  = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.DEFENCE));
       
       for(int i = 0; i < TOTAL_SHOPS_PANEL_COUNT; i++) {
+         shopPanels[i].setWorkerShopPanelActionListener(this);
          shopPanels[i].attachToParent(this);
-      }
+      }      
       
-      shopPanels[SHOP_INDEX_WOOD].show();
+      lastSelectedShopPanel = SHOP_INDEX_WOOD;
    }   
+   
+   @Override
+   public void show() {
+      super.show();
+      
+      shopPanels[lastSelectedShopPanel].show();
+      shopPanels[lastSelectedShopPanel].registerTouchArea(scene);
+   }
+   
+   @Override
+   public void hide() {
+      super.hide();
+      
+      shopPanels[lastSelectedShopPanel].hide();
+      shopPanels[lastSelectedShopPanel].unregisterTouchArea(scene);
+   }
    
    @Override
    public void registerTouchArea(Scene scene) {
@@ -56,10 +84,15 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
 
    @Override
    public void onWorkerClassShopSelectedListener(int shopIndex) {
-      for(int i = 0; i < shopPanels.length; i++)
+      for(int i = 0; i < shopPanels.length; i++) {
          shopPanels[i].hide();
+         shopPanels[i].unregisterTouchArea(scene);
+      }
       
-      shopPanels[shopIndex].show();     
+      lastSelectedShopPanel = shopIndex;
+      
+      shopPanels[shopIndex].show();
+      shopPanels[shopIndex].registerTouchArea(scene);
    }
    
    @Override
@@ -67,8 +100,16 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
       super.update();
       for(int i = 0; i < shopPanels.length; i++) {
          shopPanels[i].update();
-      }
-      
+      }     
+   }
+   
+   public void setWorkersShopDialogActionListener(WorkersShopDialogActionListener workersShopDialogActionListener) {
+      this.workersShopDialogActionListener = workersShopDialogActionListener;
+   }
+
+   @Override
+   public void onBuyButtonClicked(IWorker worker) {
+      workersShopDialogActionListener.onBuyWorkerAction(worker);
    }
 
 }

@@ -17,7 +17,6 @@ public interface IGameManager {
    public int getFoodCount    ();
    public int getWoodCount    ();
    public int getGoldCount    ();
-   public int getHomeCount    ();
    
    public IBuildingsManager   getBuildingsManager  ();
    public IClickersManager    getClickersManager   ();

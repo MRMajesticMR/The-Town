@@ -15,12 +15,12 @@ public class ShopsDialogsManager implements IShopsDialogsManager,
    private OnShopsCloseButtonCLickedListener onShopsClosedListener;
    private IShopDialog[]         shops;
    
-   public ShopsDialogsManager(IGameManager gameManager) {
+   public ShopsDialogsManager(IGameManager gameManager, Scene scene) {
       shops = new IShopDialog[TOTAL_SHOPS_COUNT];
       
       shops[SHOP_TYPE_CLICKERS]     = new ClickersShopDialog(gameManager);
       shops[SHOP_TYPE_BUILDINGS]    = new BuildingsShopDialog(gameManager);
-      shops[SHOP_TYPE_WORKERS]      = new WorkersShopDialog(gameManager);
+      shops[SHOP_TYPE_WORKERS]      = new WorkersShopDialog(gameManager, scene);
       shops[SHOP_TYPE_GOLD]         = new GoldShopDialog(gameManager);
       
       addOnDialogClosedListenerToAllDialogs();

@@ -12,4 +12,6 @@ public interface IWorkersManager {
    public IWorker    getWorker         (IWorker.WorkerType workerType, int wokerIndex);
    public IWorker[]  getWorkersByType  (IWorker.WorkerType workerType);
    
+   public int        getTotalHomeForWorkers();
+   
 }

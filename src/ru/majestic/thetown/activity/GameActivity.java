@@ -15,6 +15,7 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
+import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
@@ -30,9 +31,11 @@ import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ShopsDialogsManager;
+import ru.majestic.thetown.view.dialogs.shops.impl.WorkersShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActionListeners;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
+import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
 import ru.majestic.thetown.view.menu.impl.ShopsMenu;
@@ -45,7 +48,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnShopsCloseButtonCLickedListener,
                                                               ClickersShopDialogActionsListener,
                                                               OnShopsMenuButtonClickedListener,
-                                                              BuildingsShopDialogActionListeners {
+                                                              BuildingsShopDialogActionListeners, 
+                                                              WorkersShopDialogActionListener {
 
 	private Camera 	camera;
 	
@@ -75,40 +79,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-	   ResourceManager.getInstance().loadResources(this, getEngine());
-	   
-	   gameManager = new GameManager();
-	   gameManager.load(this);	  	   
-	   
-	   foodClicker = new FoodClickerView();
-	   woodClicker = new WoodClickerView();
-	   
-	   foodCountView = new FoodCounterView();
-	   goldCountView = new GoldCounterView();
-	   woodCountView = new WoodCounterView();
-	   homeCountView = new HomeCounterView();
-	   
-	   townView      = new SimpleTownView(gameManager.getTown());
-	   
-	   shopsMenu = new ShopsMenu();	   	
-	   
-	   shopsDialogManager = new ShopsDialogsManager(gameManager);
-	   
-	   foodClicker.setOnClickerClickedListener(this);
-	   woodClicker.setOnClickerClickedListener(this);	
-	   
-	   shopsMenu.setOnShopsMenuButtonClickedListener(this);
-	   
-	   shopsDialogManager.setOnShopsCloseButtonClickedListener(this);
-	     	   	   	  
-	   ClickersShopDialog clickersShopDialog = (ClickersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS);
-	   clickersShopDialog.setClickersShopDialogActionsListener(this);
-	   
-	   BuildingsShopDialog buildingsShopDialog = (BuildingsShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS);
-	   buildingsShopDialog.setBuildingsShopDialogActionListeners(this);	   
-	   
-	   homeCountView.changeCount(gameManager.getHomeCount());
-	   homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
+	   ResourceManager.getInstance().loadResources(this, getEngine());	   	   
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
@@ -116,6 +87,42 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
 		scene = new TheTownScene();
+		
+		gameManager = new GameManager();
+      gameManager.load(this);       
+      
+      foodClicker = new FoodClickerView();
+      woodClicker = new WoodClickerView();
+      
+      foodCountView = new FoodCounterView();
+      goldCountView = new GoldCounterView();
+      woodCountView = new WoodCounterView();
+      homeCountView = new HomeCounterView();
+      
+      townView      = new SimpleTownView(gameManager.getTown());
+      
+      shopsMenu = new ShopsMenu();        
+      
+      shopsDialogManager = new ShopsDialogsManager(gameManager, scene);
+      
+      foodClicker.setOnClickerClickedListener(this);
+      woodClicker.setOnClickerClickedListener(this);  
+      
+      shopsMenu.setOnShopsMenuButtonClickedListener(this);
+      
+      shopsDialogManager.setOnShopsCloseButtonClickedListener(this);
+                       
+      ClickersShopDialog clickersShopDialog = (ClickersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS);
+      clickersShopDialog.setClickersShopDialogActionsListener(this);
+      
+      BuildingsShopDialog buildingsShopDialog = (BuildingsShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS);
+      buildingsShopDialog.setBuildingsShopDialogActionListeners(this);     
+      
+      WorkersShopDialog workersShopDialog = (WorkersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS);
+      workersShopDialog.setWorkersShopDialogActionListener(this);
+      
+      homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
+      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
 		
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
@@ -251,5 +258,23 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       updateCountViewers();
       shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
+   }
+
+   @Override
+   public void onBuyWorkerAction(IWorker worker) {
+      if(gameManager.getFoodCount() >= worker.getFoodCost() && (gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) >= worker.getHomePlaces()) {
+         gameManager.removeFood(worker.getFoodCost());
+         gameManager.getTown().addExp(worker.getExp());
+         
+         worker.buy();
+         
+         townView.update();
+         updateCountViewers();
+         
+         homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
+         homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
+         
+         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
+      }
    }
 }

@@ -103,7 +103,7 @@ public class WorkerShopPanel extends Rectangle implements IWorkerShopPanel, OnCl
    @Override
    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
       if(pButtonSprite == buyButton) {
-//         buildingShopPanelActionListener.onBuyButtonClicked(building);
+         workerShopPanelActionListener.onBuyButtonClicked(worker);
          return;
       }
    }

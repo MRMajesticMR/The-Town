@@ -9,6 +9,7 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkerShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.WorkerShopPanelActionListener;
 
 public class WorkersShopPanel extends Rectangle implements IWorkersShopPanel {
    
@@ -37,7 +38,7 @@ public class WorkersShopPanel extends Rectangle implements IWorkersShopPanel {
    }
 
    @Override
-   public void show() {
+   public void show() {      
       setVisible(true);      
    }
 
@@ -65,6 +66,14 @@ public class WorkersShopPanel extends Rectangle implements IWorkersShopPanel {
       for(int i = 0; i < workerShopPanels.length; i++) {
          workerShopPanels[i].update();
       }      
+   }
+
+   @Override
+   public void setWorkerShopPanelActionListener(WorkerShopPanelActionListener workerShopPanelActionListener) {
+      for(int i = 0; i < workerShopPanels.length; i++) {
+         workerShopPanels[i].setWorkerShopPanelActionListener(workerShopPanelActionListener);
+      }
+      
    }
 
 }

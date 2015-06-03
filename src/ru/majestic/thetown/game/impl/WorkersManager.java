@@ -73,4 +73,19 @@ public class WorkersManager implements IWorkersManager {
       return workers.get(workerType);
    }
 
+   @Override
+   public int getTotalHomeForWorkers() {
+      int result = 0;
+      
+      final Iterator<WorkerType> workerTypesIter = workers.keySet().iterator();
+      
+      while(workerTypesIter.hasNext()) {
+         IWorker[] oneTypeWorkers = workers.get(workerTypesIter.next());
+         for(int i = 0; i < oneTypeWorkers.length; i++)
+            result += oneTypeWorkers[i].getCurrentCount() * oneTypeWorkers[i].getHomePlaces();
+      }
+      
+      return result;
+   }
+
 }

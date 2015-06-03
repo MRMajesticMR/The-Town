@@ -17,12 +17,10 @@ public class GameManager implements IGameManager {
    private static final String PREFF_KEY_FOOD            = "PREFF_KEY_FOOD";
    private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";
    private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
-   private static final String PREFF_KEY_HOME_COUNT      = "PREFF_KEY_HOME_COUNT";
    
    private int foodCount;
    private int woodCount;
    private int goldCount;
-   private int homeCount;
    
    private final IBuildingsManager  buildingsManager;
    private final IClickersManager   clickersManager;
@@ -43,7 +41,6 @@ public class GameManager implements IGameManager {
       foodCount      = prefs.getInt(PREFF_KEY_FOOD, 0);
       goldCount      = prefs.getInt(PREFF_KEY_GOLD, 0);
       woodCount      = prefs.getInt(PREFF_KEY_WOOD, 0);
-      homeCount      = prefs.getInt(PREFF_KEY_HOME_COUNT, 0);
       
       buildingsManager.load(prefs);
       clickersManager.load(prefs);
@@ -57,8 +54,7 @@ public class GameManager implements IGameManager {
       
       editor.putInt(PREFF_KEY_FOOD, getFoodCount());
       editor.putInt(PREFF_KEY_GOLD, getGoldCount());
-      editor.putInt(PREFF_KEY_WOOD, getWoodCount());
-      editor.putInt(PREFF_KEY_HOME_COUNT, getHomeCount());    
+      editor.putInt(PREFF_KEY_WOOD, getWoodCount());    
       
       buildingsManager.save(editor);
       clickersManager.save(editor);
@@ -100,11 +96,6 @@ public class GameManager implements IGameManager {
    @Override
    public void removeFood(int food) {
       foodCount -= food;      
-   }
-
-   @Override
-   public int getHomeCount() {
-      return homeCount;
    }
 
    @Override
