@@ -45,6 +45,7 @@ public class GameManager implements IGameManager {
       buildingsManager.load(prefs);
       clickersManager.load(prefs);
       town.load(prefs);
+      workersManager.load(prefs);
    }
    
    @Override
@@ -59,6 +60,7 @@ public class GameManager implements IGameManager {
       buildingsManager.save(editor);
       clickersManager.save(editor);
       town.save(editor);
+      workersManager.save(editor);
       
       editor.commit();
    }

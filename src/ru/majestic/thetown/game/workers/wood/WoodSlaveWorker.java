@@ -10,7 +10,7 @@ public class WoodSlaveWorker extends AWoodWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_SLAVE_WOOD_WORKER";
    
    public WoodSlaveWorker() {
-      super("Slave", 10, 1, 1);
+      super("Slave", 10, 1, 1, 1);
    }   
    
    @Override

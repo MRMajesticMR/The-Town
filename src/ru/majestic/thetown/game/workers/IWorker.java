@@ -22,6 +22,7 @@ public interface IWorker {
    public int                 getHomePlaces     ();
    public ITextureRegion      getWorkerImage    ();
    public int                 getCurrentCount   ();
+   public int                 getResourcesPerSec();
    
    public WorkerType          getType           ();
    

@@ -1,6 +1,7 @@
 package ru.majestic.thetown.game;
 
 import ru.majestic.thetown.game.workers.IWorker;
+import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -13,5 +14,7 @@ public interface IWorkersManager {
    public IWorker[]  getWorkersByType  (IWorker.WorkerType workerType);
    
    public int        getTotalHomeForWorkers();
+   
+   public int        getResourcesPerSecond(WorkerType workerType);
    
 }

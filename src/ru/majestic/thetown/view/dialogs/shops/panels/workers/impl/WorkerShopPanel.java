@@ -53,7 +53,7 @@ public class WorkerShopPanel extends Rectangle implements IWorkerShopPanel, OnCl
       expText        = new Text(expImage.getX() + expImage.getWidth() + 4, workerTitle.getY() + workerTitle.getHeight() + 18, ResourceManager.getInstance().getShopTextFont(), "+" + worker.getExp(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
       resourcePerSecondImage      = new Sprite(expImage.getX() + expImage.getWidth() + 85, expImage.getY(), 30, 30, getTextureForResourcePerClick(worker.getType()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      resourcePerSecondText       = new Text(resourcePerSecondImage.getX() + expImage.getWidth() + 4, workerTitle.getY() + workerTitle.getHeight() + 18, ResourceManager.getInstance().getShopTextFont(), "+" + worker.getHomePlaces(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
+      resourcePerSecondText       = new Text(resourcePerSecondImage.getX() + expImage.getWidth() + 4, workerTitle.getY() + workerTitle.getHeight() + 18, ResourceManager.getInstance().getShopTextFont(), "+" + worker.getResourcesPerSec(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
       priceImage     = new Sprite(resourcePerSecondImage.getX(), PADDING + 5, 30, 30, ResourceManager.getInstance().getFoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       priceText      = new Text(priceImage.getX() + priceImage.getWidth() + 4, PADDING + 8, ResourceManager.getInstance().getShopTextFont(), String.valueOf(worker.getFoodCost()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  

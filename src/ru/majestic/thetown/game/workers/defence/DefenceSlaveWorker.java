@@ -10,7 +10,7 @@ public class DefenceSlaveWorker extends ADefenceWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_SLAVE_DEFENCE_WORKER";
    
    public DefenceSlaveWorker() {
-      super("Rebel", 10, 1, 1);
+      super("Rebel", 10, 1, 1, 1);
    }   
    
    @Override

@@ -16,6 +16,9 @@ import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.workers.IWorker;
+import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
+import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
+import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
@@ -49,7 +52,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               ClickersShopDialogActionsListener,
                                                               OnShopsMenuButtonClickedListener,
                                                               BuildingsShopDialogActionListeners, 
-                                                              WorkersShopDialogActionListener {
+                                                              WorkersShopDialogActionListener,
+                                                              OnWokersProductionCompleteListener {
 
 	private Camera 	camera;
 	
@@ -68,7 +72,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private IShopsMenu shopsMenu;		
 	private IShopsDialogsManager shopsDialogManager;
-   
+	
+   private IWorkersProductionHandler workersProductionHandler;
+	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		
@@ -124,6 +130,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
       homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
 		
+      workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
+      workersProductionHandler.setOnWokersProductionCompleteListener(this);
+      workersProductionHandler.start();
+      
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
@@ -173,6 +183,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onStop() {
       super.onStop();
       gameManager.save(this);
+      workersProductionHandler.stop();
    }
    
    private void updateCountViewers() {
@@ -276,5 +287,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
       }
+   }
+
+   @Override
+   public void onWorkersProductionComplete(int addFood, int addWood) {
+      gameManager.addFood(addFood);
+      gameManager.addWood(addWood);
+      
+      updateCountViewers();
    }
 }

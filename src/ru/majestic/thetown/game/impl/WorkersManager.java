@@ -23,17 +23,16 @@ public class WorkersManager implements IWorkersManager {
    
    private HashMap<IWorker.WorkerType, IWorker[]> workers;
    
-   private IWorker[] woodWorkers       = new AWoodWorker[TOTAL_WORKERS_COUNT];
-   private IWorker[] foodWorkers       = new AFoodWorker[TOTAL_WORKERS_COUNT];   
-   private IWorker[] defenceWorkers    = new ADefenceWorker[TOTAL_WORKERS_COUNT];
-   
    public WorkersManager() {
       workers = new HashMap<IWorker.WorkerType, IWorker[]>();
-      
+   
+      IWorker[] woodWorkers       = new AWoodWorker[TOTAL_WORKERS_COUNT];
       woodWorkers[SLAVE_INDEX]      = new WoodSlaveWorker();
-      
+   
+      IWorker[] foodWorkers       = new AFoodWorker[TOTAL_WORKERS_COUNT];
       foodWorkers[SLAVE_INDEX]      = new FoodSlaveWorker();            
-      
+   
+      IWorker[] defenceWorkers    = new ADefenceWorker[TOTAL_WORKERS_COUNT];
       defenceWorkers[SLAVE_INDEX]   = new DefenceSlaveWorker();
       
       workers.put(WorkerType.FOOD, foodWorkers);
@@ -83,6 +82,18 @@ public class WorkersManager implements IWorkersManager {
          IWorker[] oneTypeWorkers = workers.get(workerTypesIter.next());
          for(int i = 0; i < oneTypeWorkers.length; i++)
             result += oneTypeWorkers[i].getCurrentCount() * oneTypeWorkers[i].getHomePlaces();
+      }
+      
+      return result;
+   }
+
+   @Override
+   public int getResourcesPerSecond(WorkerType workerType) {
+      int result = 0;
+      
+      IWorker[] oneTypeWorkers = getWorkersByType(workerType);
+      for(int i = 0; i < oneTypeWorkers.length; i++) {
+         result += oneTypeWorkers[i].getCurrentCount() * oneTypeWorkers[i].getResourcesPerSec(); 
       }
       
       return result;

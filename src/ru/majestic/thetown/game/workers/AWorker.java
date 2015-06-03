@@ -10,14 +10,16 @@ public abstract class AWorker implements IWorker{
    private int    exp;
    private int    homePlaces;
    private int    currentCount;
+   private int    resourcesPerSec;
    
    protected abstract String getSaveTagForCurrentCount();
    
-   public AWorker(String title, int foodCost, int exp, int homePlace) {
+   public AWorker(String title, int foodCost, int exp, int homePlace, int resourcesPerSec) {
       this.title        = title;
       this.foodCost     = foodCost;
       this.exp          = exp;
       this.homePlaces   = homePlace;
+      this.resourcesPerSec = resourcesPerSec;
    }
    
    @Override
@@ -65,4 +67,8 @@ public abstract class AWorker implements IWorker{
       currentCount += count;
    }
 
+   @Override
+   public int getResourcesPerSec() {
+      return resourcesPerSec;
+   }
 }
