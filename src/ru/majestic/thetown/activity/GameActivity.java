@@ -15,7 +15,6 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
-import ru.majestic.thetown.game.town.impl.Town;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
@@ -178,10 +177,19 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onNeedOpenShopDialog(int shopType) {
       
-      shopsDialogManager.openShop(shopType, scene);
-      
-      foodClicker.unregisterTouchArea(scene);
-      woodClicker.unregisterTouchArea(scene);
+      if(shopsDialogManager.getShop(shopType).isVisible()) {
+         shopsDialogManager.closeShop(shopType, scene);
+         
+         shopsMenu.clearAllSelection();
+         
+         foodClicker.registerTouchArea(scene);
+         woodClicker.registerTouchArea(scene);
+      } else {
+         shopsDialogManager.openShop(shopType, scene);
+         
+         foodClicker.unregisterTouchArea(scene);
+         woodClicker.unregisterTouchArea(scene);
+      }
    }
 
    @Override
