@@ -17,7 +17,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.impl.ResourcesShopPanel;
 public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCloseDialogButtonClickedListener {
 
    protected static final int MARGIN_BOTTOM           = 65;
-   protected static final int PADDING_TOP             = 46;
+   protected static final int PADDING_TOP             = 44;
    protected static final int PADDINGS_LEFT_RIGHT     = 4;
    
    private OnDialogClosedListener onDialogClosedListener;    
@@ -79,6 +79,11 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    @Override
    public void update() {
       resourcesShopPanel.onResourcesChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
+   }
+   
+   @Override
+   public IResourcesShopPanel getResoucesShopPanel() {
+      return resourcesShopPanel;
    }
 
 }

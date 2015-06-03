@@ -11,7 +11,7 @@ public abstract class AResourcesShopPanelSkeleton extends Rectangle implements I
    private static final int PANEL_HEIGHT = 60;
    
    public AResourcesShopPanelSkeleton(IShopDialog shopDialog) {
-      super(0, shopDialog.getHeight() - PANEL_HEIGHT, shopDialog.getWidth(), PANEL_HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, 44, shopDialog.getWidth(), PANEL_HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
    }
 
    @Override

@@ -15,9 +15,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.WoodClickersS
 
 public class ClickersShopDialog extends AShopDialog implements ClickersShopPanelActionsListener {
    
-   
-   private static final int PADDING_TOP   = 50;
-   private static final int PADDING       = 10;
+   private static final int PADDING       = 4;
    
    private ClickersShopDialogActionsListener clickersShopDialogActionsListener;
    
@@ -30,17 +28,17 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
       foodClickersShopPanel   = new FoodClickersShopPanel(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD));
       woodClickersShopPanel   = new WoodClickersShopPanel(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD));
       
-      foodClickersShopPanel.setHeight(194);
+      foodClickersShopPanel.setHeight(190);
       foodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       foodClickersShopPanel.setX(PADDING);
-      foodClickersShopPanel.setY(PADDING_TOP);            
+      foodClickersShopPanel.setY(getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight() + 4);            
       
       foodClickersShopPanel.setClickersShopPanelActionsListener(this);
       
-      woodClickersShopPanel.setHeight(194);
+      woodClickersShopPanel.setHeight(190);
       woodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
       woodClickersShopPanel.setX((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3));
-      woodClickersShopPanel.setY(PADDING_TOP);            
+      woodClickersShopPanel.setY(getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight() + 4);            
       
       woodClickersShopPanel.setClickersShopPanelActionsListener(this);
       

@@ -26,7 +26,7 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
       buildingBuyPanels = new IBuildingShopPanel[PANELS_COUNT];
       
       for(int buildingIndex = 0; buildingIndex < buildingBuyPanels.length; buildingIndex++) {
-         buildingBuyPanels[buildingIndex] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, PADDING_TOP + (buildingIndex * (BuildingShopPanel.HEIGHT + PANELS_SPACE)), (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(buildingIndex));
+         buildingBuyPanels[buildingIndex] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, (int) (getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight()) + PANELS_SPACE + (buildingIndex * (BuildingShopPanel.HEIGHT + PANELS_SPACE)), (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(buildingIndex));
          buildingBuyPanels[buildingIndex].update();
          buildingBuyPanels[buildingIndex].setBuildingShopPanelActionListener(this);
       }
