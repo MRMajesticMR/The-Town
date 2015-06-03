@@ -3,13 +3,12 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.ISelectWorkerClassShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkersShopPanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.DefenceWorkersShopPanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.FoodWorkersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.SelectWorkerClassShopPanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.WoodWorkersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.workers.impl.WorkersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerClassShopSelectedListener;
 
 public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopSelectedListener {
@@ -32,9 +31,9 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
       
       shopPanels = new IWorkersShopPanel[TOTAL_SHOPS_PANEL_COUNT];
       
-      shopPanels[SHOP_INDEX_WOOD]      = new WoodWorkersShopPanel      (this);
-      shopPanels[SHOP_INDEX_FOOD]      = new FoodWorkersShopPanel      (this);
-      shopPanels[SHOP_INDEX_DEFENECE]  = new DefenceWorkersShopPanel   (this);
+      shopPanels[SHOP_INDEX_WOOD]      = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.WOOD));
+      shopPanels[SHOP_INDEX_FOOD]      = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.FOOD));
+      shopPanels[SHOP_INDEX_DEFENECE]  = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.DEFENCE));
       
       for(int i = 0; i < TOTAL_SHOPS_PANEL_COUNT; i++) {
          shopPanels[i].attachToParent(this);
@@ -61,6 +60,15 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
          shopPanels[i].hide();
       
       shopPanels[shopIndex].show();     
+   }
+   
+   @Override
+   public void update() {
+      super.update();
+      for(int i = 0; i < shopPanels.length; i++) {
+         shopPanels[i].update();
+      }
+      
    }
 
 }

@@ -13,6 +13,13 @@ public abstract class AWorker implements IWorker{
    
    protected abstract String getSaveTagForCurrentCount();
    
+   public AWorker(String title, int foodCost, int exp, int homePlace) {
+      this.title        = title;
+      this.foodCost     = foodCost;
+      this.exp          = exp;
+      this.homePlaces   = homePlace;
+   }
+   
    @Override
    public void save(Editor prefsEditor) {
       prefsEditor.putInt(getSaveTagForCurrentCount(), getCurrentCount());

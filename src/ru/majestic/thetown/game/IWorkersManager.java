@@ -10,5 +10,6 @@ public interface IWorkersManager {
    public void       save              (Editor prefsEditor);
    
    public IWorker    getWorker         (IWorker.WorkerType workerType, int wokerIndex);
+   public IWorker[]  getWorkersByType  (IWorker.WorkerType workerType);
    
 }

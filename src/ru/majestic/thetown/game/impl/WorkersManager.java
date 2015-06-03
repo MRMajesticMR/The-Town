@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.workers.ADefenceWorker;
+import ru.majestic.thetown.game.workers.AFoodWorker;
+import ru.majestic.thetown.game.workers.AWoodWorker;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.defence.DefenceSlaveWorker;
@@ -21,16 +23,16 @@ public class WorkersManager implements IWorkersManager {
    
    private HashMap<IWorker.WorkerType, IWorker[]> workers;
    
-   private IWorker[] foodWorkers       = new ADefenceWorker[TOTAL_WORKERS_COUNT];
-   private IWorker[] woodWorkers       = new ADefenceWorker[TOTAL_WORKERS_COUNT];
+   private IWorker[] woodWorkers       = new AWoodWorker[TOTAL_WORKERS_COUNT];
+   private IWorker[] foodWorkers       = new AFoodWorker[TOTAL_WORKERS_COUNT];   
    private IWorker[] defenceWorkers    = new ADefenceWorker[TOTAL_WORKERS_COUNT];
    
    public WorkersManager() {
       workers = new HashMap<IWorker.WorkerType, IWorker[]>();
       
-      foodWorkers[SLAVE_INDEX]      = new FoodSlaveWorker();
-      
       woodWorkers[SLAVE_INDEX]      = new WoodSlaveWorker();
+      
+      foodWorkers[SLAVE_INDEX]      = new FoodSlaveWorker();            
       
       defenceWorkers[SLAVE_INDEX]   = new DefenceSlaveWorker();
       
@@ -64,6 +66,11 @@ public class WorkersManager implements IWorkersManager {
    @Override
    public IWorker getWorker(WorkerType workerType, int wokerIndex) {
       return workers.get(workerType)[wokerIndex];
+   }
+
+   @Override
+   public IWorker[] getWorkersByType(WorkerType workerType) {
+      return workers.get(workerType);
    }
 
 }

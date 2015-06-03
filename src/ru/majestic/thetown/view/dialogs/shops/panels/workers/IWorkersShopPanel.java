@@ -4,7 +4,8 @@ import ru.majestic.thetown.view.IClickableView;
 
 public interface IWorkersShopPanel extends IClickableView {
 
-   public void show();
-   public void hide();
+   public void show     ();
+   public void hide     ();
+   public void update   ();
    
 }
