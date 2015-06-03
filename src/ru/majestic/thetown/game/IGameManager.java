@@ -22,4 +22,5 @@ public interface IGameManager {
    public IBuildingsManager   getBuildingsManager  ();
    public IClickersManager    getClickersManager   ();
    public ITown               getTown              ();
+   public IWorkersManager     getWorkersManager    ();
 }

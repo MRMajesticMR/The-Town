@@ -3,6 +3,7 @@ package ru.majestic.thetown.game.impl;
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.town.ITown;
 import ru.majestic.thetown.game.town.impl.Town;
 import android.content.Context;
@@ -23,14 +24,16 @@ public class GameManager implements IGameManager {
    private int goldCount;
    private int homeCount;
    
-   private IBuildingsManager  buildingsManager;
-   private IClickersManager   clickersManager;
-   private ITown              town;
+   private final IBuildingsManager  buildingsManager;
+   private final IClickersManager   clickersManager;
+   private final ITown              town;
+   private final IWorkersManager    workersManager;
    
    public GameManager() {
       buildingsManager  = new BuildingsManager();
       clickersManager   = new ClickersManager();
       town              = new Town();
+      workersManager    = new WorkersManager();
    }
    
    @Override
@@ -117,6 +120,11 @@ public class GameManager implements IGameManager {
    @Override
    public ITown getTown() {
       return town;
+   }
+
+   @Override
+   public IWorkersManager getWorkersManager() {
+      return workersManager;
    }
    
 }
