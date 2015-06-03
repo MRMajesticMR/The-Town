@@ -6,7 +6,7 @@ import ru.majestic.thetown.view.clickers.AClickerViewSkeleton;
 public class FoodClickerView extends AClickerViewSkeleton {
 
    private static final int X = 20;
-   private static final int Y = 500;   
+   private static final int Y = 500;             
    
    public FoodClickerView() {
       super(X, Y, CLICKER_WIDTH_AND_HEIGHT, CLICKER_WIDTH_AND_HEIGHT, ResourceManager.getInstance().getFoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
