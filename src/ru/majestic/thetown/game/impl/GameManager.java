@@ -12,7 +12,7 @@ import android.content.SharedPreferences.Editor;
 
 public class GameManager implements IGameManager {
    
-   private static final String PREFFS_NAME = "THE_TOWN_PREFFS";
+   private static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
    
    private static final String PREFF_KEY_FOOD            = "PREFF_KEY_FOOD";
    private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";

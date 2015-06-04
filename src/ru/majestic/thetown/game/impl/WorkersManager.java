@@ -26,13 +26,13 @@ public class WorkersManager implements IWorkersManager {
    public WorkersManager() {
       workers = new HashMap<IWorker.WorkerType, IWorker[]>();
    
-      IWorker[] woodWorkers       = new AWoodWorker[TOTAL_WORKERS_COUNT];
+      IWorker[] woodWorkers         = new AWoodWorker[TOTAL_WORKERS_COUNT];
       woodWorkers[SLAVE_INDEX]      = new WoodSlaveWorker();
    
-      IWorker[] foodWorkers       = new AFoodWorker[TOTAL_WORKERS_COUNT];
+      IWorker[] foodWorkers         = new AFoodWorker[TOTAL_WORKERS_COUNT];
       foodWorkers[SLAVE_INDEX]      = new FoodSlaveWorker();            
    
-      IWorker[] defenceWorkers    = new ADefenceWorker[TOTAL_WORKERS_COUNT];
+      IWorker[] defenceWorkers      = new ADefenceWorker[TOTAL_WORKERS_COUNT];
       defenceWorkers[SLAVE_INDEX]   = new DefenceSlaveWorker();
       
       workers.put(WorkerType.FOOD, foodWorkers);

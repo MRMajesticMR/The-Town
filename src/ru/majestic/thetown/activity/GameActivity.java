@@ -166,8 +166,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   if(workersProductionHandler == null) {
 	      workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
-	      workersProductionHandler.setOnWokersProductionCompleteListener(this);
-	   }
+	      workersProductionHandler.setOnWokersProductionCompleteListener(this);	      
+	   }	   	   
+	   
+	   workersProductionHandler.load(this);
       workersProductionHandler.start();
 	}
 
@@ -190,6 +192,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onStop() {
       super.onStop();
       gameManager.save(this);
+      workersProductionHandler.save(this);
       workersProductionHandler.stop();
    }
    
