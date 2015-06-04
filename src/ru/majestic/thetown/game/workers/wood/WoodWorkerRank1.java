@@ -1,16 +1,16 @@
-package ru.majestic.thetown.game.workers.food;
+package ru.majestic.thetown.game.workers.wood;
 
 import org.andengine.opengl.texture.region.ITextureRegion;
 
-import ru.majestic.thetown.game.workers.AFoodWorker;
+import ru.majestic.thetown.game.workers.AWoodWorker;
 import ru.majestic.thetown.resources.ResourceManager;
 
-public class FoodSlaveWorker extends AFoodWorker {
+public class WoodWorkerRank1 extends AWoodWorker {
 
-   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_SLAVE_FOOD_WORKER";
+   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_WOOD_WORKER_RANK_1";
    
-   public FoodSlaveWorker() {
-      super("Butcher", 10, 1, 1, 1);
+   public WoodWorkerRank1() {
+      super("Wood R.1", 10, 1, 1, 1);
    }   
    
    @Override

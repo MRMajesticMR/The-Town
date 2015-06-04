@@ -41,6 +41,7 @@ public class ResourceManager {
    
    private BitmapTextureAtlas shopTitleFontTextureAtlas;
    private BitmapTextureAtlas countersFontTextureAtlas;
+   private BitmapTextureAtlas countersPerSecondsFontTextureAtlas;
    private BitmapTextureAtlas menuFontTextureAtlas;
    private BitmapTextureAtlas shopTextFontTextureAtlas;
    
@@ -49,6 +50,7 @@ public class ResourceManager {
    
    private Font               shopTitleFont;
    private Font               countersFont;
+   private Font               countersPerSecondsFont;
    private Font               menuButtonsFont;
    private Font               shopTextFont;
    
@@ -100,6 +102,7 @@ public class ResourceManager {
    private void loadFonts() {
       shopTitleFontTextureAtlas           = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       countersFontTextureAtlas            = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      countersPerSecondsFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       menuFontTextureAtlas                = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       shopTextFontTextureAtlas            = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       shopBuildingsTitleFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -107,6 +110,7 @@ public class ResourceManager {
       
       shopTitleFont           = new Font(engine.getFontManager(), shopTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 26, true, Color.BLACK);
       countersFont            = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 26, true, Color.BLACK);
+      countersPerSecondsFont  = new Font(engine.getFontManager(), countersPerSecondsFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 16, true, Color.BLACK);
       menuButtonsFont         = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 26, true, Color.BLACK);
       shopTextFont            = new Font(engine.getFontManager(), shopTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 20, true, Color.BLACK);
       shopBuildingsTitleFont  = new Font(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 24, true, Color.BLACK);
@@ -114,6 +118,7 @@ public class ResourceManager {
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
+      engine.getTextureManager().loadTexture(countersPerSecondsFontTextureAtlas);
       engine.getTextureManager().loadTexture(menuFontTextureAtlas);
       engine.getTextureManager().loadTexture(shopTextFontTextureAtlas);
       engine.getTextureManager().loadTexture(shopBuildingsTitleFontTextureAtlas);
@@ -121,6 +126,7 @@ public class ResourceManager {
             
       engine.getFontManager().loadFont(shopTitleFont);
       engine.getFontManager().loadFont(countersFont);
+      engine.getFontManager().loadFont(countersPerSecondsFont);      
       engine.getFontManager().loadFont(menuButtonsFont);
       engine.getFontManager().loadFont(shopTextFont);
       engine.getFontManager().loadFont(shopBuildingsTitleFont);
@@ -141,6 +147,10 @@ public class ResourceManager {
    
    public Font getCountersFont() {
       return countersFont;
+   }      
+
+   public Font getCountersPerSecondsFont() {
+      return countersPerSecondsFont;
    }
 
    public Font getMenuButtonsFont() {

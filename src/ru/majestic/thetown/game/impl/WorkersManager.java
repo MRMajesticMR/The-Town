@@ -9,17 +9,33 @@ import ru.majestic.thetown.game.workers.AFoodWorker;
 import ru.majestic.thetown.game.workers.AWoodWorker;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
-import ru.majestic.thetown.game.workers.defence.DefenceSlaveWorker;
-import ru.majestic.thetown.game.workers.food.FoodSlaveWorker;
-import ru.majestic.thetown.game.workers.wood.WoodSlaveWorker;
+import ru.majestic.thetown.game.workers.defence.DefenceWorkerRank1;
+import ru.majestic.thetown.game.workers.defence.DefenceWorkerRank2;
+import ru.majestic.thetown.game.workers.defence.DefenceWorkerRank3;
+import ru.majestic.thetown.game.workers.defence.DefenceWorkerRank4;
+import ru.majestic.thetown.game.workers.defence.DefenceWorkerRank5;
+import ru.majestic.thetown.game.workers.food.FoodWorkerRank1;
+import ru.majestic.thetown.game.workers.food.FoodWorkerRank2;
+import ru.majestic.thetown.game.workers.food.FoodWorkerRank3;
+import ru.majestic.thetown.game.workers.food.FoodWorkerRank4;
+import ru.majestic.thetown.game.workers.food.FoodWorkerRank5;
+import ru.majestic.thetown.game.workers.wood.WoodWorkerRank1;
+import ru.majestic.thetown.game.workers.wood.WoodWorkerRank2;
+import ru.majestic.thetown.game.workers.wood.WoodWorkerRank3;
+import ru.majestic.thetown.game.workers.wood.WoodWorkerRank4;
+import ru.majestic.thetown.game.workers.wood.WoodWorkerRank5;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class WorkersManager implements IWorkersManager {
 
-   private static final int TOTAL_WORKERS_COUNT = 1;
+   private static final int TOTAL_WORKERS_COUNT = 5;
    
-   private static final int SLAVE_INDEX = 0;
+   private static final int RANK_1 = 0;
+   private static final int RANK_2 = 1;
+   private static final int RANK_3 = 2;
+   private static final int RANK_4 = 3;
+   private static final int RANK_5 = 4;   
    
    private HashMap<IWorker.WorkerType, IWorker[]> workers;
    
@@ -27,13 +43,25 @@ public class WorkersManager implements IWorkersManager {
       workers = new HashMap<IWorker.WorkerType, IWorker[]>();
    
       IWorker[] woodWorkers         = new AWoodWorker[TOTAL_WORKERS_COUNT];
-      woodWorkers[SLAVE_INDEX]      = new WoodSlaveWorker();
+      woodWorkers[RANK_1]           = new WoodWorkerRank1();
+      woodWorkers[RANK_2]           = new WoodWorkerRank2();
+      woodWorkers[RANK_3]           = new WoodWorkerRank3();
+      woodWorkers[RANK_4]           = new WoodWorkerRank4();
+      woodWorkers[RANK_5]           = new WoodWorkerRank5();
    
       IWorker[] foodWorkers         = new AFoodWorker[TOTAL_WORKERS_COUNT];
-      foodWorkers[SLAVE_INDEX]      = new FoodSlaveWorker();            
-   
+      foodWorkers[RANK_1]           = new FoodWorkerRank1();            
+      foodWorkers[RANK_2]           = new FoodWorkerRank2();            
+      foodWorkers[RANK_3]           = new FoodWorkerRank3();            
+      foodWorkers[RANK_4]           = new FoodWorkerRank4();            
+      foodWorkers[RANK_5]           = new FoodWorkerRank5();            
+      
       IWorker[] defenceWorkers      = new ADefenceWorker[TOTAL_WORKERS_COUNT];
-      defenceWorkers[SLAVE_INDEX]   = new DefenceSlaveWorker();
+      defenceWorkers[RANK_1]        = new DefenceWorkerRank1();
+      defenceWorkers[RANK_2]        = new DefenceWorkerRank2();
+      defenceWorkers[RANK_3]        = new DefenceWorkerRank3();
+      defenceWorkers[RANK_4]        = new DefenceWorkerRank4();
+      defenceWorkers[RANK_5]        = new DefenceWorkerRank5();
       
       workers.put(WorkerType.FOOD, foodWorkers);
       workers.put(WorkerType.WOOD, woodWorkers);

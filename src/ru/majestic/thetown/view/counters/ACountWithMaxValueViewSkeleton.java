@@ -24,7 +24,7 @@ public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountW
       
       setAlpha(0.0f);
       
-      countText      = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "00000/00000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText      = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "0000000/0000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       counterImage   = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);

@@ -5,12 +5,12 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import ru.majestic.thetown.game.workers.AWoodWorker;
 import ru.majestic.thetown.resources.ResourceManager;
 
-public class WoodSlaveWorker extends AWoodWorker {
+public class WoodWorkerRank3 extends AWoodWorker {
 
-   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_SLAVE_WOOD_WORKER";
+   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_WOOD_WORKER_RANK_3";
    
-   public WoodSlaveWorker() {
-      super("Slave", 10, 1, 1, 1);
+   public WoodWorkerRank3() {
+      super("Wood R.3", 1000, 100, 100, 100);
    }   
    
    @Override

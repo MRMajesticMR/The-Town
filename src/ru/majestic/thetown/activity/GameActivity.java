@@ -23,12 +23,10 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
-import ru.majestic.thetown.view.counters.ICountView;
 import ru.majestic.thetown.view.counters.ICountWithMaxValueView;
-import ru.majestic.thetown.view.counters.impl.FoodCounterView;
-import ru.majestic.thetown.view.counters.impl.GoldCounterView;
+import ru.majestic.thetown.view.counters.IResourcesCounterPanel;
+import ru.majestic.thetown.view.counters.impl.GameResourcesCounterPanel;
 import ru.majestic.thetown.view.counters.impl.HomeCounterView;
-import ru.majestic.thetown.view.counters.impl.WoodCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
@@ -62,11 +60,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private IClickerView foodClicker;
 	private IClickerView woodClicker;
-	
-	private ICountView foodCountView;
-	private ICountView goldCountView;
-	private ICountView woodCountView; 
-	private ICountWithMaxValueView homeCountView;
+
+	private IResourcesCounterPanel  resourcesCounterPanel;
+	private ICountWithMaxValueView  homeCountView;
 	
 	private ITownView townView;
 	
@@ -100,10 +96,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodClicker = new FoodClickerView();
       woodClicker = new WoodClickerView();
       
-      foodCountView = new FoodCounterView();
-      goldCountView = new GoldCounterView();
-      woodCountView = new WoodCounterView();
-      homeCountView = new HomeCounterView();
+      resourcesCounterPanel   = new GameResourcesCounterPanel(gameManager);
+      homeCountView           = new HomeCounterView();
       
       townView      = new SimpleTownView(gameManager.getTown());
       
@@ -139,9 +133,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   foodClicker.attachToParent(scene);
 	   woodClicker.attachToParent(scene);	  
 	   
-	   foodCountView.attachToParent(scene);
-	   goldCountView.attachToParent(scene);
-	   woodCountView.attachToParent(scene);	   
+	   resourcesCounterPanel.attachToParent(scene);
 	   homeCountView.attachToParent(scene);
 	   
 	   townView.attachToParent(scene);
@@ -155,7 +147,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   shopsMenu.registerTouchArea(scene);
 	   
-	   updateCountViewers();
+	   resourcesCounterPanel.update();
 	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -177,15 +169,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onClickerClicked(IClickerView clicker) {
       if(clicker == foodClicker) {         
          gameManager.addFood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
-         
-         foodCountView.changeCount(gameManager.getFoodCount());
       }
       
       if(clicker == woodClicker) {
          gameManager.addWood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
-         
-         woodCountView.changeCount(gameManager.getWoodCount());
       }            
+      
+      resourcesCounterPanel.update();
    }
    
    @Override
@@ -194,12 +184,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.save(this);
       workersProductionHandler.save(this);
       workersProductionHandler.stop();
-   }
-   
-   private void updateCountViewers() {
-      foodCountView.changeCount(gameManager.getFoodCount());
-      goldCountView.changeCount(gameManager.getGoldCount());
-      woodCountView.changeCount(gameManager.getWoodCount());
    }
 
    @Override
@@ -229,7 +213,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          building.buy();
          
          townView.update();
-         updateCountViewers();         
+         resourcesCounterPanel.update();         
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
          
          shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS).update();
@@ -277,7 +261,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          }
       }
       
-      updateCountViewers();
+      resourcesCounterPanel.update();
       shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
    }
 
@@ -290,7 +274,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          worker.buy();
          
          townView.update();
-         updateCountViewers();
+         resourcesCounterPanel.update();
          
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
          homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
@@ -304,7 +288,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.addFood(addFood);
       gameManager.addWood(addWood);
       
-      updateCountViewers();
+      resourcesCounterPanel.update();
       
       if(shopsDialogManager.hasOpenedShop())
          shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
