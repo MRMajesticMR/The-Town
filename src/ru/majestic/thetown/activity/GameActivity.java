@@ -128,11 +128,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       workersShopDialog.setWorkersShopDialogActionListener(this);
       
       homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
-      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
-		
-      workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
-      workersProductionHandler.setOnWokersProductionCompleteListener(this);
-      workersProductionHandler.start();
+      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());		      
       
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
@@ -162,6 +158,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   updateCountViewers();
 	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
+	}
+	
+	@Override
+	public void onResumeGame() {
+	   super.onResumeGame();
+	   
+	   if(workersProductionHandler == null) {
+	      workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
+	      workersProductionHandler.setOnWokersProductionCompleteListener(this);
+	   }
+      workersProductionHandler.start();
 	}
 
    @Override

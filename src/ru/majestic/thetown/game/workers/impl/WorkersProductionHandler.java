@@ -18,9 +18,10 @@ public class WorkersProductionHandler implements Runnable, IWorkersProductionHan
    
    @Override
    public void start() {
-      this.working = true;
-      
-      new Thread(this).start();
+      if(!working) {
+         working = true;      
+         new Thread(this).start();
+      }
    }
 
    @Override
