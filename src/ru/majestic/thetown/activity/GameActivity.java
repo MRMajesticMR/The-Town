@@ -305,5 +305,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.addWood(addWood);
       
       updateCountViewers();
+      
+      if(shopsDialogManager.hasOpenedShop())
+         shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
    }
 }

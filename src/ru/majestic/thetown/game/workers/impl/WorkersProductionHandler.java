@@ -1,13 +1,12 @@
 package ru.majestic.thetown.game.workers.impl;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.util.Log;
 import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class WorkersProductionHandler implements Runnable, IWorkersProductionHandler {
 
