@@ -116,7 +116,7 @@ public class ResourceManager {
       shopTitleFont           = new Font(engine.getFontManager(), shopTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 20, true, Color.BLACK);
       countersFont            = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 16, true, Color.BLACK);
       countersPerSecondsFont  = new Font(engine.getFontManager(), countersPerSecondsFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 14, true, Color.BLACK);
-      menuButtonsFont         = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 26, true, Color.BLACK);
+      menuButtonsFont         = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 24, true, Color.BLACK);
       shopTextFont            = new Font(engine.getFontManager(), shopTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 14, true, Color.BLACK);
       townLvlFont             = new Font(engine.getFontManager(), townLvlFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 14, true, Color.BLACK);
       shopBuildingsTitleFont  = new Font(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 20, true, Color.BLACK);

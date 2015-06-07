@@ -7,7 +7,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerC
 
 public class SelectWorkerClassShopPanel extends ASelectWorkerClassShopPanel implements OnWorkerClassShopButtonClickedListener {
 
-   private static final int HEIGHT           = 60;
+   private static final int HEIGHT           = 40;
    private static final int BUTTONS_SPACE    = 2;
    
    private static final int TOTAL_SHOPS_PANEL_COUNT = 3;
