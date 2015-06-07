@@ -14,9 +14,9 @@ public interface IGameManager {
    public void removeWood(int wood);
    public void removeFood(int food);
    
-   public int getFoodCount    ();
-   public int getWoodCount    ();
-   public int getGoldCount    ();
+   public long getFoodCount    ();
+   public long getWoodCount    ();
+   public long getGoldCount    ();
    
    public IBuildingsManager   getBuildingsManager  ();
    public IClickersManager    getClickersManager   ();

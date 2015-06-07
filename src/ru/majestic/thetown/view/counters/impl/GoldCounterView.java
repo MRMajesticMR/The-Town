@@ -6,7 +6,7 @@ import ru.majestic.thetown.view.counters.ACountViewSkeleton;
 public class GoldCounterView extends ACountViewSkeleton {
 
    public GoldCounterView() {
-      super(170, 10, ResourceManager.getInstance().getGoldIconTextureRegion());
+      super(330, 4, ResourceManager.getInstance().getGoldIconTextureRegion());
    }
 
 }

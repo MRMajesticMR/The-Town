@@ -3,12 +3,12 @@ package ru.majestic.thetown.game.buildings.impl;
 import ru.majestic.thetown.game.buildings.ABuilding;
 import ru.majestic.thetown.resources.ResourceManager;
 
-public class Hut extends ABuilding {
+public class BuildingRank2 extends ABuilding {
    
-   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_HUT_CURRENT_COUNT";
+   private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_BIG_TENT_CURRENT_COUNT";
    
-   public Hut() {
-      super("Hut", 10000, 1000, 1000, ResourceManager.getInstance().getHomeIconTextureRegion());
+   public BuildingRank2() {
+      super("Big tent", 45, 10, 10, ResourceManager.getInstance().getHomeIconTextureRegion());
    }
 
    @Override

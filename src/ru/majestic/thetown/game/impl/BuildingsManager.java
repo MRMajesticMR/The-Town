@@ -2,11 +2,11 @@ package ru.majestic.thetown.game.impl;
 
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
-import ru.majestic.thetown.game.buildings.impl.BigTent;
-import ru.majestic.thetown.game.buildings.impl.Hut;
-import ru.majestic.thetown.game.buildings.impl.Logcabin;
-import ru.majestic.thetown.game.buildings.impl.Shack;
-import ru.majestic.thetown.game.buildings.impl.Tent;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank2;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank4;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank5;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank3;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank1;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -19,11 +19,11 @@ public class BuildingsManager implements IBuildingsManager {
    public BuildingsManager() {
       buildings = new IBuilding[TOTAL_BUILDINGS_TYPE_COUNT];
       
-      buildings[BUILDING_TYPE_TENT]       = new Tent();
-      buildings[BUILDING_TYPE_BIG_TENT]   = new BigTent();
-      buildings[BUILDING_TYPE_SHACK]      = new Shack();
-      buildings[BUILDING_TYPE_HUT]        = new Hut();
-      buildings[BUILDING_TYPE_LOG_CABIN]  = new Logcabin();
+      buildings[BUILDING_TYPE_TENT]       = new BuildingRank1();
+      buildings[BUILDING_TYPE_BIG_TENT]   = new BuildingRank2();
+      buildings[BUILDING_TYPE_SHACK]      = new BuildingRank3();
+      buildings[BUILDING_TYPE_HUT]        = new BuildingRank4();
+      buildings[BUILDING_TYPE_LOG_CABIN]  = new BuildingRank5();
    }
    
    @Override

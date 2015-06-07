@@ -18,9 +18,9 @@ public class GameManager implements IGameManager {
    private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";
    private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
    
-   private int foodCount;
-   private int woodCount;
-   private int goldCount;
+   private long foodCount;
+   private long woodCount;
+   private long goldCount;
    
    private final IBuildingsManager  buildingsManager;
    private final IClickersManager   clickersManager;
@@ -38,9 +38,9 @@ public class GameManager implements IGameManager {
    public void load(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       
-      foodCount      = prefs.getInt(PREFF_KEY_FOOD, 0);
-      goldCount      = prefs.getInt(PREFF_KEY_GOLD, 0);
-      woodCount      = prefs.getInt(PREFF_KEY_WOOD, 0);
+      foodCount      = prefs.getLong(PREFF_KEY_FOOD, 0);
+      goldCount      = prefs.getLong(PREFF_KEY_GOLD, 0);
+      woodCount      = prefs.getLong(PREFF_KEY_WOOD, 0);
       
       buildingsManager.load(prefs);
       clickersManager.load(prefs);
@@ -53,9 +53,9 @@ public class GameManager implements IGameManager {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       Editor editor = prefs.edit();
       
-      editor.putInt(PREFF_KEY_FOOD, getFoodCount());
-      editor.putInt(PREFF_KEY_GOLD, getGoldCount());
-      editor.putInt(PREFF_KEY_WOOD, getWoodCount());    
+      editor.putLong(PREFF_KEY_FOOD, getFoodCount());
+      editor.putLong(PREFF_KEY_GOLD, getGoldCount());
+      editor.putLong(PREFF_KEY_WOOD, getWoodCount());    
       
       buildingsManager.save(editor);
       clickersManager.save(editor);
@@ -76,17 +76,17 @@ public class GameManager implements IGameManager {
    }
 
    @Override
-   public int getFoodCount() {
+   public long getFoodCount() {
       return foodCount;
    }
 
    @Override
-   public int getWoodCount() {
+   public long getWoodCount() {
       return woodCount;
    }
 
    @Override
-   public int getGoldCount() {
+   public long getGoldCount() {
       return goldCount;
    }
 

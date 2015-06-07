@@ -18,10 +18,10 @@ public class WorkersShopPanel extends Rectangle implements IWorkersShopPanel {
    
    private IWorkerShopPanel[] workerShopPanels;
    
-   public WorkersShopPanel(IShopDialog shop, IWorker[] workers) {
-      super(0, shop.getResoucesShopPanel().getY() + shop.getResoucesShopPanel().getHeight() + 2, shop.getWidth(), shop.getHeight() - shop.getResoucesShopPanel().getY() - shop.getResoucesShopPanel().getHeight() - 64, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());           
+   public WorkersShopPanel(int x, int y, int width, IShopDialog shop, IWorker[] workers) {
+      super(x, y, width, shop.getHeight() - shop.getResoucesShopPanel().getY() - shop.getResoucesShopPanel().getHeight() - 64, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());           
       
-      setColor(0, 1, 0);
+      setAlpha(0.0f);
       setVisible(false);
       
       workerShopPanels = new IWorkerShopPanel[workers.length];

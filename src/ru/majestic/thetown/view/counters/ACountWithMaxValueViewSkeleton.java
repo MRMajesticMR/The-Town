@@ -7,14 +7,15 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountWithMaxValueView {
 
    private static final int WIDTH   = 140;
    private static final int HEIGHT  = 40;   
    
-   private int value;
-   private int maxValue;
+   private long value;
+   private long maxValue;
    
    private Text   countText;
    private Sprite counterImage;
@@ -24,8 +25,8 @@ public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountW
       
       setAlpha(0.0f);
       
-      countText      = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "0000000/0000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      counterImage   = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText      = new Text(34, 4, ResourceManager.getInstance().getCountersFont(), "100.00AA/100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      counterImage   = new Sprite(0, 0, 30, 30, imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);
       attachChild(counterImage);
@@ -39,20 +40,20 @@ public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountW
 
 
    @Override
-   public void changeCount(int newValue) {
+   public void changeCount(long newValue) {
       value = newValue;
       updateView();
       
    }
 
    @Override
-   public void onMaxValueChanged(int maxValue) {
+   public void onMaxValueChanged(long maxValue) {
       this.maxValue = maxValue;
       updateView();
    }
    
    private void updateView() {
-      countText.setText(value + "/" + maxValue);
+      countText.setText(BigValueFormatter.format(value) + "/" + BigValueFormatter.format(maxValue));
    }
 
 }

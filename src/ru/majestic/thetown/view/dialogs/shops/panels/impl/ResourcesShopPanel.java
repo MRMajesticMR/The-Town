@@ -26,7 +26,7 @@ public class ResourcesShopPanel extends AResourcesShopPanelSkeleton {
    }
    
    @Override
-   public void onResourcesChanged(int food, int gold, int wood) {
+   public void onResourcesChanged(long food, long gold, long wood) {
       foodCountView.changeCount(food);
       goldCountView.changeCount(gold);
       woodCountView.changeCount(wood);      

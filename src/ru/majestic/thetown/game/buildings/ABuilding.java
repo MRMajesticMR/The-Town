@@ -8,16 +8,16 @@ import android.content.SharedPreferences.Editor;
 public abstract class ABuilding implements IBuilding {
 
    private String          title;
-   private int             woodCost;
+   private int             priceKoeff;
    private int             exp;
    private int             homePlaces;
    private ITextureRegion  buildingImage;
    
    protected int     currentCount;
    
-   public ABuilding(String title, int woodCost, int exp, int homePlaces, ITextureRegion buildingImage) {
+   public ABuilding(String title, int priceKoeff, int exp, int homePlaces, ITextureRegion buildingImage) {
       this.title           = title;
-      this.woodCost        = woodCost;
+      this.priceKoeff      = priceKoeff;
       this.exp             = exp;
       this.homePlaces      = homePlaces;
       this.buildingImage   = buildingImage;
@@ -30,7 +30,7 @@ public abstract class ABuilding implements IBuilding {
    
    @Override
    public int getWoodCost() {
-      return woodCost;
+      return (int) Math.pow(((getCurrentCount() + 1) * priceKoeff), 1.4f);
    }
    
    @Override

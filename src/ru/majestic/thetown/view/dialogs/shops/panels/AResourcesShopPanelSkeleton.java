@@ -8,7 +8,7 @@ import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 
 public abstract class AResourcesShopPanelSkeleton extends Rectangle implements IResourcesShopPanel {
 
-   private static final int PANEL_HEIGHT = 60;
+   private static final int PANEL_HEIGHT = 40;
    
    public AResourcesShopPanelSkeleton(IShopDialog shopDialog) {
       super(0, 44, shopDialog.getWidth(), PANEL_HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());

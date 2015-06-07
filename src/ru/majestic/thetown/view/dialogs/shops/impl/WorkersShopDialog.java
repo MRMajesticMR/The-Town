@@ -42,9 +42,9 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
       
       shopPanels = new IWorkersShopPanel[TOTAL_SHOPS_PANEL_COUNT];
       
-      shopPanels[SHOP_INDEX_WOOD]      = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.WOOD));
-      shopPanels[SHOP_INDEX_FOOD]      = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.FOOD));
-      shopPanels[SHOP_INDEX_DEFENECE]  = new WorkersShopPanel      (this, gameManager.getWorkersManager().getWorkersByType(WorkerType.DEFENCE));
+      shopPanels[SHOP_INDEX_WOOD]      = new WorkersShopPanel(PADDINGS_LEFT_RIGHT, (int) (getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight()) + 4, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), this, gameManager.getWorkersManager().getWorkersByType(WorkerType.WOOD));
+      shopPanels[SHOP_INDEX_FOOD]      = new WorkersShopPanel(PADDINGS_LEFT_RIGHT, (int) (getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight()) + 4, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), this, gameManager.getWorkersManager().getWorkersByType(WorkerType.FOOD));
+      shopPanels[SHOP_INDEX_DEFENECE]  = new WorkersShopPanel(PADDINGS_LEFT_RIGHT, (int) (getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight()) + 4, (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), this, gameManager.getWorkersManager().getWorkersByType(WorkerType.DEFENCE));
       
       for(int i = 0; i < TOTAL_SHOPS_PANEL_COUNT; i++) {
          shopPanels[i].setWorkerShopPanelActionListener(this);

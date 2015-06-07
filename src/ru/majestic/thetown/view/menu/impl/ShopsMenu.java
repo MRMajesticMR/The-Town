@@ -14,7 +14,7 @@ import ru.majestic.thetown.view.menu.listeners.OnShopsMenuButtonClickedListener;
 
 public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClickedListener {
 
-   private static final int MENU_HEIGHT = 60;
+   private static final int MENU_HEIGHT = 40;
    
    private static final int BUTTONS_PADDING = 5;
    
@@ -52,7 +52,7 @@ public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClic
          
          float buttonWidth = getButtonsWidth();
          
-         button.setButtonHeight(getHeight() - BUTTONS_PADDING);
+         button.setButtonHeight(getHeight());
          button.setButtonWidth(buttonWidth);
          button.setButtonX(BUTTONS_PADDING + (buttonWidth + BUTTONS_PADDING) * i);
          

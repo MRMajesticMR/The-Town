@@ -7,6 +7,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public abstract class ACountWithPsRViewSkeleton extends Rectangle implements ICountWithPsRView {
 
@@ -22,9 +23,9 @@ public abstract class ACountWithPsRViewSkeleton extends Rectangle implements ICo
       
       setAlpha(0.0f);
       
-      countText            = new Text(50, 2, ResourceManager.getInstance().getCountersFont(), "         ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      resourcesPerSecText  = new Text(50, countText.getY() + countText.getHeight() + 2, ResourceManager.getInstance().getCountersPerSecondsFont(), "         ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      counterImage         = new Sprite(0, 0, getHeight(), getHeight(), imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText            = new Text(32, 2, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      resourcesPerSecText  = new Text(32, countText.getY() + countText.getHeight() + 2, ResourceManager.getInstance().getCountersPerSecondsFont(), "+100.00AA PS", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      counterImage         = new Sprite(0, 4, 30, 30, imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);
       attachChild(counterImage);
@@ -39,15 +40,15 @@ public abstract class ACountWithPsRViewSkeleton extends Rectangle implements ICo
 
 
    @Override
-   public void changeCount(int newValue) {
-      countText.setText(String.valueOf(newValue));
+   public void changeCount(long newValue) {
+      countText.setText(BigValueFormatter.format(newValue));
       
    }
 
 
    @Override
    public void updateResourcesPerSecondValue(int resourcesPerSceonds) {
-      resourcesPerSecText.setText("+" + resourcesPerSceonds + " pS");
+      resourcesPerSecText.setText("+" + BigValueFormatter.format(resourcesPerSceonds) + " PS");
    }
 
 }
