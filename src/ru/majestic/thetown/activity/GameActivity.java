@@ -102,8 +102,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       woodClicker = new WoodClickerView();
       
       resourcesCounterPanel   = new GameResourcesCounterPanel(gameManager);
-      homeCountView           = new HomeCounterView();
-      defenceCountView        = new DefenceCounterView();
+      homeCountView           = new HomeCounterView      (10, 90);
+      defenceCountView        = new DefenceCounterView   (10, 130);
       
       townView      = new SimpleTownView(gameManager.getTown());
       

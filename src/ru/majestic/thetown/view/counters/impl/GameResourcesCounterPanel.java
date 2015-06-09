@@ -29,7 +29,7 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
       this.gameManager = gameManager;
       
       foodCountView = new FoodCounterWithRpSView();
-      goldCountView = new GoldCounterView();
+      goldCountView = new GoldCounterView(350, 4);
       woodCountView = new WoodCounterWithRpSView();
       
       foodCountView.attachToParent(this);

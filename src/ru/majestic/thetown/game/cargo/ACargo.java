@@ -13,7 +13,7 @@ public abstract class ACargo implements ICargo {
    
    @Override
    public void load(SharedPreferences prefs) {
-      count = prefs.getInt(getSaveTag() + SAVE_SUFFIX_COUNT, 0);
+      count = prefs.getLong(getSaveTag() + SAVE_SUFFIX_COUNT, 0);
    }
 
    @Override

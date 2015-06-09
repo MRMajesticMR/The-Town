@@ -18,6 +18,7 @@ public class SimpleCloseDialogButton extends Rectangle implements ICloseDialogBu
    
    public SimpleCloseDialogButton(IDialog dialog) {
       super(dialog.getWidth() - SIZE, 0, SIZE, SIZE, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      setColor(0, 1, 0);
    }   
    
    @Override

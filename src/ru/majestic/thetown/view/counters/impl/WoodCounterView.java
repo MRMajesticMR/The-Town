@@ -5,8 +5,8 @@ import ru.majestic.thetown.view.counters.ACountViewSkeleton;
 
 public class WoodCounterView extends ACountViewSkeleton {
 
-   public WoodCounterView() {
-      super(170, 4, ResourceManager.getInstance().getWoodIconTextureRegion());
+   public WoodCounterView(int x, int y) {
+      super(x, y, ResourceManager.getInstance().getWoodIconTextureRegion());
    }
 
 }

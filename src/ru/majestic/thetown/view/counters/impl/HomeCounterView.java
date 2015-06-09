@@ -5,8 +5,8 @@ import ru.majestic.thetown.view.counters.ACountWithMaxValueViewSkeleton;
 
 public class HomeCounterView extends ACountWithMaxValueViewSkeleton {
 
-   public HomeCounterView() {
-      super(10, 90, ResourceManager.getInstance().getHomeIconTextureRegion());
+   public HomeCounterView(int x, int y) {
+      super(x, y, ResourceManager.getInstance().getHomeIconTextureRegion());
    }
 
 }

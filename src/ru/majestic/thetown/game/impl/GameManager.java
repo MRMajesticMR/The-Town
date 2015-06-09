@@ -15,14 +15,6 @@ public class GameManager implements IGameManager {
    
    private static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
    
-//   private static final String PREFF_KEY_FOOD            = "PREFF_KEY_FOOD";
-//   private static final String PREFF_KEY_GOLD            = "PREFF_KEY_GOLD";
-//   private static final String PREFF_KEY_WOOD            = "PREFF_KEY_WOOD";
-   
-//   private long foodCount;
-//   private long woodCount;
-//   private long goldCount;
-   
    private final IBuildingsManager  buildingsManager;
    private final IClickersManager   clickersManager;
    private final ITown              town;
@@ -41,10 +33,6 @@ public class GameManager implements IGameManager {
    public void load(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
       
-//      foodCount      = prefs.getLong(PREFF_KEY_FOOD, 0);
-//      goldCount      = prefs.getLong(PREFF_KEY_GOLD, 0);
-//      woodCount      = prefs.getLong(PREFF_KEY_WOOD, 0);
-      
       buildingsManager.load(prefs);
       clickersManager.load(prefs);
       town.load(prefs);
@@ -55,11 +43,7 @@ public class GameManager implements IGameManager {
    @Override
    public void save(Context context) {
       SharedPreferences prefs = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE);
-      Editor editor = prefs.edit();
-      
-//      editor.putLong(PREFF_KEY_FOOD, getFoodCount());
-//      editor.putLong(PREFF_KEY_GOLD, getGoldCount());
-//      editor.putLong(PREFF_KEY_WOOD, getWoodCount());    
+      Editor editor = prefs.edit();  
       
       buildingsManager.save(editor);
       clickersManager.save(editor);
@@ -69,41 +53,6 @@ public class GameManager implements IGameManager {
       
       editor.commit();
    }
-   
-//   @Override
-//   public void addWood(int wood) {
-//      woodCount += wood;
-//   }
-//   
-//   @Override
-//   public void addFood(int food) {
-//      foodCount += food;
-//   }
-//
-//   @Override
-//   public long getFoodCount() {
-//      return foodCount;
-//   }
-//
-//   @Override
-//   public long getWoodCount() {
-//      return woodCount;
-//   }
-//
-//   @Override
-//   public long getGoldCount() {
-//      return goldCount;
-//   }
-//
-//   @Override
-//   public void removeWood(int wood) {
-//      woodCount -= wood;
-//   }
-//
-//   @Override
-//   public void removeFood(int food) {
-//      foodCount -= food;      
-//   }
 
    @Override
    public IBuildingsManager getBuildingsManager() {
