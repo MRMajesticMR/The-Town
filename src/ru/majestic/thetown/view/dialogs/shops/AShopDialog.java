@@ -5,6 +5,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
@@ -78,7 +79,10 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    
    @Override
    public void update() {
-      resourcesShopPanel.onResourcesChanged(gameManager.getFoodCount(), gameManager.getGoldCount(), gameManager.getWoodCount());
+      resourcesShopPanel.onResourcesChanged(
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount(), 
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount(), 
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount());
    }
    
    @Override

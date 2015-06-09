@@ -36,7 +36,7 @@ public class Town implements ITown {
 
    @Override
    public int getExpToNextLvl() {
-      return (int) (currentLvl * (Math.pow(3, currentLvl)));
+      return (int) (Math.pow(currentLvl, 1.7));
    }
 
    @Override

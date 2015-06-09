@@ -8,6 +8,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
@@ -176,11 +177,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onClickerClicked(IClickerView clicker) {
       if(clicker == foodClicker) {         
-         gameManager.addFood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
       }
       
       if(clicker == woodClicker) {
-         gameManager.addWood(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
       }            
       
       resourcesCounterPanel.update();
@@ -214,8 +215,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyBuildingAction(IBuilding building) {
-      if(gameManager.getWoodCount() >= building.getWoodCost()) {
-         gameManager.removeWood(building.getWoodCost());
+      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= building.getWoodCost()) {
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(building.getWoodCost());
          gameManager.getTown().addExp(building.getExp());
          
          building.buy();
@@ -256,15 +257,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onUpgradeClickerButtonClicked(IClicker clicker) {
       if(clicker instanceof FoodClicker) {
-         if(gameManager.getWoodCount() >= clicker.getUpgradePrice()) {
-            gameManager.removeWood(clicker.getUpgradePrice());
+         if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          }
       }
       
       if(clicker instanceof WoodClicker) {
-         if(gameManager.getFoodCount() >= clicker.getUpgradePrice()) {
-            gameManager.removeFood(clicker.getUpgradePrice());
+         if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          }
       }
@@ -275,8 +276,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyWorkerAction(IWorker worker) {
-      if(gameManager.getFoodCount() >= worker.getFoodCost() && (gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) >= worker.getHomePlaces()) {
-         gameManager.removeFood(worker.getFoodCost());
+      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() >= worker.getFoodCost() && (gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) >= worker.getHomePlaces()) {
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
          gameManager.getTown().addExp(worker.getExp());
          
          worker.buy();
@@ -295,8 +296,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onWorkersProductionComplete(int addFood, int addWood) {
-      gameManager.addFood(addFood);
-      gameManager.addWood(addWood);
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(addFood);
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(addWood);
       
       resourcesCounterPanel.update();
       
