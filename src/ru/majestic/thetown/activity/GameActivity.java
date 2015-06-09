@@ -16,6 +16,7 @@ import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.workers.IWorker;
+import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
 import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
@@ -23,8 +24,10 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
+import ru.majestic.thetown.view.counters.ICountView;
 import ru.majestic.thetown.view.counters.ICountWithMaxValueView;
 import ru.majestic.thetown.view.counters.IResourcesCounterPanel;
+import ru.majestic.thetown.view.counters.impl.DefenceCounterView;
 import ru.majestic.thetown.view.counters.impl.GameResourcesCounterPanel;
 import ru.majestic.thetown.view.counters.impl.HomeCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
@@ -63,6 +66,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	private IResourcesCounterPanel  resourcesCounterPanel;
 	private ICountWithMaxValueView  homeCountView;
+	private ICountView              defenceCountView;
 	
 	private ITownView townView;
 	
@@ -98,6 +102,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       resourcesCounterPanel   = new GameResourcesCounterPanel(gameManager);
       homeCountView           = new HomeCounterView();
+      defenceCountView        = new DefenceCounterView();
       
       townView      = new SimpleTownView(gameManager.getTown());
       
@@ -122,7 +127,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       workersShopDialog.setWorkersShopDialogActionListener(this);
       
       homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
-      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());		      
+      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());	
+      
+      defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
       
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
@@ -135,6 +142,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   resourcesCounterPanel.attachToParent(scene);
 	   homeCountView.attachToParent(scene);
+	   defenceCountView.attachToParent(scene);
 	   
 	   townView.attachToParent(scene);
 	   
@@ -179,8 +187,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    }
    
    @Override
-   public void onStop() {
-      super.onStop();
+   public void onPause() {
+      super.onPause();
       gameManager.save(this);
       workersProductionHandler.save(this);
       workersProductionHandler.stop();
@@ -278,6 +286,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
          homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
+         
+         defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
          
          shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
       }

@@ -4,18 +4,25 @@ import java.math.BigDecimal;
 
 public class BigValueFormatter {
 
+   private static final long BB        = 1000000000000000L;
    private static final long AA        = 1000000000000L;
    private static final long BILLION   = 1000000000L;
    private static final long MILLION   = 1000000L;
    private static final long THOUSAND  = 1000L;
    
    public static String format(long value) {
-                  
+       
+      if(value >= BB) {
+         BigDecimal bd = new BigDecimal(Float.toString(value / (float) BB));
+         bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+         return bd.floatValue() + "BB";
+      }
+      
       if(value >= AA) {
          BigDecimal bd = new BigDecimal(Float.toString(value / (float) AA));
          bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
          return bd.floatValue() + "AA";
-      }
+      }            
       
       if(value >= BILLION) {
          BigDecimal bd = new BigDecimal(Float.toString(value / (float) BILLION));
