@@ -1,11 +1,11 @@
 package ru.majestic.thetown.game.impl;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class ClickersManager implements IClickersManager {
 

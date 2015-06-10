@@ -1,12 +1,12 @@
 package ru.majestic.thetown.game.impl;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.cargo.ICargo;
 import ru.majestic.thetown.game.cargo.impl.FoodCargo;
 import ru.majestic.thetown.game.cargo.impl.GoldCargo;
 import ru.majestic.thetown.game.cargo.impl.WoodCargo;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class CargoManager implements ICargoManager {
 

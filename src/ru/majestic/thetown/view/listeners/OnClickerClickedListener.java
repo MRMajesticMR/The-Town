@@ -4,6 +4,6 @@ import ru.majestic.thetown.view.clickers.IClickerView;
 
 public interface OnClickerClickedListener {
 
-	public void onClickerClicked(IClickerView clicker);
+	public void onClickerClicked(float x, float y, IClickerView clicker);
 	
 }

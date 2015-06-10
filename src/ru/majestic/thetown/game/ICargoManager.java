@@ -1,8 +1,8 @@
 package ru.majestic.thetown.game;
 
+import ru.majestic.thetown.game.cargo.ICargo;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import ru.majestic.thetown.game.cargo.ICargo;
 
 public interface ICargoManager {
 

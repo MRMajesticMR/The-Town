@@ -175,13 +175,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	}
 
    @Override
-   public void onClickerClicked(IClickerView clicker) {
+   public void onClickerClicked(float x, float y, IClickerView clicker) {
       if(clicker == foodClicker) {         
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
+         foodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
       }
       
       if(clicker == woodClicker) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
+         woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
       }            
       
       resourcesCounterPanel.update();

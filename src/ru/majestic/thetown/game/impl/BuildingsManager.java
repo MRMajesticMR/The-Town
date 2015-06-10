@@ -2,11 +2,11 @@ package ru.majestic.thetown.game.impl;
 
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank1;
 import ru.majestic.thetown.game.buildings.impl.BuildingRank2;
+import ru.majestic.thetown.game.buildings.impl.BuildingRank3;
 import ru.majestic.thetown.game.buildings.impl.BuildingRank4;
 import ru.majestic.thetown.game.buildings.impl.BuildingRank5;
-import ru.majestic.thetown.game.buildings.impl.BuildingRank3;
-import ru.majestic.thetown.game.buildings.impl.BuildingRank1;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
