@@ -5,8 +5,8 @@ import ru.majestic.thetown.view.counters.ACountWithPsRViewSkeleton;
 
 public class FoodCounterWithRpSView extends ACountWithPsRViewSkeleton {
 
-   public FoodCounterWithRpSView() {
-      super(10, 4, ResourceManager.getInstance().getFoodIconTextureRegion());
+   public FoodCounterWithRpSView(float x, float y) {
+      super(x, y, ResourceManager.getInstance().getFoodIconTextureRegion());
    }
 
 }

@@ -28,13 +28,13 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
       
       this.gameManager = gameManager;
       
-      foodCountView = new FoodCounterWithRpSView();
-      goldCountView = new GoldCounterView(350, 4);
-      woodCountView = new WoodCounterWithRpSView();
+      foodCountView = new FoodCounterWithRpSView(10, 4);
+      woodCountView = new WoodCounterWithRpSView(180, 4);
+      goldCountView = new GoldCounterView(350, 4);      
       
       foodCountView.attachToParent(this);
-      goldCountView.attachToParent(this);
       woodCountView.attachToParent(this);
+      goldCountView.attachToParent(this);      
    }
 
    @Override
@@ -45,8 +45,8 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
    @Override
    public void update() {
       foodCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount());
-      goldCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount());
-      woodCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount());   
+      woodCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount());
+      goldCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount());        
       
       foodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.FOOD));
       woodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.WOOD));

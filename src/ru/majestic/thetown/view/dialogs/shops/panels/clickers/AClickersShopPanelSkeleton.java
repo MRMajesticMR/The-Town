@@ -11,7 +11,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 

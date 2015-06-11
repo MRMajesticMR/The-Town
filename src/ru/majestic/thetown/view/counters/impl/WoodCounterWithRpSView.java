@@ -5,8 +5,8 @@ import ru.majestic.thetown.view.counters.ACountWithPsRViewSkeleton;
 
 public class WoodCounterWithRpSView extends ACountWithPsRViewSkeleton {
 
-   public WoodCounterWithRpSView() {
-      super(180, 4, ResourceManager.getInstance().getWoodIconTextureRegion());
+   public WoodCounterWithRpSView(float x, float y) {
+      super(x, y, ResourceManager.getInstance().getWoodIconTextureRegion());
    }
 
 }
