@@ -19,7 +19,7 @@ public class SimpleTownView extends ATownView {
    public SimpleTownView(ITown town) {
       super((TheTownCamera.CAMERA_WIDTH - WIDTH) / 2, 60, WIDTH, HEIGHT, town);
       
-      lvlTxt      = new Text(0, 0, ResourceManager.getInstance().getTownLvlFont(), "1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      lvlTxt      = new Text(0, 0, ResourceManager.getInstance().getTownLvlFont(), "LVL: 1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       expTxt      = new Text(0, 0, ResourceManager.getInstance().getTownLvlFont(), "100.00AA/100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(lvlTxt);
