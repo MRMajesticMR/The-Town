@@ -13,4 +13,5 @@ public interface IGameManager {
    public ITown               getTown              ();
    public IWorkersManager     getWorkersManager    ();
    public ICargoManager       getCargoManager      ();
+   public IAttackManager      getAttackManager     ();
 }

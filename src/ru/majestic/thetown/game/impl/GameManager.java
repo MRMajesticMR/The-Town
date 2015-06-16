@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game.impl;
 
+import ru.majestic.thetown.game.IAttackManager;
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
@@ -20,6 +21,8 @@ public class GameManager implements IGameManager {
    private final ITown              town;
    private final IWorkersManager    workersManager;
    private final ICargoManager      cargoManager;
+   private final IAttackManager     attackManager;
+   
    
    public GameManager() {
       buildingsManager  = new BuildingsManager();
@@ -27,6 +30,7 @@ public class GameManager implements IGameManager {
       town              = new Town();
       workersManager    = new WorkersManager();
       cargoManager      = new CargoManager();
+      attackManager     = new AttackManager(town);
    }
    
    @Override
@@ -38,6 +42,7 @@ public class GameManager implements IGameManager {
       town.load(prefs);
       workersManager.load(prefs);
       cargoManager.load(prefs);
+      attackManager.load(prefs);
    }
    
    @Override
@@ -50,6 +55,7 @@ public class GameManager implements IGameManager {
       town.save(editor);
       workersManager.save(editor);
       cargoManager.save(editor);
+      attackManager.save(editor);
       
       editor.commit();
    }
@@ -77,6 +83,11 @@ public class GameManager implements IGameManager {
    @Override
    public ICargoManager getCargoManager() {
       return cargoManager;
+   }
+
+   @Override
+   public IAttackManager getAttackManager() {
+      return attackManager;
    }
    
 }

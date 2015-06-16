@@ -22,6 +22,8 @@ import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
 import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.view.attack.IAttackView;
+import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
@@ -67,9 +69,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	private IResourcesCounterPanel  resourcesCounterPanel;
 	private ICountWithMaxValueView  homeCountView;
-	private ICountView              defenceCountView;
-	
-	private ITownView townView;
+	private ICountView              defenceCountView;	
+	private ITownView               townView;
+	private IAttackView             attackView;
 	
 	private IShopsMenu shopsMenu;		
 	private IShopsDialogsManager shopsDialogManager;
@@ -96,16 +98,16 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 		scene = new TheTownScene();
 		
 		gameManager = new GameManager();
-      gameManager.load(this);       
+      gameManager.load(this);            
       
       foodClicker = new FoodClickerView();
       woodClicker = new WoodClickerView();
       
       resourcesCounterPanel   = new GameResourcesCounterPanel(gameManager);
       homeCountView           = new HomeCounterView      (10, 90);
-      defenceCountView        = new DefenceCounterView   (10, 130);
-      
-      townView      = new SimpleTownView(gameManager.getTown());
+      defenceCountView        = new DefenceCounterView   (10, 130);      
+      townView                = new SimpleTownView(gameManager.getTown());
+      attackView              = new SimpleAttackView(TheTownCamera.CAMERA_WIDTH - 90, 100, gameManager.getAttackManager());
       
       shopsMenu = new ShopsMenu();        
       
@@ -143,9 +145,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   resourcesCounterPanel.attachToParent(scene);
 	   homeCountView.attachToParent(scene);
-	   defenceCountView.attachToParent(scene);
-	   
+	   defenceCountView.attachToParent(scene);	   
 	   townView.attachToParent(scene);
+	   attackView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
 	   
@@ -170,6 +172,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	      workersProductionHandler.setOnWokersProductionCompleteListener(this);	      
 	   }	   	   
 	   
+	   gameManager.getAttackManager().startAttackTimeObserve();
 	   workersProductionHandler.load(this);
       workersProductionHandler.start();
 	}
@@ -193,6 +196,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onPause() {
       super.onPause();
       gameManager.save(this);
+      gameManager.getAttackManager().stopAttackTimeObserve();
       workersProductionHandler.save(this);
       workersProductionHandler.stop();
    }
