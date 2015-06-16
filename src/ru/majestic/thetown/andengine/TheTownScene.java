@@ -13,7 +13,7 @@ public class TheTownScene extends Scene {
 	   AutoParallaxBackground background = new AutoParallaxBackground(1, 1, 1, 50);
 	   
 	   background.attachParallaxEntity(new ParallaxEntity(1.0f, new Sprite(0, 0, ResourceManager.getInstance().getBackgroundMidLayerTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
-	   background.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, 400, ResourceManager.getInstance().getBackgroundFrontLayerTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
+	   background.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, 100, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT, ResourceManager.getInstance().getBackgroundFrontLayerTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
       
 		setBackground(background);
 		setBackgroundEnabled(true);

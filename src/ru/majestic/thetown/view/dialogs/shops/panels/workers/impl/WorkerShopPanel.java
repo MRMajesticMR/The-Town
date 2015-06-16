@@ -1,7 +1,6 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.workers.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -16,7 +15,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkerShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.WorkerShopPanelActionListener;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
-public class WorkerShopPanel extends Rectangle implements IWorkerShopPanel, OnClickListener {
+public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClickListener {
 
    private  static final int PADDING  = 4;    
    
@@ -45,11 +44,9 @@ public class WorkerShopPanel extends Rectangle implements IWorkerShopPanel, OnCl
    
    
    public WorkerShopPanel(int x, int y, int width, int height, IWorker worker) {
-      super(x, y, width, height, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(x, y, width, height, ResourceManager.getInstance().getShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      this.worker = worker;
-      
-      setColor(1, 0, 0);            
+      this.worker = worker;       
       
       workerImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), worker.getWorkerImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       workerTitle  = new Text(workerImage.getX() + workerImage.getHeight() + 4, PADDING, ResourceManager.getInstance().getShopBuildingsTitleFont(), worker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());

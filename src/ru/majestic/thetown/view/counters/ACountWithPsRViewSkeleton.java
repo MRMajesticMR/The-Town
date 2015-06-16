@@ -23,8 +23,8 @@ public abstract class ACountWithPsRViewSkeleton extends Rectangle implements ICo
       
       setAlpha(0.0f);
       
-      countText            = new Text(32, 2, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      resourcesPerSecText  = new Text(32, countText.getY() + countText.getHeight() + 2, ResourceManager.getInstance().getCountersPerSecondsFont(), "+100.00AA PS", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText            = new Text(32, 0, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      resourcesPerSecText  = new Text(32, countText.getY() + countText.getHeight() - 4, ResourceManager.getInstance().getCountersPerSecondsFont(), "+100.00AA PS", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       counterImage         = new Sprite(0, 4, 30, 30, imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);

@@ -1,8 +1,8 @@
 package ru.majestic.thetown.view.menu.buttons.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
@@ -10,20 +10,18 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.menu.buttons.IMenuButton;
 import ru.majestic.thetown.view.menu.buttons.listeners.OnMenuButtonClickedListener;
 
-public class TextMenuButton extends Rectangle implements IMenuButton {
+public class TextMenuButton extends Sprite implements IMenuButton {
 
    private Text   menuText;
    
    private OnMenuButtonClickedListener onMenuButtonClickedListener;
    
    public TextMenuButton(String text) {
-      super(0, 0, 0, 0, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, 0, 0, 0, ResourceManager.getInstance().getMenuButtonTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       menuText = new Text(0, 0, ResourceManager.getInstance().getMenuButtonsFont(), text, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
-      attachChild(menuText);
-      
-      setColor(0, 0, 1);
+      attachChild(menuText);      
       
       setNewTextPosition();
    }
@@ -87,7 +85,7 @@ public class TextMenuButton extends Rectangle implements IMenuButton {
       if(active) {
          setColor(1, 0, 0);
       } else {
-         setColor(0, 0, 1);
+         setColor(1, 1, 1);
       }
    }   
 

@@ -2,15 +2,16 @@ package ru.majestic.thetown.resources;
 
 import org.andengine.engine.Engine;
 import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.util.color.Color;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.graphics.Color;
 
 public class ResourceManager {
 
@@ -31,6 +32,10 @@ public class ResourceManager {
    private ITextureRegion  homeIconTextureRegion;
    private ITextureRegion  swordsIconTextureRegion;
    
+   private BitmapTextureAtlas buttonsBitmapTextureAtlas;
+   
+   private ITextureRegion  menuButtonTextureRegion;
+   
    private BitmapTextureAtlas    plusBtnTextureAtlas;
    
    private ITiledTextureRegion   plusBtnTextureRegion;
@@ -40,8 +45,13 @@ public class ResourceManager {
    private ITextureRegion        expIconTextureRegion;
    private ITiledTextureRegion   buyBtnTextureRegion;
    
+   private BitmapTextureAtlas    shopBitmapTextureAtlas;
+   private ITextureRegion        shopBackgroundTextureRegion;
+   private ITextureRegion        shopItemBackgroundTextureRegion;
+   
+   
    private BitmapTextureAtlas shopTitleFontTextureAtlas;
-   private BitmapTextureAtlas countersFontTextureAtlas;
+   private ITexture           countersFontTextureAtlas;
    private BitmapTextureAtlas countersPerSecondsFontTextureAtlas;
    private BitmapTextureAtlas menuFontTextureAtlas;
    private BitmapTextureAtlas shopTextFontTextureAtlas;
@@ -82,10 +92,14 @@ public class ResourceManager {
    public void loadResources(Context context, Engine engine) {
       this.engine = engine;
       
-      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 256, 128);      
+      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);      
       
       foodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker_bgnd.png", 0, 0);
-      woodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/wood_clicker_bgnd.png", 128, 0);
+      woodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/wood_clicker.png", 256, 0);
+      
+      buttonsBitmapTextureAtlas     = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);
+      
+      menuButtonTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buttonsBitmapTextureAtlas, context, "gfx/buttons/menu_button_background.png", 0, 0);
       
       iconsBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 512);
       
@@ -99,21 +113,27 @@ public class ResourceManager {
       
       plusBtnTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(plusBtnTextureAtlas, context, "gfx/buttons/plus_btn.png", 0, 0, 2, 1);
       
-      buildingShopPanelIconsTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256);
+      buildingShopPanelIconsTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
       buyBtnTextureRegion                 = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/buttons/buy_btn.png", 0, 0, 2, 1);
       expIconTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/exp_icon.png", 128, 0);
       
+      shopBitmapTextureAtlas              = new BitmapTextureAtlas(engine.getTextureManager(), 2048, 2048);
+      shopBackgroundTextureRegion         = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_background.png", 0, 0);
+      shopItemBackgroundTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_item_background.png", 1024, 0);
+      
       clickersBitmapTextureAtlas.load();
+      buttonsBitmapTextureAtlas.load();
       iconsBitmapTextureAtlas.load();
       plusBtnTextureAtlas.load();
-      buildingShopPanelIconsTextureAtlas.load();
+      buildingShopPanelIconsTextureAtlas.load();  
+      shopBitmapTextureAtlas.load();
       
-      loadFonts();
+      loadFonts(context);
       loadBackground(context);
    }
    
-   private void loadFonts() {
+   private void loadFonts(Context context) {
       shopTitleFontTextureAtlas           = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       countersFontTextureAtlas            = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       countersPerSecondsFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -124,15 +144,17 @@ public class ResourceManager {
       shopBuildingsTitleFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       shopBuildingsTextFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);            
       
-      shopTitleFont           = new Font(engine.getFontManager(), shopTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 20, true, Color.BLACK);
-      countersFont            = new Font(engine.getFontManager(), countersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 16, true, Color.BLACK);
-      countersPerSecondsFont  = new Font(engine.getFontManager(), countersPerSecondsFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 14, true, Color.BLACK);
-      menuButtonsFont         = new Font(engine.getFontManager(), menuFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 24, true, Color.BLACK);
-      shopTextFont            = new Font(engine.getFontManager(), shopTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 14, true, Color.BLACK);
-      townLvlFont             = new Font(engine.getFontManager(), townLvlFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 14, true, Color.BLACK);
-      addersFont              = new Font(engine.getFontManager(), addersFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 18, true, Color.BLACK);
-      shopBuildingsTitleFont  = new Font(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 20, true, Color.BLACK);
-      shopBuildingsTextFont   = new Font(engine.getFontManager(), shopBuildingsTextFontTextureAtlas, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 20, true, Color.BLACK);
+      int fontsColor = Color.parseColor("#000000");
+      
+      shopTitleFont           = FontFactory.createFromAsset(engine.getFontManager(), shopTitleFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
+      countersFont            = FontFactory.createFromAsset(engine.getFontManager(), countersFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 16, true, fontsColor);
+      countersPerSecondsFont  = FontFactory.createFromAsset(engine.getFontManager(), countersPerSecondsFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 12, true, fontsColor);
+      menuButtonsFont         = FontFactory.createFromAsset(engine.getFontManager(), menuFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 18, true, fontsColor);
+      shopTextFont            = FontFactory.createFromAsset(engine.getFontManager(), shopTextFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 12, true, fontsColor);
+      townLvlFont             = FontFactory.createFromAsset(engine.getFontManager(), townLvlFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 12, true, fontsColor);
+      addersFont              = FontFactory.createFromAsset(engine.getFontManager(), addersFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 18, true, fontsColor);
+      shopBuildingsTitleFont  = FontFactory.createFromAsset(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
+      shopBuildingsTextFont   = FontFactory.createFromAsset(engine.getFontManager(), shopBuildingsTextFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
@@ -157,10 +179,10 @@ public class ResourceManager {
    
    private void loadBackground(Context context) {
       midBackgroundTextureAtlas     = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
-      frontBackgroundTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
+      frontBackgroundTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
       backgroundMidLayerTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(midBackgroundTextureAtlas, context, "gfx/environment/clouds/light_day.png", 0, 0);
-      backgroundFrontLayerTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(frontBackgroundTextureAtlas, context, "gfx/environment/grass.png", 0, 0);
+      backgroundFrontLayerTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(frontBackgroundTextureAtlas, context, "gfx/environment/midground.png", 0, 0);
       
       midBackgroundTextureAtlas.load();
       frontBackgroundTextureAtlas.load();
@@ -252,6 +274,18 @@ public class ResourceManager {
 
    public Font getAddersFont() {
       return addersFont;
+   }
+
+   public ITextureRegion getMenuButtonTextureRegion() {
+      return menuButtonTextureRegion;
+   }
+
+   public ITextureRegion getShopBackgroundTextureRegion() {
+      return shopBackgroundTextureRegion;
+   }
+
+   public ITextureRegion getShopItemBackgroundTextureRegion() {
+      return shopItemBackgroundTextureRegion;
    }        
    
 }

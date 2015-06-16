@@ -7,10 +7,10 @@ import ru.majestic.thetown.view.clickers.IClickersAdderView;
 public class WoodClickerView extends AClickerViewSkeleton {
 
    private static final int X = 245;
-   private static final int Y = 520;
+   private static final int Y = 500;
    
    public WoodClickerView() {
-      super(X, Y, CLICKER_WIDTH_AND_HEIGHT, CLICKER_WIDTH_AND_HEIGHT, ResourceManager.getInstance().getWoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(X, Y, 235, 265, ResourceManager.getInstance().getWoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
    }
 
    @Override

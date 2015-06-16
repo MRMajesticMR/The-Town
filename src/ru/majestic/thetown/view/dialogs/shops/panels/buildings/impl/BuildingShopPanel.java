@@ -1,7 +1,6 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.buildings.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -14,11 +13,11 @@ import ru.majestic.thetown.view.dialogs.shops.panels.buildings.IBuildingShopPane
 import ru.majestic.thetown.view.dialogs.shops.panels.buildings.listeners.BuildingShopPanelActionListener;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
-public class BuildingShopPanel extends Rectangle implements IBuildingShopPanel, OnClickListener {
+public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnClickListener {
 
    public static final int HEIGHT   = 80;
    
-   private static final int PADDING  = 4;    
+   private static final int PADDING  = 8;    
    
    private IBuilding                         building;
    private BuildingShopPanelActionListener   buildingShopPanelActionListener;
@@ -41,19 +40,19 @@ public class BuildingShopPanel extends Rectangle implements IBuildingShopPanel, 
    
    
    public BuildingShopPanel(int x, int y, int width, IBuilding building) {
-      super(x, y, width, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      setColor(1, 0, 0);
+      super(x, y, width, HEIGHT, ResourceManager.getInstance().getShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       this.building = building;
       
       buildingImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), building.getBuildingImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
-      buildingTitle  = new Text(buildingImage.getX() + buildingImage.getHeight() + 4, PADDING, ResourceManager.getInstance().getShopBuildingsTitleFont(), building.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-   
-      expImage       = new Sprite(buildingImage.getX() + buildingImage.getWidth() + 4, buildingTitle.getY() + buildingTitle.getHeight() + 2, 25, 20, ResourceManager.getInstance().getExpIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());       
-      expText        = new Text(expImage.getX() + expImage.getWidth() + 4, expImage.getY() + 4, ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(building.getExp()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
-      homeImage      = new Sprite(buildingImage.getX() + buildingImage.getWidth() + 4, expImage.getY() + expImage.getHeight() + 2, 20, 20, ResourceManager.getInstance().getHomeIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      homeText       = new Text(homeImage.getX() + homeImage.getWidth() + 4, homeImage.getY() + 4, ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(building.getHomePlaces()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
+      buildingTitle  = new Text(buildingImage.getX() + buildingImage.getHeight() + 8, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), building.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+   
+      expImage       = new Sprite(buildingImage.getX() + buildingImage.getWidth() + 8, buildingTitle.getY() + buildingTitle.getHeight(), 21, 16, ResourceManager.getInstance().getExpIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());       
+      expText        = new Text(expImage.getX() + expImage.getWidth() + 8, expImage.getY(), ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(building.getExp()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
+      
+      homeImage      = new Sprite(buildingImage.getX() + buildingImage.getWidth() + 8, expImage.getY() + expImage.getHeight() + 4, 16, 16, ResourceManager.getInstance().getHomeIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      homeText       = new Text(homeImage.getX() + homeImage.getWidth() + 8, homeImage.getY(), ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(building.getHomePlaces()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
       priceTitleText = new Text(250, PADDING + 8, ResourceManager.getInstance().getShopTextFont(), "PRICE:", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       priceImage     = new Sprite(250, expImage.getY(), 20, 20, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());

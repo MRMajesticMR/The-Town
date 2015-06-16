@@ -1,8 +1,8 @@
 package ru.majestic.thetown.view.dialogs.shops;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.game.IGameManager;
@@ -14,7 +14,7 @@ import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.IResourcesShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.impl.ResourcesShopPanel;
 
-public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCloseDialogButtonClickedListener {
+public abstract class AShopDialog extends Sprite implements IShopDialog, OnCloseDialogButtonClickedListener {
 
    protected static final int MARGIN_BOTTOM           = 45;
    protected static final int PADDING_TOP             = 44;
@@ -27,10 +27,9 @@ public abstract class AShopDialog extends Rectangle implements IShopDialog, OnCl
    protected IGameManager        gameManager;
    
    public AShopDialog(IGameManager gameManager) {
-      super(0, 0, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT - MARGIN_BOTTOM, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, 0, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT - MARGIN_BOTTOM, ResourceManager.getInstance().getShopBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       this.gameManager = gameManager;
       
-      setColor(0, 0, 1);
       setVisible(false);
       
       resourcesShopPanel = new ResourcesShopPanel(this, gameManager);
