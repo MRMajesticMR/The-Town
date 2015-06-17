@@ -248,6 +248,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
          
          shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_BUILDINGS).update();
+      } else {
+         ErrorViewManager.showError(scene, "No enough wood");
       }
    }
 
@@ -285,7 +287,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
             gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          } else {
-            ErrorViewManager.showError(scene, "Not enough wood");
+            ErrorViewManager.showError(scene, "No enough wood");
          }
       }
       
@@ -294,7 +296,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
             gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          } else {
-            ErrorViewManager.showError(scene, "Not enough food");
+            ErrorViewManager.showError(scene, "No enough food");
          }
       }
       
@@ -304,22 +306,30 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyWorkerAction(IWorker worker) {
-      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() >= worker.getFoodCost() && (gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) >= worker.getHomePlaces()) {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
-         gameManager.getTown().addExp(worker.getExp());
-         
-         worker.buy();
-         
-         townView.update();
-         resourcesCounterPanel.update();
-         
-         homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
-         homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
-         
-         defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
-         
-         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
+      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost()) {
+         ErrorViewManager.showError(scene, "No enough food");
+         return;
       }
+      
+      if((gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) < worker.getHomePlaces()) {
+         ErrorViewManager.showError(scene, "No enough homes");
+         return;
+      }
+      
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
+      gameManager.getTown().addExp(worker.getExp());
+
+      worker.buy();
+
+      townView.update();
+      resourcesCounterPanel.update();
+
+      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
+      homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
+
+      defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
+
+      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
    }
 
    @Override
