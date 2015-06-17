@@ -12,22 +12,15 @@ public class Attack implements IAttack {
    private static final String   SAVE_TAG_ATTACK_POWER      = "SAVE_TAG_ATTACK_POWER";
    
 //   private static final int      ATTACK_PERIOD = 1000 * 60 * 60 * 3;
-   private static final int      ATTACK_PERIOD = 1000 * 3;
+   private static final int      ATTACK_PERIOD = 1000 * 30;
    
    private long   nextAttackTime;
    private int    attackPower;
    
-   private ITown  town;
-   
-   public Attack(ITown town) {
-      this.town = town;
-   }
-   
    @Override
    public void load(SharedPreferences prefs) {      
       nextAttackTime = prefs.getLong(SAVE_TAG_NEXT_ATTACK_TIME, System.currentTimeMillis() + ATTACK_PERIOD);
-      attackPower    = prefs.getInt(SAVE_TAG_ATTACK_POWER, (int) (Math.pow(34, town.getLvl())));      
-      
+      attackPower    = prefs.getInt(SAVE_TAG_ATTACK_POWER, 0);            
    }
 
    @Override
@@ -42,7 +35,7 @@ public class Attack implements IAttack {
    }
 
    @Override
-   public void update() {
+   public void update(ITown town) {
       nextAttackTime = System.currentTimeMillis() + ATTACK_PERIOD;
       attackPower    = (int) (Math.pow(34, town.getLvl()));
    }

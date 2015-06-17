@@ -31,6 +31,7 @@ public class ResourceManager {
    private ITextureRegion  goldIconTextureRegion;
    private ITextureRegion  homeIconTextureRegion;
    private ITextureRegion  swordsIconTextureRegion;
+   private ITextureRegion  shiledIconTextureRegion;
    
    private BitmapTextureAtlas buttonsBitmapTextureAtlas;
    
@@ -108,6 +109,7 @@ public class ResourceManager {
       goldIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/gold_icon.png", 0, 128);
       homeIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/home_icon.png", 128, 128);
       swordsIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/swords_icon.png", 256, 0);
+      shiledIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/shield_icon.png", 256, 128);
       
       plusBtnTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 128, 64);
       
@@ -278,6 +280,10 @@ public class ResourceManager {
 
    public ITextureRegion getMenuButtonTextureRegion() {
       return menuButtonTextureRegion;
+   }
+   
+   public ITextureRegion getShiledIconTextureRegion() {
+      return shiledIconTextureRegion;
    }
 
    public ITextureRegion getShopBackgroundTextureRegion() {

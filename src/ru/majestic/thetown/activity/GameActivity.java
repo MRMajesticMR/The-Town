@@ -16,11 +16,13 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.GameManager;
+import ru.majestic.thetown.game.listener.OnTimeToAttackListener;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
 import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
+import ru.majestic.thetown.notifications.TheTownNotificationManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.attack.IAttackView;
 import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
@@ -57,7 +59,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnShopsMenuButtonClickedListener,
                                                               BuildingsShopDialogActionListeners, 
                                                               WorkersShopDialogActionListener,
-                                                              OnWokersProductionCompleteListener {
+                                                              OnWokersProductionCompleteListener,
+                                                              OnTimeToAttackListener {
 
 	private Camera 	camera;
 	
@@ -98,7 +101,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 		scene = new TheTownScene();
 		
 		gameManager = new GameManager();
-      gameManager.load(this);            
+      gameManager.load(this);         
+      gameManager.getAttackManager().setOnTimeToAttackListener(this);
       
       foodClicker = new FoodClickerView();
       woodClicker = new WoodClickerView();
@@ -309,5 +313,14 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       if(shopsDialogManager.hasOpenedShop())
          shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
+   }
+
+   @Override
+   public void onTimeToAttack() {
+      gameManager.getAttackManager().getAttack().execute();
+      gameManager.getAttackManager().getAttack().update(gameManager.getTown());
+      gameManager.save(this);
+      
+      TheTownNotificationManager.reset(this);
    }
 }

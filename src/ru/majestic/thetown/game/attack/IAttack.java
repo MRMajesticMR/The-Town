@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game.attack;
 
+import ru.majestic.thetown.game.town.ITown;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -9,7 +10,7 @@ public interface IAttack {
    public void       save                 (Editor prefsEditor);
    
    public long       getTimeToNextAttack  ();
-   public void       update               ();
+   public void       update               (ITown town);
    public int        getAttackPower       ();
    public void       execute              ();
    

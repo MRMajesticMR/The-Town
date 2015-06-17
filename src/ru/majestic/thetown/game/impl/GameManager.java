@@ -14,7 +14,7 @@ import android.content.SharedPreferences.Editor;
 
 public class GameManager implements IGameManager {
    
-   private static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
+   public static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
    
    private final IBuildingsManager  buildingsManager;
    private final IClickersManager   clickersManager;
@@ -30,7 +30,7 @@ public class GameManager implements IGameManager {
       town              = new Town();
       workersManager    = new WorkersManager();
       cargoManager      = new CargoManager();
-      attackManager     = new AttackManager(town);
+      attackManager     = new AttackManager();
    }
    
    @Override
