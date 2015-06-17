@@ -18,7 +18,7 @@ public class SelectWorkerClassShopPanel extends ASelectWorkerClassShopPanel impl
    
    
    public SelectWorkerClassShopPanel(IShopDialog dialog) {
-      super(0, dialog.getHeight() - HEIGHT, dialog.getWidth(), HEIGHT);          
+      super(0, dialog.getHeight() - HEIGHT - 22, dialog.getWidth(), HEIGHT);          
       
       menuButtons = new ISelectWorkerClassShopPanelButton[TOTAL_SHOPS_PANEL_COUNT];
       
