@@ -54,17 +54,17 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       homeImage      = new Sprite(buildingImage.getX() + buildingImage.getWidth() + 8, expImage.getY() + expImage.getHeight() + 4, 16, 16, ResourceManager.getInstance().getHomeIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       homeText       = new Text(homeImage.getX() + homeImage.getWidth() + 8, homeImage.getY(), ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(building.getHomePlaces()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
-      priceTitleText = new Text(250, PADDING + 8, ResourceManager.getInstance().getShopTextFont(), "PRICE:", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
-      priceImage     = new Sprite(250, expImage.getY(), 20, 20, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      priceTitleText = new Text(220, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), "price:", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
+      priceImage     = new Sprite(220, expImage.getY(), 20, 20, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       priceText      = new Text(priceImage.getX() + priceImage.getWidth() + 4, priceImage.getY() + 2, ResourceManager.getInstance().getShopTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  
       
       buyButton      = new ButtonSprite(0, 0, ResourceManager.getInstance().getBuyBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buyButton.setHeight((getHeight() - (PADDING * 2)) / 2);
       buyButton.setWidth(130);
-      buyButton.setX(getWidth() - PADDING - buyButton.getWidth());
-      buyButton.setY(getHeight() - PADDING - buyButton.getHeight());
+      buyButton.setX(getWidth() - PADDING - buyButton.getWidth() - 4);
+      buyButton.setY(getHeight() - PADDING - buyButton.getHeight() - 4);
       
-      buildingsCount = new Text(0, PADDING + 6, ResourceManager.getInstance().getShopTitleFont(), "999999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      buildingsCount = new Text(0, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), "999999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
             
       attachChild(buildingImage);
