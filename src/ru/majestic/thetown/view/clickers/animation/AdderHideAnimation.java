@@ -10,11 +10,11 @@ import org.andengine.util.modifier.IModifier;
 
 public class AdderHideAnimation extends ParallelEntityModifier {
    
-   public AdderHideAnimation(float fromY, float toY) {
+   public AdderHideAnimation() {
       super(new SequenceEntityModifier(
                   new DelayModifier(1.5f),
                   new FadeOutModifier(1.0f)),
-            new MoveYModifier(1.5f, fromY, fromY - 300));
+            new MoveYModifier(1.5f, 0, -300));
       
       addModifierListener(new IModifierListener<IEntity>() {
          

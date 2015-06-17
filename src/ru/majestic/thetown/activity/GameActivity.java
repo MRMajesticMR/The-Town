@@ -48,6 +48,7 @@ import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActio
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
+import ru.majestic.thetown.view.errors.impl.ErrorViewManager;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
 import ru.majestic.thetown.view.menu.impl.ShopsMenu;
@@ -283,6 +284,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
             gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
+         } else {
+            ErrorViewManager.showError(scene, "Not enough wood");
          }
       }
       
@@ -290,6 +293,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
             gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
+         } else {
+            ErrorViewManager.showError(scene, "Not enough food");
          }
       }
       

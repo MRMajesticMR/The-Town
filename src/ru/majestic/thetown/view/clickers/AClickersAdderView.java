@@ -47,7 +47,10 @@ public class AClickersAdderView extends Rectangle implements IClickersAdderView 
       countText.setAlpha(1.0f);
       counterImage.setAlpha(1.0f);
       
-      AdderHideAnimation adderHideAnimation = new AdderHideAnimation(y - HEIGHT, -300);
+      countText.setY(y);
+      counterImage.setY(y - 6);
+      
+      AdderHideAnimation adderHideAnimation = new AdderHideAnimation();
     
       countText.registerEntityModifier(adderHideAnimation);
       counterImage.registerEntityModifier(adderHideAnimation);
