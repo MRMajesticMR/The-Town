@@ -17,12 +17,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 public class TheTownNotificationManager extends BroadcastReceiver {
 
 // private static final long ALARM_MANAGER_INTERVAL = 1000 * 60 * 30; //30 MIN
    private static final long ALARM_MANAGER_INTERVAL = 1000; //1 sec
+      
+//   private static final long TIME_TO_ATTACK_HALF_HOUR  = 1000 * 60 * 30;
+//   private static final long TIME_TO_ATTACK_HOUR       = TIME_TO_ATTACK_HALF_HOUR * 2;
    
    public static final long TIME_TO_ATTACK_HOUR       = 15000;
    public static final long TIME_TO_ATTACK_HALF_HOUR  = 5000;   
@@ -35,7 +37,6 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       HOUR, 
       HALF_HOUR
    }   
-
    
    public static void startAlarmManager(Context context) {
       AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);      
@@ -68,9 +69,6 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       
       IWorkersManager workersManager = new WorkersManager();
       workersManager.load(context.getSharedPreferences(GameManager.PREFFS_NAME, Context.MODE_PRIVATE));
-      
-      Log.i("TIME_TO_ATTACK", "Interval: " + (nextAttack.getTimeToNextAttack() - System.currentTimeMillis()));
-      Log.i("TIME_TO_ATTACK", "Attack power: " + nextAttack.getAttackPower() + ". Defence power: " + workersManager.getResourcesPerSecond(WorkerType.DEFENCE));
       
       if(nextAttack.getAttackPower() > workersManager.getResourcesPerSecond(WorkerType.DEFENCE)) {      
          if(nextAttack.getTimeToNextAttack() - System.currentTimeMillis() < TheTownNotificationManager.TIME_TO_ATTACK_HALF_HOUR && !isNotifictionAlreadyShowed(context, SAVE_TAG_HALF_HOUR)) {

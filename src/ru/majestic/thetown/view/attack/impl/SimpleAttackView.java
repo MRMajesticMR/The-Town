@@ -2,94 +2,80 @@ package ru.majestic.thetown.view.attack.impl;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.text.Text;
 
-import ru.majestic.thetown.game.IAttackManager;
+import ru.majestic.thetown.andengine.TheTownCamera;
+import ru.majestic.thetown.game.attack.IAttack;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.attack.IAttackView;
+import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
 
-public class SimpleAttackView extends Rectangle implements IAttackView {
+public class SimpleAttackView extends Rectangle implements IAttackView, OnClickListener {   
 
-   private static final float WIDTH  = 80;
-   private static final float HEIGHT = 60;
+   private static final int PANEL_PADDING = 4;
    
-   private static final int   DEFAULT_TIME_UPDATE = 1;
+   private OnAttackDialogClosedListener onAttackDialogClosedListener;
    
-   private Sprite    attackImage;
-   private Text      timeText;   
-   private Text      attackPowerText;
+   private final ButtonSprite    closeBtn;
+   private final Text            resultText;
    
-   private IAttackManager attackManager;
+   public SimpleAttackView() {
+      super(10, 200, TheTownCamera.CAMERA_WIDTH - 20, 300, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      
+      setVisible(false);
+      
+      closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getPlusBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      resultText            = new Text(0, PANEL_PADDING, ResourceManager.getInstance().getAttackResultTextFont(), "You've been attacked!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      
+      closeBtn.setWidth(200);
+      closeBtn.setHeight(50);            
+      closeBtn.setX((getWidth() - (PANEL_PADDING * 2) - closeBtn.getWidth()) / 2); 
+      closeBtn.setY(getHeight() - PANEL_PADDING - closeBtn.getHeight());
+      
+      closeBtn.setOnClickListener(this);
+      
+      resultText.setX((getWidth() - resultText.getWidth()) / 2); 
+      
+      attachChild(closeBtn);
+      attachChild(resultText);
+   }   
    
-   private float timeToUpdate;
-   
-   public SimpleAttackView(float x, float y, IAttackManager attackManager) {
-      super(x, y, WIDTH, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      
-      setAlpha(0.0f);
-      
-      attackImage    = new Sprite((getWidth() - 40) / 2, 0, 40, 40, ResourceManager.getInstance().getSwordsIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
-      attackPowerText   = new Text(0, attackImage.getY() + attackImage.getHeight() + 4, ResourceManager.getInstance().getCountersFont(), "00000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      timeText       = new Text(0, attackPowerText.getY() + attackPowerText.getHeight() + 2, ResourceManager.getInstance().getCountersFont(), "00:00:00", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      
-      attachChild(attackImage);
-      attachChild(attackPowerText);
-      attachChild(timeText);
-      
-      this.attackManager   = attackManager;
-      this.timeToUpdate    = 0;
-   }
-
-   @Override
-   public void update() {
-      timeText.setText(convertLongToTimeString(attackManager.getAttack().getTimeToNextAttack() - System.currentTimeMillis()));
-      attackPowerText.setText(String.valueOf(attackManager.getAttack().getAttackPower()));
-      
-      timeText.setX((getWidth() - timeText.getWidth()) / 2);
-      attackPowerText.setX((getWidth() - attackPowerText.getWidth()) / 2);
-   }
-
    @Override
    public void attachToParent(Entity parent) {
-      parent.attachChild(this);
+      parent.attachChild(this);      
    }
-   
-   private String convertLongToTimeString(long time) {
-      if(time > 0) {
-         final int SECOND  = 1000;
-         final int MINUTE  = SECOND * 60;
-         final int HOUR    = MINUTE * 60;
-         
-         int hours      = (int) (time / HOUR);
-         time -= HOUR * hours;
-         
-         int minutes    = (int) (time / MINUTE);
-         time -= MINUTE * minutes;
-         
-         int seconds    = (int) (time / SECOND);
-         
-         StringBuilder builder = new StringBuilder();
-         builder.append((hours < 10) ? "0" + hours : hours);
-         builder.append(":");
-         builder.append((minutes < 10) ? "0" + minutes : minutes);
-         builder.append(":");
-         builder.append((seconds < 10) ? "0" + seconds: seconds);
-         
-         return builder.toString();
-      } else {
-         return "00:00:00";
-      }            
+
+   @Override
+   public void show(IAttack attack) {
+      setVisible(true);
    }
    
    @Override
-   protected void onManagedUpdate(final float pSecondsElapsed) {
-      timeToUpdate -= pSecondsElapsed;
-      
-      if(timeToUpdate < 0) {
-         timeToUpdate = DEFAULT_TIME_UPDATE;
-         update();
-      }      
+   public void registerTouchArea(Scene scene) {
+      scene.registerTouchArea(closeBtn);
+   }
+
+   @Override
+   public void unregisterTouchArea(Scene scene) {
+      scene.unregisterTouchArea(closeBtn);      
+   }
+
+   @Override
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      onAttackDialogClosedListener.onAttackDialogClosed();
+   }
+
+   @Override
+   public void setOnAttackDialogClosedListener(OnAttackDialogClosedListener onAttackDialogClosedListener) {
+      this.onAttackDialogClosedListener = onAttackDialogClosedListener;
+   }
+
+   @Override
+   public void close() {
+      setVisible(false);
    }
 
 }

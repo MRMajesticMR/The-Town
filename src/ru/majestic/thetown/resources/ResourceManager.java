@@ -62,6 +62,8 @@ public class ResourceManager {
    private BitmapTextureAtlas shopBuildingsTitleFontTextureAtlas;
    private BitmapTextureAtlas shopBuildingsTextFontTextureAtlas;
    
+   private BitmapTextureAtlas attackResultFontTextureAtlas;
+   
    private BitmapTextureAtlas frontBackgroundTextureAtlas;
    private BitmapTextureAtlas midBackgroundTextureAtlas;
    
@@ -79,6 +81,7 @@ public class ResourceManager {
    
    private Font               shopBuildingsTitleFont;
    private Font               shopBuildingsTextFont;
+   private Font               attackResultTextFont;
    
    private ResourceManager() {
       
@@ -145,6 +148,8 @@ public class ResourceManager {
       addersFontTextureAtlas              = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       shopBuildingsTitleFontTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       shopBuildingsTextFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);            
+      attackResultFontTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      
       
       int fontsColor = Color.parseColor("#000000");
       
@@ -157,6 +162,7 @@ public class ResourceManager {
       addersFont              = FontFactory.createFromAsset(engine.getFontManager(), addersFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 18, true, fontsColor);
       shopBuildingsTitleFont  = FontFactory.createFromAsset(engine.getFontManager(), shopBuildingsTitleFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
       shopBuildingsTextFont   = FontFactory.createFromAsset(engine.getFontManager(), shopBuildingsTextFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
+      attackResultTextFont    = FontFactory.createFromAsset(engine.getFontManager(), attackResultFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 32, true, fontsColor);
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
@@ -166,7 +172,8 @@ public class ResourceManager {
       engine.getTextureManager().loadTexture(townLvlFontTextureAtlas);
       engine.getTextureManager().loadTexture(addersFontTextureAtlas);
       engine.getTextureManager().loadTexture(shopBuildingsTitleFontTextureAtlas);
-      engine.getTextureManager().loadTexture(shopBuildingsTextFontTextureAtlas);           
+      engine.getTextureManager().loadTexture(shopBuildingsTextFontTextureAtlas);
+      engine.getTextureManager().loadTexture(attackResultFontTextureAtlas);
             
       engine.getFontManager().loadFont(shopTitleFont);
       engine.getFontManager().loadFont(countersFont);
@@ -177,6 +184,7 @@ public class ResourceManager {
       engine.getFontManager().loadFont(addersFont);      
       engine.getFontManager().loadFont(shopBuildingsTitleFont);
       engine.getFontManager().loadFont(shopBuildingsTextFont);
+      engine.getFontManager().loadFont(attackResultTextFont);      
    }
    
    private void loadBackground(Context context) {
@@ -292,6 +300,10 @@ public class ResourceManager {
 
    public ITextureRegion getShopItemBackgroundTextureRegion() {
       return shopItemBackgroundTextureRegion;
+   }
+
+   public Font getAttackResultTextFont() {
+      return attackResultTextFont;
    }        
-   
+      
 }

@@ -11,5 +11,6 @@ public interface ICargo {
    public long       getCurrentCount   ();
    public void       add               (long count);
    public void       remove            (long count);
+   public void       clear             ();
    
 }

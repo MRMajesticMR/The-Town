@@ -36,4 +36,9 @@ public abstract class ACargo implements ICargo {
       this.count -= count;
    }
 
+   @Override
+   public void clear() {
+      count = 0;
+   }
+
 }

@@ -24,8 +24,11 @@ import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.notifications.TheTownNotificationManager;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.view.attack.IAttackTimeView;
 import ru.majestic.thetown.view.attack.IAttackView;
+import ru.majestic.thetown.view.attack.impl.SimpleAttackTimeView;
 import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
+import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
@@ -60,7 +63,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               BuildingsShopDialogActionListeners, 
                                                               WorkersShopDialogActionListener,
                                                               OnWokersProductionCompleteListener,
-                                                              OnTimeToAttackListener {
+                                                              OnTimeToAttackListener,
+                                                              OnAttackDialogClosedListener {
 
 	private Camera 	camera;
 	
@@ -74,6 +78,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private ICountWithMaxValueView  homeCountView;
 	private ICountView              defenceCountView;	
 	private ITownView               townView;
+	private IAttackTimeView         attackTimeView;
+	
 	private IAttackView             attackView;
 	
 	private IShopsMenu shopsMenu;		
@@ -111,7 +117,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       homeCountView           = new HomeCounterView      (10, 90);
       defenceCountView        = new DefenceCounterView   (10, 130);      
       townView                = new SimpleTownView(gameManager.getTown());
-      attackView              = new SimpleAttackView(TheTownCamera.CAMERA_WIDTH - 90, 100, gameManager.getAttackManager());
+      attackTimeView          = new SimpleAttackTimeView(TheTownCamera.CAMERA_WIDTH - 90, 100, gameManager.getAttackManager());
+      
+      attackView              = new SimpleAttackView();
+      attackView.setOnAttackDialogClosedListener(this);
       
       shopsMenu = new ShopsMenu();        
       
@@ -151,6 +160,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   homeCountView.attachToParent(scene);
 	   defenceCountView.attachToParent(scene);	   
 	   townView.attachToParent(scene);
+	   attackTimeView.attachToParent(scene);
+	   
 	   attackView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
@@ -252,7 +263,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
     
    @Override
    public void onBackPressed() {
-      if(shopsDialogManager.hasOpenedShop()) {
+      if(attackView.isVisible()) {
+         onAttackDialogClosed();
+      } else if(shopsDialogManager.hasOpenedShop()) {
          shopsDialogManager.closeShop(shopsDialogManager.getOpenedShopIndex(), scene);
          
          shopsMenu.clearAllSelection();
@@ -317,10 +330,37 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onTimeToAttack() {
-      gameManager.getAttackManager().getAttack().execute();
+      if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
+         foodClicker.unregisterTouchArea(scene);
+         woodClicker.unregisterTouchArea(scene);
+         shopsMenu.unregisterTouchArea(scene);
+         
+         attackView.registerTouchArea(scene);
+         attackView.show(gameManager.getAttackManager().getAttack());
+      } else {      
+         gameManager.getAttackManager().getAttack().update(gameManager.getTown());
+         gameManager.save(this);
+         
+         TheTownNotificationManager.reset(this);
+      }
+   }
+
+   @Override
+   public void onAttackDialogClosed() {
+      foodClicker.registerTouchArea(scene);
+      woodClicker.registerTouchArea(scene);
+      shopsMenu.registerTouchArea(scene);
+      
+      attackView.unregisterTouchArea(scene);
+      attackView.close();
+      
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).clear();
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();        
+      resourcesCounterPanel.update();            
+      
       gameManager.getAttackManager().getAttack().update(gameManager.getTown());
       gameManager.save(this);
       
-      TheTownNotificationManager.reset(this);
+      TheTownNotificationManager.reset(this);            
    }
 }

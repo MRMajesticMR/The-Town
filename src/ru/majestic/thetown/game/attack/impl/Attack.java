@@ -4,7 +4,6 @@ import ru.majestic.thetown.game.attack.IAttack;
 import ru.majestic.thetown.game.town.ITown;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 public class Attack implements IAttack {
 
@@ -43,11 +42,6 @@ public class Attack implements IAttack {
    @Override
    public int getAttackPower() {
       return attackPower;
-   }
-
-   @Override
-   public void execute() {
-      Log.i("ATTACK", "Execute");
    }
 
 }
