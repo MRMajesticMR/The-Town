@@ -10,8 +10,7 @@ public class Attack implements IAttack {
    private static final String   SAVE_TAG_NEXT_ATTACK_TIME  = "SAVE_TAG_NEXT_ATTACK_TIME";
    private static final String   SAVE_TAG_ATTACK_POWER      = "SAVE_TAG_ATTACK_POWER";
    
-//   private static final int      ATTACK_PERIOD = 1000 * 60 * 60 * 3;
-   private static final int      ATTACK_PERIOD = 1000 * 30;
+   private static final int      ATTACK_PERIOD = 1000 * 60 * 60 * 3;
    
    private long   nextAttackTime;
    private int    attackPower;
