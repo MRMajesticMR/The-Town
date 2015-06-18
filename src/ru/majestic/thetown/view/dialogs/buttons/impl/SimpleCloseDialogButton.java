@@ -1,39 +1,31 @@
 package ru.majestic.thetown.view.dialogs.buttons.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
-import org.andengine.input.touch.TouchEvent;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.IDialog;
 import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.listeners.OnCloseDialogButtonClickedListener;
 
-public class SimpleCloseDialogButton extends Rectangle implements ICloseDialogButton {
+public class SimpleCloseDialogButton extends ButtonSprite implements ICloseDialogButton, OnClickListener {
 
    private static final int SIZE = 40;
    
    private OnCloseDialogButtonClickedListener onCloseDialogButtonClickedListener;
    
    public SimpleCloseDialogButton(IDialog dialog) {
-      super(dialog.getWidth() - SIZE, 0, SIZE, SIZE, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      setColor(0, 1, 0);
+      super(dialog.getWidth() - SIZE, 0, ResourceManager.getInstance().getCloseBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      setWidth(SIZE);
+      setHeight(SIZE);
+      setOnClickListener(this);
    }   
    
    @Override
    public void setOnCloseDialogButtonClickedListener(OnCloseDialogButtonClickedListener onCloseDialogButtonClickedListener) {
       this.onCloseDialogButtonClickedListener = onCloseDialogButtonClickedListener;      
-   }
-   
-   @Override
-   public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
-   {
-       if (pSceneTouchEvent.isActionDown())
-       {
-          onCloseDialogButtonClickedListener.onCloseDialogButtonClicked();
-       }
-       return true;
    }
 
    @Override
@@ -49,6 +41,11 @@ public class SimpleCloseDialogButton extends Rectangle implements ICloseDialogBu
    @Override
    public void attachToParent(Entity parent) {
       parent.attachChild(this);
+   }
+
+   @Override
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      onCloseDialogButtonClickedListener.onCloseDialogButtonClicked();
    };
 
 }

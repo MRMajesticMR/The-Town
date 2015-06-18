@@ -8,6 +8,7 @@ import org.andengine.entity.text.Text;
 import ru.majestic.thetown.game.IAttackManager;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.attack.IAttackTimeView;
+import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public class SimpleAttackTimeView extends Rectangle implements IAttackTimeView {
 
@@ -44,7 +45,7 @@ public class SimpleAttackTimeView extends Rectangle implements IAttackTimeView {
    @Override
    public void update() {
       timeText.setText(convertLongToTimeString(attackManager.getAttack().getTimeToNextAttack() - System.currentTimeMillis()));
-      attackPowerText.setText(String.valueOf(attackManager.getAttack().getAttackPower()));
+      attackPowerText.setText(BigValueFormatter.format(attackManager.getAttack().getAttackPower()));
       
       timeText.setX((getWidth() - timeText.getWidth()) / 2);
       attackPowerText.setX((getWidth() - attackPowerText.getWidth()) / 2);

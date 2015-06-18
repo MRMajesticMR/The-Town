@@ -29,11 +29,11 @@ public class ResourcesShopPanel extends AResourcesShopPanelSkeleton {
       
       this.gameManager = gameManager;
       
-      foodCountView           = new FoodCounterWithRpSView(10, 4);
-      woodCountView           = new WoodCounterWithRpSView(180, 4);
-      goldCountView           = new GoldCounterView(350, 4);      
-      homeCountView           = new HomeCounterView(10, 44);
-      defenceCountView        = new DefenceCounterView(180, 44);
+      foodCountView           = new FoodCounterWithRpSView(10, 2);
+      woodCountView           = new WoodCounterWithRpSView(180, 2);
+      goldCountView           = new GoldCounterView(350, 2);      
+      homeCountView           = new HomeCounterView(10, 40);
+      defenceCountView        = new DefenceCounterView(180, 40);
       
       foodCountView.attachToParent(this);
       woodCountView.attachToParent(this);

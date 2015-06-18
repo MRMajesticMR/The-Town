@@ -67,7 +67,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       
       buyButton      = new ButtonSprite(0, 0, ResourceManager.getInstance().getBuyBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buyButton.setHeight((getHeight() - (PADDING * 2)) / 2);
-      buyButton.setWidth(130);
+      buyButton.setWidth(100);
       buyButton.setX(getWidth() - PADDING - buyButton.getWidth() - 4);
       buyButton.setY(getHeight() - PADDING - buyButton.getHeight() - 4);
       

@@ -37,9 +37,6 @@ public class ResourceManager {
    
    private ITextureRegion  menuButtonTextureRegion;
    
-   private BitmapTextureAtlas    plusBtnTextureAtlas;
-   
-   private ITiledTextureRegion   plusBtnTextureRegion;
    
    private BitmapTextureAtlas    buildingShopPanelIconsTextureAtlas;
    
@@ -49,7 +46,18 @@ public class ResourceManager {
    private BitmapTextureAtlas    shopBitmapTextureAtlas;
    private ITextureRegion        shopBackgroundTextureRegion;
    private ITextureRegion        shopItemBackgroundTextureRegion;
+   private ITextureRegion        shopResPanelBackgroundTextureRegion;
+   private ITiledTextureRegion   closeBtnTextureRegion;
    
+   private BitmapTextureAtlas    clickersShopTextureAtals;
+   private ITextureRegion        clickersUpgraderBackgroundTextureRegion;
+   private ITiledTextureRegion   upgBtnTextureRegion;
+   
+   private BitmapTextureAtlas    workersShopTextureAtals;
+   private ITextureRegion        workersTypeBtnBgndTextureRegion;
+   private ITextureRegion        workerWoodTextureRegion;
+   private ITextureRegion        workerFoodTextureRegion;
+   private ITextureRegion        workerDefenceTextureRegion;
    
    private BitmapTextureAtlas shopTitleFontTextureAtlas;
    private ITexture           countersFontTextureAtlas;
@@ -116,27 +124,37 @@ public class ResourceManager {
       goldIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/gold_icon.png", 0, 128);
       homeIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/home_icon.png", 128, 128);
       swordsIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/swords_icon.png", 256, 0);
-      shiledIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/shield_icon.png", 256, 128);
-      
-      plusBtnTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 128, 64);
-      
-      plusBtnTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(plusBtnTextureAtlas, context, "gfx/buttons/plus_btn.png", 0, 0, 2, 1);
+      shiledIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/shield_icon.png", 256, 128);                  
       
       buildingShopPanelIconsTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
       buyBtnTextureRegion                 = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/buttons/buy_btn.png", 0, 0, 2, 1);
-      expIconTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/exp_icon.png", 128, 0);
+      expIconTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/exp_icon.png", 0, 128);
       
       shopBitmapTextureAtlas              = new BitmapTextureAtlas(engine.getTextureManager(), 2048, 2048);
       shopBackgroundTextureRegion         = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_background.png", 0, 0);
       shopItemBackgroundTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_item_background.png", 1024, 0);
+      shopResPanelBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_res_panel_background.png", 1024, 200);
+      closeBtnTextureRegion               = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(shopBitmapTextureAtlas, context, "gfx/buttons/close_dialog_btn.png", 1024, 400, 2, 1);
+      
+      
+      clickersShopTextureAtals                  = new BitmapTextureAtlas(engine.getTextureManager(), 512, 512);
+      clickersUpgraderBackgroundTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/clickers/clickers_upgrader_background.png", 0, 0);
+      upgBtnTextureRegion                       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(clickersShopTextureAtals, context, "gfx/shops/clickers/upg_btn.png", 0, 256, 2, 1);
+      
+      workersShopTextureAtals                   = new BitmapTextureAtlas(engine.getTextureManager(), 512, 512);
+      workersTypeBtnBgndTextureRegion           = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/workers_type_btn_bgnd.png", 0, 0);
+      workerWoodTextureRegion                   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/worker_wood_icon.png", 0, 256);
+      workerFoodTextureRegion                   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/worker_food_icon.png", 128, 256);
+      workerDefenceTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/worker_defence_icon.png", 128, 384);
       
       clickersBitmapTextureAtlas.load();
       buttonsBitmapTextureAtlas.load();
       iconsBitmapTextureAtlas.load();
-      plusBtnTextureAtlas.load();
       buildingShopPanelIconsTextureAtlas.load();  
       shopBitmapTextureAtlas.load();
+      clickersShopTextureAtals.load();
+      workersShopTextureAtals.load();
       
       loadFonts(context);
       loadBackground(context);
@@ -249,8 +267,8 @@ public class ResourceManager {
       return goldIconTextureRegion;
    }
 
-   public ITiledTextureRegion getPlusBtnTextureRegion() {
-      return plusBtnTextureRegion;
+   public ITiledTextureRegion getUpgBtnTextureRegion() {
+      return upgBtnTextureRegion;
    }
 
    public ITextureRegion getHomeIconTextureRegion() {
@@ -315,8 +333,34 @@ public class ResourceManager {
 
    public Font getErrorTextFont() {
       return errorTextFont;
-   }      
-   
-   
+   }
+
+   public ITextureRegion getShopResPanelBackgroundTextureRegion() {
+      return shopResPanelBackgroundTextureRegion;
+   }
+
+   public ITiledTextureRegion getCloseBtnTextureRegion() {
+      return closeBtnTextureRegion;
+   }
+
+   public ITextureRegion getClickersUpgraderBackgroundTextureRegion() {
+      return clickersUpgraderBackgroundTextureRegion;
+   }
+
+   public ITextureRegion getWorkersTypeBtnBgndTextureRegion() {
+      return workersTypeBtnBgndTextureRegion;
+   }
+
+   public ITextureRegion getWorkerWoodTextureRegion() {
+      return workerWoodTextureRegion;
+   }
+
+   public ITextureRegion getWorkerFoodTextureRegion() {
+      return workerFoodTextureRegion;
+   }
+
+   public ITextureRegion getWorkerDefenceTextureRegion() {
+      return workerDefenceTextureRegion;
+   }
       
 }

@@ -15,7 +15,7 @@ public class FoodWorkerRank5 extends AFoodWorker {
    
    @Override
    public ITextureRegion getWorkerImage() {
-      return ResourceManager.getInstance().getHomeIconTextureRegion();
+      return ResourceManager.getInstance().getWorkerFoodTextureRegion();
    }
 
    @Override

@@ -15,7 +15,7 @@ public class DefenceWorkerRank4 extends ADefenceWorker {
    
    @Override
    public ITextureRegion getWorkerImage() {
-      return ResourceManager.getInstance().getHomeIconTextureRegion();
+      return ResourceManager.getInstance().getWorkerDefenceTextureRegion();
    }
 
    @Override

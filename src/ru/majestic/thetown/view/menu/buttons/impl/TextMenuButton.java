@@ -83,7 +83,7 @@ public class TextMenuButton extends Sprite implements IMenuButton {
    @Override
    public void setActive(boolean active) {
       if(active) {
-         setColor(1, 0, 0);
+         setColor(0.3f, 1f, 0.3f);
       } else {
          setColor(1, 1, 1);
       }

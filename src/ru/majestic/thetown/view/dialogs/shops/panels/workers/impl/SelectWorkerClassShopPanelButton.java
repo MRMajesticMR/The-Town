@@ -1,8 +1,8 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.workers.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
@@ -10,14 +10,14 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.ISelectWorkerClassShopPanelButton;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerClassShopButtonClickedListener;
 
-public class SelectWorkerClassShopPanelButton extends Rectangle implements ISelectWorkerClassShopPanelButton {
+public class SelectWorkerClassShopPanelButton extends Sprite implements ISelectWorkerClassShopPanelButton {
 
    private OnWorkerClassShopButtonClickedListener onWorkerClassShopButtonClickedListener;
    
    private Text   menuText;
    
    public SelectWorkerClassShopPanelButton(String text) {
-      super(0, 0, 0, 0, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, 0, 0, 0, ResourceManager.getInstance().getWorkersTypeBtnBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       menuText = new Text(0, 0, ResourceManager.getInstance().getMenuButtonsFont(), text, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
@@ -61,9 +61,9 @@ public class SelectWorkerClassShopPanelButton extends Rectangle implements ISele
    @Override
    public void setActive(boolean active) {
       if(active) {
-         setColor(1, 0, 0);
+         setColor(0.3f, 1f, 0.3f);
       } else {
-         setColor(1, 0, 1);
+         setColor(1, 1, 1);
       }
    }
 

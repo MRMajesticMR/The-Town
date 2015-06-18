@@ -15,7 +15,7 @@ public class WoodWorkerRank2 extends AWoodWorker {
    
    @Override
    public ITextureRegion getWorkerImage() {
-      return ResourceManager.getInstance().getHomeIconTextureRegion();
+      return ResourceManager.getInstance().getWorkerWoodTextureRegion();
    }
 
    @Override

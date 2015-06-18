@@ -8,7 +8,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerC
 public class SelectWorkerClassShopPanel extends ASelectWorkerClassShopPanel implements OnWorkerClassShopButtonClickedListener {
 
    private static final int HEIGHT           = 40;
-   private static final int BUTTONS_SPACE    = 2;
+   private static final int BUTTONS_SPACE    = 15;
    
    private static final int TOTAL_SHOPS_PANEL_COUNT = 3;
    
@@ -18,7 +18,9 @@ public class SelectWorkerClassShopPanel extends ASelectWorkerClassShopPanel impl
    
    
    public SelectWorkerClassShopPanel(IShopDialog dialog) {
-      super(0, dialog.getHeight() - HEIGHT - 22, dialog.getWidth(), HEIGHT);          
+      super(0, dialog.getHeight() - HEIGHT - 20, dialog.getWidth(), HEIGHT);          
+      
+      setAlpha(0.0f);
       
       menuButtons = new ISelectWorkerClassShopPanelButton[TOTAL_SHOPS_PANEL_COUNT];
       

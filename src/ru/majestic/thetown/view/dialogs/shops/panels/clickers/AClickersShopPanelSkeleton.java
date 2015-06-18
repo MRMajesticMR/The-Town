@@ -1,7 +1,6 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.clickers;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -14,10 +13,10 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
-public abstract class AClickersShopPanelSkeleton extends Rectangle implements IClickersShopPanel,
+public abstract class AClickersShopPanelSkeleton extends Sprite implements IClickersShopPanel,
                                                                               OnClickListener {
 
-   private static final int PANEL_PADDING = 6;
+   private static final int PANEL_PADDING = 12;
    
    private ClickersShopPanelActionsListener clickersShopPanelActionsListener;
    
@@ -32,23 +31,22 @@ public abstract class AClickersShopPanelSkeleton extends Rectangle implements IC
    
    
    public AClickersShopPanelSkeleton(IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
-      super(0, 0, 0, 0, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      setColor(0, 1, 0);
+      super(0, 0, 0, 0, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       this.clicker = clicker;
                   
       currentLvlTxt           = new Text(0, PANEL_PADDING + 6, ResourceManager.getInstance().getShopTitleFont(), "1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
             
-      perClickResourceIcon   = new Sprite(PANEL_PADDING, PANEL_PADDING, 40, 40, perSecondResourceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      perClickResourceIcon   = new Sprite(PANEL_PADDING, PANEL_PADDING, 30, 30, perSecondResourceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       perClickResourceTxt    = new Text(perClickResourceIcon.getX() + perClickResourceIcon.getWidth() + 8, perClickResourceIcon.getY() + 10, ResourceManager.getInstance().getShopTextFont(), "100.00AA PC", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
-      upgradePriceIcon        = new Sprite(PANEL_PADDING, perClickResourceIcon.getY() + perClickResourceIcon.getHeight() + 8, 40, 40, upgradePriceIconTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      upgradePriceIcon        = new Sprite(PANEL_PADDING, perClickResourceIcon.getY() + perClickResourceIcon.getHeight() + 8, 30, 30, upgradePriceIconTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       upgradePriceTxt         = new Text(upgradePriceIcon.getX() + upgradePriceIcon.getWidth() + 4, upgradePriceIcon.getY() + 8, ResourceManager.getInstance().getShopTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       
-      upgradeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getPlusBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      upgradeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      upgradeBtn.setWidth(40);
-      upgradeBtn.setHeight(40);            
-      upgradeBtn.setX(234 - upgradeBtn.getWidth() - PANEL_PADDING); 
+      upgradeBtn.setWidth(70);
+      upgradeBtn.setHeight(35);            
+      upgradeBtn.setX(215 - upgradeBtn.getWidth() - PANEL_PADDING); 
       upgradeBtn.setY(upgradePriceIcon.getY());
       
       upgradeBtn.setOnClickListener(this);

@@ -27,7 +27,7 @@ public class SimpleAttackView extends Rectangle implements IAttackView, OnClickL
       
       setVisible(false);
       
-      closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getPlusBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       resultText            = new Text(0, PANEL_PADDING, ResourceManager.getInstance().getAttackResultTextFont(), "You've been attacked!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       closeBtn.setWidth(200);
