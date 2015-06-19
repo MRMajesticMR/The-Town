@@ -211,10 +211,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onPause() {
       super.onPause();
-      gameManager.save(this);
-      gameManager.getAttackManager().stopAttackTimeObserve();
-      workersProductionHandler.save(this);
-      workersProductionHandler.stop();
+      if(gameManager != null) {
+         gameManager.save(this);
+         gameManager.getAttackManager().stopAttackTimeObserve();
+      }
+      
+      if(workersProductionHandler != null) {
+         workersProductionHandler.save(this);
+         workersProductionHandler.stop();
+      }
    }
 
    @Override
