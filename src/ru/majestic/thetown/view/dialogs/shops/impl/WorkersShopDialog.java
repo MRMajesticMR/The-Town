@@ -5,6 +5,7 @@ import org.andengine.entity.scene.Scene;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
+import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.ISelectWorkerClassShopPanel;
@@ -93,6 +94,8 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
       
       shopPanels[shopIndex].show();
       shopPanels[shopIndex].registerTouchArea(scene);
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
    
    @Override

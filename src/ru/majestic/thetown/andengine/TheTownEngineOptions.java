@@ -9,6 +9,7 @@ public class TheTownEngineOptions extends EngineOptions {
 
 	public TheTownEngineOptions(Camera camera) {
 		super(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), camera);
+		getAudioOptions().setNeedsSound(true);
 	}
 
 }

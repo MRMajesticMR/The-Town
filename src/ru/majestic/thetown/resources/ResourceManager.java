@@ -19,6 +19,8 @@ public class ResourceManager {
    
    private Engine engine;
    
+   private SoundsManager soundsManager;
+   
    private BitmapTextureAtlas clickersBitmapTextureAtlas;
    
    private ITextureRegion  foodClickerBgndTextureRegion;
@@ -111,6 +113,8 @@ public class ResourceManager {
    
    public void loadResources(Context context, Engine engine) {
       this.engine = engine;
+      
+      soundsManager = new SoundsManager(engine.getSoundManager(), context);
       
       clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);      
       
@@ -234,6 +238,10 @@ public class ResourceManager {
    
    public Engine getEngine() {
       return engine;
+   }
+   
+   public SoundsManager getSoundsManager() {
+      return soundsManager;
    }
    
    public ITextureRegion getFoodClickerBgndTextureRegion() {

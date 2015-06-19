@@ -203,6 +203,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(clicker == woodClicker) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
          woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
+         ResourceManager.getInstance().getSoundsManager().getRandomWoodClickerClickSound().play();
       }            
       
       resourcesCounterPanel.update();
@@ -238,6 +239,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          foodClicker.unregisterTouchArea(scene);
          woodClicker.unregisterTouchArea(scene);
       }
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 
    @Override
@@ -256,6 +259,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       } else {
          ErrorViewManager.showError(scene, "No enough wood");
       }
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 
    @Override
@@ -267,6 +272,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       foodClicker.registerTouchArea(scene);
       woodClicker.registerTouchArea(scene);
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
     
    @Override
@@ -307,34 +314,34 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       resourcesCounterPanel.update();
       shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 
    @Override
    public void onBuyWorkerAction(IWorker worker) {
       if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost()) {
          ErrorViewManager.showError(scene, "No enough food");
-         return;
-      }
-      
-      if((gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) < worker.getHomePlaces()) {
+      } else if((gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) < worker.getHomePlaces()) {
          ErrorViewManager.showError(scene, "No enough homes");
-         return;
+      } else {      
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
+         gameManager.getTown().addExp(worker.getExp());
+   
+         worker.buy();
+   
+         townView.update();
+         resourcesCounterPanel.update();
+   
+         homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
+         homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
+   
+         defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
+   
+         shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
       }
       
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
-      gameManager.getTown().addExp(worker.getExp());
-
-      worker.buy();
-
-      townView.update();
-      resourcesCounterPanel.update();
-
-      homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());
-      homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
-
-      defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
-
-      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS).update();
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 
    @Override
@@ -381,6 +388,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.getAttackManager().getAttack().update(gameManager.getTown());
       gameManager.save(this);
       
-      TheTownNotificationManager.reset(this);            
+      TheTownNotificationManager.reset(this);     
+      
+      
    }
 }
