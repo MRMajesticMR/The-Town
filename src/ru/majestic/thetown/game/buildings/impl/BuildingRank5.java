@@ -8,7 +8,7 @@ public class BuildingRank5 extends ABuilding {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_LOG_CABIN_CURRENT_COUNT";
    
    public BuildingRank5() {
-      super("Log cabin", 87955, 10000, 10000, ResourceManager.getInstance().getHomeIconTextureRegion());
+      super("Log cabin", 100000000.0f, 10000, 10000, ResourceManager.getInstance().getHomeIconTextureRegion());
    }
 
    @Override

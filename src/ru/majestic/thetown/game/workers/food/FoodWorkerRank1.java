@@ -10,7 +10,7 @@ public class FoodWorkerRank1 extends AFoodWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_FOOD_WORKER_RANK_1";
    
    public FoodWorkerRank1() {
-      super("Food R.1", 4, 1, 1, 1);
+      super("Food R.1", 3000, 1, 1, 1);
    }   
    
    @Override

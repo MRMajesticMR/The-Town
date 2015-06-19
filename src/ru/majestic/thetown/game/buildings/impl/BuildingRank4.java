@@ -8,7 +8,7 @@ public class BuildingRank4 extends ABuilding {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_HUT_CURRENT_COUNT";
    
    public BuildingRank4() {
-      super("Hut", 4567, 1000, 1000, ResourceManager.getInstance().getHomeIconTextureRegion());
+      super("Hut", 10000000.0f, 1000, 1000, ResourceManager.getInstance().getHomeIconTextureRegion());
    }
 
    @Override

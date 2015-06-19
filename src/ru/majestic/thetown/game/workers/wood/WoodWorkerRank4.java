@@ -10,7 +10,7 @@ public class WoodWorkerRank4 extends AWoodWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_WOOD_WORKER_RANK_4";
    
    public WoodWorkerRank4() {
-      super("Wood R.4", 4867, 1000, 1000, 1000);
+      super("Wood R.4", 3000000, 1000, 1000, 1000);
    }   
    
    @Override

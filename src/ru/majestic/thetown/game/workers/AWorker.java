@@ -6,7 +6,7 @@ import android.content.SharedPreferences.Editor;
 public abstract class AWorker implements IWorker{
 
    private String title;
-   private int    priceKoeff;
+   private float  priceKoeff;
    private int    exp;
    private int    homePlaces;
    private int    currentCount;
@@ -14,7 +14,7 @@ public abstract class AWorker implements IWorker{
    
    protected abstract String getSaveTagForCurrentCount();
    
-   public AWorker(String title, int priceKoeff, int exp, int homePlace, int resourcesPerSec) {
+   public AWorker(String title, float priceKoeff, int exp, int homePlace, int resourcesPerSec) {
       this.title        = title;
       this.priceKoeff     = priceKoeff;
       this.exp          = exp;
@@ -39,7 +39,7 @@ public abstract class AWorker implements IWorker{
 
    @Override
    public int getFoodCost() {
-      return (int) Math.pow(((getCurrentCount() + 1) * priceKoeff), 1.4f);
+      return (int) Math.pow(priceKoeff * ((getCurrentCount() / 10.0f) + 1), 1.0005f);
    }
 
    @Override

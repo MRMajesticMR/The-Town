@@ -10,7 +10,7 @@ public class DefenceWorkerRank4 extends ADefenceWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_DEFENCE_WORKER_RANK_4";
    
    public DefenceWorkerRank4() {
-      super("Defender R.4", 10000, 1000, 1000, 1000);
+      super("Defender R.4", 3000000, 1000, 1000, 1000);
    }   
    
    @Override

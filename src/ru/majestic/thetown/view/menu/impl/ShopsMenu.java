@@ -39,7 +39,7 @@ public class ShopsMenu extends Rectangle implements IShopsMenu, OnMenuButtonClic
       buttons[BUTTONS_INDEX_CLICKERS]    = new TextMenuButton("Clickers");
       buttons[BUTTONS_INDEX_BUILDINGS]   = new TextMenuButton("Buildings");
       buttons[BUTTONS_INDEX_WORKERS]     = new TextMenuButton("Workers");      
-      buttons[BUTTONS_INDEX_GOLD]        = new TextMenuButton("Gold");
+      buttons[BUTTONS_INDEX_GOLD]        = new TextMenuButton("Market");
       
       for(IMenuButton button: buttons)
          button.setOnMenuButtonClickedListener(this);
