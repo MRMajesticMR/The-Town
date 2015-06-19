@@ -3,6 +3,7 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
@@ -37,7 +38,12 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
       super.update();
       for(IBuildingShopPanel buildingShopPanel: buildingBuyPanels) {
          buildingShopPanel.update();
+         buildingShopPanel.setAvailable(isAvailable(buildingShopPanel.getBuilding()));
       }
+   }
+   
+   private boolean isAvailable(IBuilding building) {      
+      return building.getWoodCost() <= gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount();
    }
    
    public void setBuildingsShopDialogActionListeners(BuildingsShopDialogActionListeners buildingsShopDialogActionListeners) {

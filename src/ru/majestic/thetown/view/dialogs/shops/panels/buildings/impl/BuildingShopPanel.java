@@ -1,6 +1,7 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.buildings.impl;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -21,6 +22,8 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
    
    private IBuilding                         building;
    private BuildingShopPanelActionListener   buildingShopPanelActionListener;
+   
+   private Rectangle availableShadow;
    
    private Sprite buildingImage;
    private Text   buildingTitle;
@@ -43,6 +46,10 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       super(x, y, width, HEIGHT, ResourceManager.getInstance().getShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       this.building = building;
+      
+      availableShadow = new Rectangle(0, 0, getWidth(), getHeight(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      availableShadow.setAlpha(0.6f);
+      availableShadow.setColor(0, 0, 0);      
       
       buildingImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), building.getBuildingImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       
@@ -83,7 +90,14 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       attachChild(buyButton);
       attachChild(buildingsCount);
       
+      attachChild(availableShadow);
+      
       buyButton.setOnClickListener(this);
+   }
+   
+   @Override
+   public IBuilding getBuilding() {
+      return building;
    }
 
    @Override
@@ -120,6 +134,11 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       
       buildingsCount.setText(String.valueOf(building.getCurrentCount()));
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
+   }
+
+   @Override
+   public void setAvailable(boolean available) {
+      availableShadow.setVisible(!available);
    }
 
 }

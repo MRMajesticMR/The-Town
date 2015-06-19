@@ -250,6 +250,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          soundStateView.registerTouchArea(scene);
       } else {
          shopsDialogManager.openShop(shopType, scene);
+         shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
          
          foodClicker.unregisterTouchArea(scene);
          woodClicker.unregisterTouchArea(scene);

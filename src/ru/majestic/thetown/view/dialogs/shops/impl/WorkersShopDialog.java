@@ -102,7 +102,7 @@ public class WorkersShopDialog extends AShopDialog implements OnWorkerClassShopS
    public void update() {
       super.update();
       for(int i = 0; i < shopPanels.length; i++) {
-         shopPanels[i].update();
+         shopPanels[i].update(gameManager);
       }     
    }
    

@@ -1,6 +1,7 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.workers.impl;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -22,6 +23,8 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
    private WorkerShopPanelActionListener workerShopPanelActionListener;
    
    private IWorker worker;    
+   
+   private Rectangle availableShadow;
    
    private Sprite workerImage;
    private Text   workerTitle;
@@ -46,7 +49,11 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
    public WorkerShopPanel(int x, int y, int width, int height, IWorker worker) {
       super(x, y, width, height, ResourceManager.getInstance().getShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      this.worker = worker;       
+      this.worker = worker;  
+      
+      availableShadow = new Rectangle(0, 0, getWidth(), getHeight(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      availableShadow.setAlpha(0.6f);
+      availableShadow.setColor(0, 0, 0);
       
       workerImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), worker.getWorkerImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       workerTitle  = new Text(workerImage.getX() + workerImage.getHeight() + 8, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), worker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -94,6 +101,8 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       
       attachChild(buyButton);
       attachChild(workersCount);
+      
+      attachChild(availableShadow);
       
       buyButton.setOnClickListener(this);
    }
@@ -149,5 +158,15 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       }
       
       return null;
+   }
+
+   @Override
+   public void setAvailable(boolean available) {
+      availableShadow.setVisible(!available);
+   }
+
+   @Override
+   public IWorker getWorker() {
+      return worker;
    }
 }
