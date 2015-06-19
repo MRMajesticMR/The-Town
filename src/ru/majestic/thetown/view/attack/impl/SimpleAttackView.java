@@ -1,10 +1,10 @@
 package ru.majestic.thetown.view.attack.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
@@ -13,7 +13,7 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.attack.IAttackView;
 import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
 
-public class SimpleAttackView extends Rectangle implements IAttackView, OnClickListener {   
+public class SimpleAttackView extends Sprite implements IAttackView, OnClickListener {   
 
    private static final int PANEL_PADDING = 4;
    
@@ -23,11 +23,11 @@ public class SimpleAttackView extends Rectangle implements IAttackView, OnClickL
    private final Text            resultText;
    
    public SimpleAttackView() {
-      super(10, 200, TheTownCamera.CAMERA_WIDTH - 20, 300, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(10, 200, TheTownCamera.CAMERA_WIDTH - 20, 300, ResourceManager.getInstance().getAttackDialogBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setVisible(false);
       
-      closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getCloseButtonTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       resultText            = new Text(0, PANEL_PADDING, ResourceManager.getInstance().getAttackResultTextFont(), "You've been attacked!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       closeBtn.setWidth(200);

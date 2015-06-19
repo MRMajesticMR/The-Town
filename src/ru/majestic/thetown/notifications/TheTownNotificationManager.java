@@ -20,7 +20,7 @@ import android.support.v4.app.NotificationCompat;
 
 public class TheTownNotificationManager extends BroadcastReceiver {
 
- private static final long ALARM_MANAGER_INTERVAL        = 1000 * 60 * 30; //30 MIN
+   private static final long ALARM_MANAGER_INTERVAL      = 1000 * 60 * 10; //30 MIN
       
    private static final long TIME_TO_ATTACK_HALF_HOUR    = 1000 * 60 * 30;
    private static final long TIME_TO_ATTACK_HOUR         = TIME_TO_ATTACK_HALF_HOUR * 2;   
