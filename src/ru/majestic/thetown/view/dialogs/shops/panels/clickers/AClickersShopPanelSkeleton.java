@@ -68,7 +68,7 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
 
    @Override
    public void unregisterTouchArea(Scene scene) {      
-      scene.registerTouchArea(upgradeBtn);
+      scene.unregisterTouchArea(upgradeBtn);
    }
 
    @Override
