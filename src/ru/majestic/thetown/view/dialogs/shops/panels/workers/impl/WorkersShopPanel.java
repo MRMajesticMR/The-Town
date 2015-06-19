@@ -4,7 +4,6 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 
-import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.resources.ResourceManager;
@@ -66,18 +65,8 @@ public class WorkersShopPanel extends Rectangle implements IWorkersShopPanel {
    @Override
    public void update(IGameManager gameManager) {
       for(int i = 0; i < workerShopPanels.length; i++) {
-         workerShopPanels[i].update();
-         workerShopPanels[i].setAvailable(isWorkerAvailable(workerShopPanels[i].getWorker(), gameManager));
+         workerShopPanels[i].update(gameManager.getCargoManager(), gameManager.getBuildingsManager(), gameManager.getWorkersManager());
       }      
-   }
-   
-   private boolean isWorkerAvailable(IWorker worker, IGameManager gameManager) {
-      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost())
-         return false;
-      if(gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers() < worker.getHomePlaces())
-         return false;      
-      
-      return true;
    }
 
    @Override

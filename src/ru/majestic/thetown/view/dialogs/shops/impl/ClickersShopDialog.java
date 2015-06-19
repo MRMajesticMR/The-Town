@@ -25,25 +25,17 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
    public ClickersShopDialog(IGameManager gameManager) {
       super(gameManager);
       
-      foodClickersShopPanel   = new FoodClickersShopPanel(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD));
-      woodClickersShopPanel   = new WoodClickersShopPanel(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD));
+      foodClickersShopPanel   = new FoodClickersShopPanel((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3), getHeight() - PADDING  - 118, (getWidth() - (PADDING * 4)) / 2, 100, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD));
+      woodClickersShopPanel   = new WoodClickersShopPanel(PADDING, getHeight() - PADDING - 118, (getWidth() - (PADDING * 4)) / 2, 100, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD));
       
-      foodClickersShopPanel.setHeight(100);
-      foodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
-      foodClickersShopPanel.setX((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3));      
-      foodClickersShopPanel.setY(getHeight() - PADDING - foodClickersShopPanel.getHeight() - 18);            
-      
-      foodClickersShopPanel.setClickersShopPanelActionsListener(this);
-      
-      woodClickersShopPanel.setHeight(100);
-      woodClickersShopPanel.setWidth((getWidth() - (PADDING * 4)) / 2);
-      woodClickersShopPanel.setX(PADDING);
-      woodClickersShopPanel.setY(getHeight() - PADDING - woodClickersShopPanel.getHeight() - 18);            
-      
+      foodClickersShopPanel.setClickersShopPanelActionsListener(this);      
       woodClickersShopPanel.setClickersShopPanelActionsListener(this);
       
       foodClickersShopPanel.attachToParent(this);
       woodClickersShopPanel.attachToParent(this);            
+      
+      foodClickersShopPanel.update(gameManager.getCargoManager());
+      woodClickersShopPanel.update(gameManager.getCargoManager());      
    }
 
    @Override
@@ -76,8 +68,8 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
    public void update() {
       super.update();
       
-      foodClickersShopPanel.update();
-      woodClickersShopPanel.update();
+      foodClickersShopPanel.update(gameManager.getCargoManager());
+      woodClickersShopPanel.update(gameManager.getCargoManager());
    }
    
    public void setClickersShopDialogActionsListener(ClickersShopDialogActionsListener clickersShopDialogActionsListener) {

@@ -3,7 +3,6 @@ package ru.majestic.thetown.view.dialogs.shops.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
-import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
@@ -28,7 +27,7 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
       
       for(int buildingIndex = 0; buildingIndex < buildingBuyPanels.length; buildingIndex++) {
          buildingBuyPanels[buildingIndex] = new BuildingShopPanel(PADDINGS_LEFT_RIGHT, (int) (getResoucesShopPanel().getY() + getResoucesShopPanel().getHeight()) + PANELS_SPACE + (buildingIndex * (BuildingShopPanel.HEIGHT + PANELS_SPACE)), (int) getWidth() - (PADDINGS_LEFT_RIGHT * 2), gameManager.getBuildingsManager().getBuilding(buildingIndex));
-         buildingBuyPanels[buildingIndex].update();
+         buildingBuyPanels[buildingIndex].update(gameManager.getCargoManager());
          buildingBuyPanels[buildingIndex].setBuildingShopPanelActionListener(this);
       }
    }   
@@ -37,14 +36,9 @@ public class BuildingsShopDialog extends AShopDialog implements BuildingShopPane
    public void update() {
       super.update();
       for(IBuildingShopPanel buildingShopPanel: buildingBuyPanels) {
-         buildingShopPanel.update();
-         buildingShopPanel.setAvailable(isAvailable(buildingShopPanel.getBuilding()));
+         buildingShopPanel.update(gameManager.getCargoManager());
       }
-   }
-   
-   private boolean isAvailable(IBuilding building) {      
-      return building.getWoodCost() <= gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount();
-   }
+   }  
    
    public void setBuildingsShopDialogActionListeners(BuildingsShopDialogActionListeners buildingsShopDialogActionListeners) {
       this.buildingsShopDialogActionListeners = buildingsShopDialogActionListeners;

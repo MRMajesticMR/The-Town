@@ -1,17 +1,19 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.buildings.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.buildings.IBuildingShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.buildings.listeners.BuildingShopPanelActionListener;
+import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
+import ru.majestic.thetown.view.dialogs.utils.impl.AvailableShadow;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnClickListener {
@@ -23,7 +25,7 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
    private IBuilding                         building;
    private BuildingShopPanelActionListener   buildingShopPanelActionListener;
    
-   private Rectangle availableShadow;
+   private IAvailableShadow availableShadow;
    
    private Sprite buildingImage;
    private Text   buildingTitle;
@@ -47,9 +49,7 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       
       this.building = building;
       
-      availableShadow = new Rectangle(0, 0, getWidth(), getHeight(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      availableShadow.setAlpha(0.6f);
-      availableShadow.setColor(0, 0, 0);      
+      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
       
       buildingImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), building.getBuildingImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       
@@ -89,15 +89,10 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       
       attachChild(buyButton);
       attachChild(buildingsCount);
-      
-      attachChild(availableShadow);
+            
+      availableShadow.attachToParent(this);
       
       buyButton.setOnClickListener(this);
-   }
-   
-   @Override
-   public IBuilding getBuilding() {
-      return building;
    }
 
    @Override
@@ -129,16 +124,16 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
    }
 
    @Override
-   public void update() {
+   public void update(ICargoManager cargoManager) {
       priceText.setText(BigValueFormatter.format(building.getWoodCost()));
       
       buildingsCount.setText(String.valueOf(building.getCurrentCount()));
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
-   }
-
-   @Override
-   public void setAvailable(boolean available) {
-      availableShadow.setVisible(!available);
-   }
+      
+      if(cargoManager.getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= building.getWoodCost())
+         availableShadow.hide();
+      else
+         availableShadow.show();
+   }   
 
 }

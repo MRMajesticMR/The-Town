@@ -8,9 +8,12 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
+import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
+import ru.majestic.thetown.view.dialogs.utils.impl.AvailableShadow;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public abstract class AClickersShopPanelSkeleton extends Sprite implements IClickersShopPanel,
@@ -20,7 +23,9 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
    
    private ClickersShopPanelActionsListener clickersShopPanelActionsListener;
    
-   private IClicker clicker;
+   protected IClicker clicker;
+   
+   private IAvailableShadow availableShadow;
    
    private final Text         currentLvlTxt;
    private final Text         perClickResourceTxt;
@@ -30,9 +35,11 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
    private final Sprite       upgradePriceIcon;
    
    
-   public AClickersShopPanelSkeleton(IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
-      super(0, 0, 0, 0, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+   public AClickersShopPanelSkeleton(float x, float y, float width, float height, IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
+      super(x, y, width, height, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       this.clicker = clicker;
+      
+      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
                   
       currentLvlTxt           = new Text(0, PANEL_PADDING + 6, ResourceManager.getInstance().getShopTitleFont(), "1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
             
@@ -56,10 +63,12 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
       attachChild(perClickResourceTxt);      
       attachChild(upgradePriceIcon);
       attachChild(upgradePriceTxt); 
-      attachChild(upgradeBtn);          
+      attachChild(upgradeBtn);      
       
-      update();
+      availableShadow.attachToParent(this);
    }
+   
+   protected abstract boolean isUpgradeAvailable(ICargoManager cargoManager);
    
    @Override
    public void registerTouchArea(Scene scene) {
@@ -90,12 +99,17 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
    }
    
    @Override
-   public void update() {
+   public void update(ICargoManager cargoManager) {
       currentLvlTxt.setText(String.valueOf(clicker.getCurrentLvl()));
       perClickResourceTxt.setText(BigValueFormatter.format(clicker.getResourcesPerClick()) + " PC");
       upgradePriceTxt.setText(BigValueFormatter.format(clicker.getUpgradePrice()));
       
-      currentLvlTxt.setX(getWidth() - 100 - PANEL_PADDING + (100 - currentLvlTxt.getWidth()) / 2);   
-   }
+      currentLvlTxt.setX(getWidth() - 100 - PANEL_PADDING + (100 - currentLvlTxt.getWidth()) / 2);
+      
+      if(isUpgradeAvailable(cargoManager))
+         availableShadow.hide();
+      else
+         availableShadow.show();
+   }        
 
 }

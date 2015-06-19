@@ -1,7 +1,6 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.workers.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
@@ -9,11 +8,16 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import ru.majestic.thetown.game.IBuildingsManager;
+import ru.majestic.thetown.game.ICargoManager;
+import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkerShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.WorkerShopPanelActionListener;
+import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
+import ru.majestic.thetown.view.dialogs.utils.impl.AvailableShadow;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClickListener {
@@ -24,7 +28,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
    
    private IWorker worker;    
    
-   private Rectangle availableShadow;
+   private IAvailableShadow availableShadow;
    
    private Sprite workerImage;
    private Text   workerTitle;
@@ -51,9 +55,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       
       this.worker = worker;  
       
-      availableShadow = new Rectangle(0, 0, getWidth(), getHeight(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      availableShadow.setAlpha(0.6f);
-      availableShadow.setColor(0, 0, 0);
+      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
       
       workerImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), worker.getWorkerImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
       workerTitle  = new Text(workerImage.getX() + workerImage.getHeight() + 8, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), worker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -102,7 +104,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       attachChild(buyButton);
       attachChild(workersCount);
       
-      attachChild(availableShadow);
+      availableShadow.attachToParent(this);
       
       buyButton.setOnClickListener(this);
    }
@@ -131,12 +133,20 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
    }
 
    @Override
-   public void update() {
+   public void update(ICargoManager cargoManager, IBuildingsManager buildingsManager, IWorkersManager workersManager) {
       priceText.setText(BigValueFormatter.format(worker.getFoodCost()));
       homePriceText.setText(BigValueFormatter.format(worker.getHomePlaces()));
       
       workersCount.setText(String.valueOf(worker.getCurrentCount()));
       workersCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (workersCount.getWidth() / 2));
+      
+      if(cargoManager.getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost()) {
+         availableShadow.show();
+      } else if(buildingsManager.getTotalHomePlacesCount() - workersManager.getTotalHomeForWorkers() < worker.getHomePlaces()) {
+         availableShadow.show();      
+      } else {
+         availableShadow.hide();
+      }
    }
 
    @Override
@@ -158,15 +168,5 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       }
       
       return null;
-   }
-
-   @Override
-   public void setAvailable(boolean available) {
-      availableShadow.setVisible(!available);
-   }
-
-   @Override
-   public IWorker getWorker() {
-      return worker;
    }
 }
