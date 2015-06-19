@@ -35,7 +35,7 @@ public class Attack implements IAttack {
    @Override
    public void update(ITown town) {
       nextAttackTime = System.currentTimeMillis() + ATTACK_PERIOD;
-      attackPower    = (int) (Math.pow(2, town.getLvl()));
+      attackPower    = (int) (Math.pow(2, town.getLvl())) + 1;
    }
 
    @Override

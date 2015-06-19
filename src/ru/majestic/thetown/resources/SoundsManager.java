@@ -7,15 +7,23 @@ import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.audio.sound.SoundManager;
 
+import ru.majestic.thetown.game.impl.GameManager;
+
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
 
 public class SoundsManager {
    
-   private Sound     menuClickSound;
+   private static final String SAVE_TAG_SOUND_STATE = "SAVE_TAG_SOUND_STATE";
    
+   private Context   context;
+   
+   private Sound     menuClickSound;   
    private Sound[]   woodClickerClickSound;
    
    public SoundsManager(SoundManager soundManager, Context context) {
+      this.context = context;
+      
       woodClickerClickSound = new Sound[3];
       
       try {
@@ -28,6 +36,8 @@ public class SoundsManager {
       } catch (IOException e) {
          e.printStackTrace();
       }
+      
+      enableSounds(context.getSharedPreferences(GameManager.PREFFS_NAME, Context.MODE_PRIVATE).getBoolean(SAVE_TAG_SOUND_STATE, true));
    }
    
    public boolean isSoundEnabled() {
@@ -39,6 +49,10 @@ public class SoundsManager {
          ResourceManager.getInstance().getEngine().getSoundManager().setMasterVolume(1.0f);
       else
          ResourceManager.getInstance().getEngine().getSoundManager().setMasterVolume(0.0f);
+      
+      Editor editor = context.getSharedPreferences(GameManager.PREFFS_NAME, Context.MODE_PRIVATE).edit();      
+      editor.putBoolean(SAVE_TAG_SOUND_STATE, enable);
+      editor.commit();
    }
    
    public Sound getMenuClickSound() {
