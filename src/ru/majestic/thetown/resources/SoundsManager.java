@@ -30,6 +30,17 @@ public class SoundsManager {
       }
    }
    
+   public boolean isSoundEnabled() {
+      return ResourceManager.getInstance().getEngine().getSoundManager().getMasterVolume() == 1;
+   }
+   
+   public void enableSounds(boolean enable) {
+      if(enable)
+         ResourceManager.getInstance().getEngine().getSoundManager().setMasterVolume(1.0f);
+      else
+         ResourceManager.getInstance().getEngine().getSoundManager().setMasterVolume(0.0f);
+   }
+   
    public Sound getMenuClickSound() {
       return menuClickSound;
    }

@@ -26,14 +26,14 @@ public class ResourceManager {
    private ITextureRegion  foodClickerBgndTextureRegion;
    private ITextureRegion  woodClickerBgndTextureRegion;
    
-   private BitmapTextureAtlas iconsBitmapTextureAtlas;
-   
-   private ITextureRegion  foodIconTextureRegion;
-   private ITextureRegion  woodIconTextureRegion;
-   private ITextureRegion  goldIconTextureRegion;
-   private ITextureRegion  homeIconTextureRegion;
-   private ITextureRegion  swordsIconTextureRegion;
-   private ITextureRegion  shiledIconTextureRegion;
+   private BitmapTextureAtlas    iconsBitmapTextureAtlas;   
+   private ITextureRegion        foodIconTextureRegion;
+   private ITextureRegion        woodIconTextureRegion;
+   private ITextureRegion        goldIconTextureRegion;
+   private ITextureRegion        homeIconTextureRegion;
+   private ITextureRegion        swordsIconTextureRegion;
+   private ITextureRegion        shiledIconTextureRegion;
+   private ITiledTextureRegion   soundIconTextureRegion;
    
    private BitmapTextureAtlas buttonsBitmapTextureAtlas;
    
@@ -125,14 +125,14 @@ public class ResourceManager {
       
       menuButtonTextureRegion       = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buttonsBitmapTextureAtlas, context, "gfx/buttons/menu_button_background.png", 0, 0);
       
-      iconsBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 512);
-      
+      iconsBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);      
       foodIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/food_icon.png", 0, 0);
       woodIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/wood_icon.png", 128, 0);
       goldIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/gold_icon.png", 0, 128);
       homeIconTextureRegion      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/home_icon.png", 128, 128);
       swordsIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/swords_icon.png", 256, 0);
-      shiledIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/shield_icon.png", 256, 128);                  
+      shiledIconTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(iconsBitmapTextureAtlas, context, "gfx/shield_icon.png", 384, 0);
+      soundIconTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(iconsBitmapTextureAtlas, context, "gfx/icons/sound_icon.png", 256, 128, 2, 1);
       
       buildingShopPanelIconsTextureAtlas  = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
@@ -387,5 +387,9 @@ public class ResourceManager {
    public ITextureRegion getAttackDialogBgndTextureRegion() {
       return attackDialogBgndTextureRegion;
    }
-      
+
+   public ITiledTextureRegion getSoundIconTextureRegion() {
+      return soundIconTextureRegion;
+   }
+         
 }

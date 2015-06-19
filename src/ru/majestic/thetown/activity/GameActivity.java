@@ -53,6 +53,9 @@ import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
 import ru.majestic.thetown.view.menu.impl.ShopsMenu;
 import ru.majestic.thetown.view.menu.listeners.OnShopsMenuButtonClickedListener;
+import ru.majestic.thetown.view.sound.ISoundStateView;
+import ru.majestic.thetown.view.sound.impl.SoundStateView;
+import ru.majestic.thetown.view.sound.listener.OnSoundStateChangedListener;
 import ru.majestic.thetown.view.town.ITownView;
 import ru.majestic.thetown.view.town.impl.SimpleTownView;
 
@@ -65,7 +68,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               WorkersShopDialogActionListener,
                                                               OnWokersProductionCompleteListener,
                                                               OnTimeToAttackListener,
-                                                              OnAttackDialogClosedListener {
+                                                              OnAttackDialogClosedListener,
+                                                              OnSoundStateChangedListener {
 
 	private Camera 	camera;
 	
@@ -80,6 +84,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private ICountView              defenceCountView;	
 	private ITownView               townView;
 	private IAttackTimeView         attackTimeView;
+	
+	private ISoundStateView         soundStateView;
 	
 	private IAttackView             attackView;
 	
@@ -119,9 +125,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       defenceCountView        = new DefenceCounterView   (10, 130);      
       townView                = new SimpleTownView(gameManager.getTown());
       attackTimeView          = new SimpleAttackTimeView(TheTownCamera.CAMERA_WIDTH - 90, 100, gameManager.getAttackManager());
+      soundStateView          = new SoundStateView(TheTownCamera.CAMERA_WIDTH - 50, 40);
       
       attackView              = new SimpleAttackView();
       attackView.setOnAttackDialogClosedListener(this);
+      
+      soundStateView.setOnSoundStateChangedListener(this);
+      soundStateView.setSoundEnaled(ResourceManager.getInstance().getSoundsManager().isSoundEnabled());
       
       shopsMenu = new ShopsMenu();        
       
@@ -163,6 +173,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   townView.attachToParent(scene);
 	   attackTimeView.attachToParent(scene);
 	   
+	   soundStateView.attachToParent(scene);
+	   
 	   attackView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
@@ -171,6 +183,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   foodClicker.registerTouchArea(scene);
 	   woodClicker.registerTouchArea(scene);
+	   soundStateView.registerTouchArea(scene);
 	   
 	   shopsMenu.registerTouchArea(scene);
 	   
@@ -233,11 +246,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          foodClicker.registerTouchArea(scene);
          woodClicker.registerTouchArea(scene);
+         
+         soundStateView.registerTouchArea(scene);
       } else {
          shopsDialogManager.openShop(shopType, scene);
          
          foodClicker.unregisterTouchArea(scene);
          woodClicker.unregisterTouchArea(scene);
+         
+         soundStateView.unregisterTouchArea(scene);
       }
       
       ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
@@ -273,6 +290,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       foodClicker.registerTouchArea(scene);
       woodClicker.registerTouchArea(scene);
       
+      soundStateView.registerTouchArea(scene);
+      
       ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
     
@@ -287,6 +306,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          foodClicker.registerTouchArea(scene);
          woodClicker.registerTouchArea(scene);
+         
+         soundStateView.registerTouchArea(scene);
       } else {
          super.onBackPressed();
       }
@@ -360,6 +381,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
          foodClicker.unregisterTouchArea(scene);
          woodClicker.unregisterTouchArea(scene);
+         soundStateView.unregisterTouchArea(scene);
          shopsMenu.unregisterTouchArea(scene);
          
          attackView.registerTouchArea(scene);
@@ -376,6 +398,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onAttackDialogClosed() {
       foodClicker.registerTouchArea(scene);
       woodClicker.registerTouchArea(scene);
+      soundStateView.registerTouchArea(scene);      
       shopsMenu.registerTouchArea(scene);
       
       attackView.unregisterTouchArea(scene);
@@ -391,5 +414,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       TheTownNotificationManager.reset(this);     
       
       
+   }
+
+   @Override
+   public void onSoundStateChanged() {
+      ResourceManager.getInstance().getSoundsManager().enableSounds(!ResourceManager.getInstance().getSoundsManager().isSoundEnabled());
+      soundStateView.setSoundEnaled(ResourceManager.getInstance().getSoundsManager().isSoundEnabled());           
    }
 }
