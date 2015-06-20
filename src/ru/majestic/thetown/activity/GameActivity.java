@@ -216,7 +216,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(clicker == woodClicker) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
          woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
-         ResourceManager.getInstance().getSoundsManager().getRandomWoodClickerClickSound().play();
+//         ResourceManager.getInstance().getSoundsManager().getRandomWoodClickerClickSound().play();
       }            
       
       resourcesCounterPanel.update();
