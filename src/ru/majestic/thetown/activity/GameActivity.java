@@ -71,7 +71,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnAttackDialogClosedListener,
                                                               OnSoundStateChangedListener {
 
-	private Camera 	camera;
+	private Camera 	     camera;
 	
 	private Scene          scene;
 	private IGameManager   gameManager;
@@ -216,7 +216,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(clicker == woodClicker) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
          woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
-//         ResourceManager.getInstance().getSoundsManager().getRandomWoodClickerClickSound().play();
       }            
       
       resourcesCounterPanel.update();
@@ -379,19 +378,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onTimeToAttack() {
+      foodClicker.unregisterTouchArea(scene);
+      woodClicker.unregisterTouchArea(scene);
+      soundStateView.unregisterTouchArea(scene);
+      shopsMenu.unregisterTouchArea(scene);
+      
+      attackView.registerTouchArea(scene);
+      
       if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
-         foodClicker.unregisterTouchArea(scene);
-         woodClicker.unregisterTouchArea(scene);
-         soundStateView.unregisterTouchArea(scene);
-         shopsMenu.unregisterTouchArea(scene);
-         
-         attackView.registerTouchArea(scene);
-         attackView.show(gameManager.getAttackManager().getAttack());
+         attackView.show(true, gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount(), gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount());
       } else {      
-         gameManager.getAttackManager().getAttack().update(gameManager.getTown());
-         gameManager.save(this);
-         
-         TheTownNotificationManager.reset(this);
+         attackView.show(false, gameManager.getAttackManager().getAttack().getWoodReward(), gameManager.getAttackManager().getAttack().getFoodReward());         
       }
    }
 
@@ -404,10 +401,16 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       attackView.unregisterTouchArea(scene);
       attackView.close();
-      
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).clear();
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();        
-      resourcesCounterPanel.update();            
+
+      if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).clear();
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();        
+         resourcesCounterPanel.update();            
+      } else {
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getAttackManager().getAttack().getWoodReward());
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getAttackManager().getAttack().getFoodReward());
+         resourcesCounterPanel.update();
+      }
       
       gameManager.getAttackManager().getAttack().update(gameManager.getTown());
       gameManager.save(this);

@@ -18,7 +18,7 @@ public class Attack implements IAttack {
    @Override
    public void load(SharedPreferences prefs) {      
       nextAttackTime = prefs.getLong(SAVE_TAG_NEXT_ATTACK_TIME, System.currentTimeMillis() + ATTACK_PERIOD);
-      attackPower    = prefs.getInt(SAVE_TAG_ATTACK_POWER, 0);            
+      attackPower    = prefs.getInt(SAVE_TAG_ATTACK_POWER, 3);            
    }
 
    @Override
@@ -35,12 +35,22 @@ public class Attack implements IAttack {
    @Override
    public void update(ITown town) {
       nextAttackTime = System.currentTimeMillis() + ATTACK_PERIOD;
-      attackPower    = (int) (Math.pow(2, town.getLvl())) + 1;
+      attackPower    = (int) (Math.pow(2, town.getLvl()));
    }
 
    @Override
    public int getAttackPower() {
       return attackPower;
+   }
+
+   @Override
+   public long getWoodReward() {
+      return (long) Math.pow(attackPower, 3.4f) + 1000;
+   }
+
+   @Override
+   public long getFoodReward() {
+      return (long) Math.pow(attackPower, 3.4f) + 1000;
    }
 
 }

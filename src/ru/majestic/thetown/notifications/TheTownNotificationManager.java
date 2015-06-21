@@ -77,13 +77,19 @@ public class TheTownNotificationManager extends BroadcastReceiver {
             saveNotificationShowed(context, SAVE_TAG_HOUR);
             showAttackNotificaton(context, AttackTimeType.HOUR);
             return;
-         }                  
-      }
-      
-      if(nextAttack.getTimeToNextAttack() - System.currentTimeMillis() < 0 && !isNotifictionAlreadyShowed(context, SAVE_TAG_ATTACKED)) {
-         saveNotificationShowed(context, SAVE_TAG_ATTACKED);
-         showAttackedNotificaton(context);
-         return;
+         }
+         
+         if(nextAttack.getTimeToNextAttack() - System.currentTimeMillis() < 0 && !isNotifictionAlreadyShowed(context, SAVE_TAG_ATTACKED)) {
+            saveNotificationShowed(context, SAVE_TAG_ATTACKED);
+            showAttackedNotificaton(context, true);
+            return;
+         }
+      } else {
+         if(nextAttack.getTimeToNextAttack() - System.currentTimeMillis() < 0 && !isNotifictionAlreadyShowed(context, SAVE_TAG_ATTACKED)) {
+            saveNotificationShowed(context, SAVE_TAG_ATTACKED);
+            showAttackedNotificaton(context, false);
+            return;
+         }
       }
    }
    
@@ -113,11 +119,20 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       }
    }
    
-   private void showAttackedNotificaton(Context context) {
-      NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+   private void showAttackedNotificaton(Context context, boolean attackSuccess) {
+      NotificationCompat.Builder mBuilder = null;
+      
+      if(attackSuccess) {
+         mBuilder = new NotificationCompat.Builder(context)
+               .setSmallIcon(R.drawable.swords_icon)
+               .setContentTitle("You've been attacked!")
+               .setContentText("Come and check your Town. New wave of attackers come soon.");
+      } else {
+         mBuilder = new NotificationCompat.Builder(context)
             .setSmallIcon(R.drawable.swords_icon)
-            .setContentTitle("You've been attacked!")
-            .setContentText("Come and check your Town. New wave of attackers come soon.");
+            .setContentTitle("Attackers have been defeated!")
+            .setContentText("Come and take your reward!");
+      }
 
       Intent resultIntent = new Intent(context, GameActivity.class);
 

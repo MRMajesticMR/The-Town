@@ -1,6 +1,7 @@
 package ru.majestic.thetown.game.workers;
 
 
+
 public abstract class ADefenceWorker extends AWorker {
 
    public ADefenceWorker(String title, float priceKoeff, int exp, int homePlace, int resourcesPerSec) {
@@ -11,5 +12,4 @@ public abstract class ADefenceWorker extends AWorker {
    public WorkerType getType() {
       return WorkerType.DEFENCE;
    }
-
 }

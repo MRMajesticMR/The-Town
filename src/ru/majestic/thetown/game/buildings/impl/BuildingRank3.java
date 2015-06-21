@@ -8,7 +8,7 @@ public class BuildingRank3 extends ABuilding {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_SHACK_CURRENT_COUNT";
    
    public BuildingRank3() {
-      super("Shack", 1000000.0f, 100, 100, ResourceManager.getInstance().getHomeIconTextureRegion());
+      super("Shack", 100000.0f, 100, 100, ResourceManager.getInstance().getHomeIconTextureRegion());
    }
 
    @Override

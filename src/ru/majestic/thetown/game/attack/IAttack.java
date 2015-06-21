@@ -11,5 +11,8 @@ public interface IAttack {
    
    public long       getTimeToNextAttack  ();
    public void       update               (ITown town);
-   public int        getAttackPower       ();   
+   public int        getAttackPower       ();
+   
+   public long       getWoodReward        ();
+   public long       getFoodReward        ();
 }
