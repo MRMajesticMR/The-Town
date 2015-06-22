@@ -8,6 +8,7 @@ import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
 
 public class ShopsDialogsManager implements IShopsDialogsManager,
                                             OnDialogClosedListener {
@@ -88,6 +89,13 @@ public class ShopsDialogsManager implements IShopsDialogsManager,
       }
       
       return -1;
+   }
+
+   @Override
+   public void setOnBuyGoldListener(OnBuyGoldListener onBuyGoldListener) {
+      for(int shopIndex = 0; shopIndex < shops.length; shopIndex++) {
+         shops[shopIndex].getBuyGoldShopPanel().setOnBuyGoldListener(onBuyGoldListener);
+      }
    }
 
 }

@@ -3,6 +3,7 @@ package ru.majestic.thetown.view.dialogs.shops;
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
 
 public interface IShopsDialogsManager {
 
@@ -14,6 +15,7 @@ public interface IShopsDialogsManager {
    public static final int SHOP_TYPE_GOLD       = 3;   
    
    public void setOnShopsCloseButtonClickedListener   (OnShopsCloseButtonCLickedListener onShopsClosedListener);
+   public void setOnBuyGoldListener                   (OnBuyGoldListener onBuyGoldListener);
    
    public void          attachToScene                 (Scene scene);
    public boolean       hasOpenedShop                 ();

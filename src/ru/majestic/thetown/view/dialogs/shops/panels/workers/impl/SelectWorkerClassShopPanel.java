@@ -18,7 +18,7 @@ public class SelectWorkerClassShopPanel extends ASelectWorkerClassShopPanel impl
    
    
    public SelectWorkerClassShopPanel(IShopDialog dialog) {
-      super(0, dialog.getHeight() - HEIGHT - 20, dialog.getWidth(), HEIGHT);          
+      super(0, dialog.getHeight() - HEIGHT - 20 - dialog.getBuyGoldShopPanel().getHeight(), dialog.getWidth(), HEIGHT);          
       
       setAlpha(0.0f);
       

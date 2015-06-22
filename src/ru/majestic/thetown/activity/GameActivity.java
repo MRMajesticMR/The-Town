@@ -5,9 +5,15 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.util.Log;
+
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
+import ru.majestic.thetown.game.IBillingManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
@@ -15,6 +21,7 @@ import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
+import ru.majestic.thetown.game.impl.BillingManager;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.listener.OnTimeToAttackListener;
 import ru.majestic.thetown.game.workers.IWorker;
@@ -48,6 +55,7 @@ import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActio
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
 import ru.majestic.thetown.view.errors.impl.ErrorViewManager;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
@@ -69,12 +77,14 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnWokersProductionCompleteListener,
                                                               OnTimeToAttackListener,
                                                               OnAttackDialogClosedListener,
-                                                              OnSoundStateChangedListener {
+                                                              OnSoundStateChangedListener, 
+                                                              OnBuyGoldListener {
 
-	private Camera 	     camera;
+	private Camera 	        camera;	
+	private Scene             scene;
 	
-	private Scene          scene;
-	private IGameManager   gameManager;
+	private IGameManager      gameManager;
+	private IBillingManager   billingManager;
 	
 	private IClickerView foodClicker;
 	private IClickerView woodClicker;
@@ -117,6 +127,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.load(this);         
       gameManager.getAttackManager().setOnTimeToAttackListener(this);
       
+      billingManager = new BillingManager();
+      
       foodClicker = new FoodClickerView();
       woodClicker = new WoodClickerView();
       
@@ -143,6 +155,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       shopsMenu.setOnShopsMenuButtonClickedListener(this);
       
       shopsDialogManager.setOnShopsCloseButtonClickedListener(this);
+      shopsDialogManager.setOnBuyGoldListener(this);
                        
       ClickersShopDialog clickersShopDialog = (ClickersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS);
       clickersShopDialog.setClickersShopDialogActionsListener(this);
@@ -204,6 +217,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   gameManager.getAttackManager().startAttackTimeObserve();
 	   workersProductionHandler.load(this);
       workersProductionHandler.start();
+      
+      billingManager.init(this);
 	}
 
    @Override
@@ -232,6 +247,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(workersProductionHandler != null) {
          workersProductionHandler.save(this);
          workersProductionHandler.stop();
+      }
+      
+      if(billingManager != null) {
+         billingManager.deinit(this);
       }
    }
 
@@ -424,5 +443,44 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onSoundStateChanged() {
       ResourceManager.getInstance().getSoundsManager().enableSounds(!ResourceManager.getInstance().getSoundsManager().isSoundEnabled());
       soundStateView.setSoundEnaled(ResourceManager.getInstance().getSoundsManager().isSoundEnabled());           
+   }
+
+   @Override
+   public void onBuyGold(BuyType buyType) {
+      switch(buyType) {
+      case TEN:
+         Log.d("BUY_GOLD", "TEN");
+         try {
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_TEN_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
+         } catch (SendIntentException e) {
+            Log.e("BUY_GOLD", "ERROR: " + e.toString());
+         }
+         break;
+      case HUNDRED:
+         Log.d("BUY_GOLD", "HUNDRED");
+         try {
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_HUNDRED_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
+         } catch (SendIntentException e) {
+            Log.e("BUY_GOLD", "ERROR: " + e.toString());
+         }
+         break;
+      case THOUSAND:
+         Log.d("BUY_GOLD", "THOUSAND");
+         try {
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_THOUSAND_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
+         } catch (SendIntentException e) {
+            Log.e("BUY_GOLD", "ERROR: " + e.toString());
+         }
+         break;
+      }
+   }
+   
+   @Override
+   protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+      if(resultCode == Activity.RESULT_OK) {
+         if(requestCode == 1001) {
+            Log.d("BUY_GOLD", "Purchased");
+         }
+      }
    }
 }

@@ -11,7 +11,9 @@ import ru.majestic.thetown.view.dialogs.buttons.ICloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.impl.SimpleCloseDialogButton;
 import ru.majestic.thetown.view.dialogs.buttons.listeners.OnCloseDialogButtonClickedListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.IBuyGoldShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.IResourcesShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.impl.BuyGoldShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.impl.ResourcesShopPanel;
 
 public abstract class AShopDialog extends Sprite implements IShopDialog, OnCloseDialogButtonClickedListener {
@@ -24,6 +26,8 @@ public abstract class AShopDialog extends Sprite implements IShopDialog, OnClose
    
    private ICloseDialogButton    closeDialogButton;
    private IResourcesShopPanel   resourcesShopPanel;
+   private IBuyGoldShopPanel     buyGoldShopPanel;
+   
    protected IGameManager        gameManager;
    
    public AShopDialog(IGameManager gameManager) {
@@ -37,17 +41,22 @@ public abstract class AShopDialog extends Sprite implements IShopDialog, OnClose
       
       closeDialogButton = new SimpleCloseDialogButton(this);     
       closeDialogButton.setOnCloseDialogButtonClickedListener(this);      
-      closeDialogButton.attachToParent(this);            
+      closeDialogButton.attachToParent(this);
+      
+      buyGoldShopPanel = new BuyGoldShopPanel(this);
+      buyGoldShopPanel.attachToParent(this);
    }
    
    @Override
    public void registerTouchArea(Scene scene) {
-      closeDialogButton.registerTouchArea(scene);      
+      closeDialogButton.registerTouchArea(scene);
+      buyGoldShopPanel.registerTouchArea(scene);
    }
 
    @Override
    public void unregisterTouchArea(Scene scene) {
       closeDialogButton.unregisterTouchArea(scene);
+      buyGoldShopPanel.unregisterTouchArea(scene);
    }
 
    @Override
@@ -83,6 +92,11 @@ public abstract class AShopDialog extends Sprite implements IShopDialog, OnClose
    @Override
    public IResourcesShopPanel getResoucesShopPanel() {
       return resourcesShopPanel;
+   }
+
+   @Override
+   public IBuyGoldShopPanel getBuyGoldShopPanel() {
+      return buyGoldShopPanel;
    }
 
 }
