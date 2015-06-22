@@ -7,4 +7,6 @@ public interface IBuyGoldButton extends IClickableView {
 
    public void    setOnBuyGoldButtonClickedListener      (OnBuyGoldButtonClickedListener onBuyGoldButtonClickedListener);
    public int     getIndex                               ();
+   public void    setGoldCount                           (int goldCount);
+   public void    setDollarsCount                        (float dollarsCount);
 }

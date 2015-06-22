@@ -39,6 +39,15 @@ public class BuyGoldShopPanel extends Rectangle implements IBuyGoldShopPanel, On
          buyGoldBtns[buttonIndex].setOnBuyGoldButtonClickedListener(this);
          buyGoldBtns[buttonIndex].attachToParent(this);
       }
+      
+      buyGoldBtns[BTN_INDEX_TEN_GOLD].setGoldCount(10);
+      buyGoldBtns[BTN_INDEX_TEN_GOLD].setDollarsCount(0.99f);
+      
+      buyGoldBtns[BTN_INDEX_HUNDRED_GOLD].setGoldCount(100);
+      buyGoldBtns[BTN_INDEX_HUNDRED_GOLD].setDollarsCount(7.99f);
+      
+      buyGoldBtns[BTN_INDEX_THOUSAND_GOLD].setGoldCount(1000);
+      buyGoldBtns[BTN_INDEX_THOUSAND_GOLD].setDollarsCount(69.99f);      
    }
    
    private float getButtonXByIndex(int index) {
