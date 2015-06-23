@@ -22,7 +22,7 @@ public class ShopsDialogsManager implements IShopsDialogsManager,
       shops[SHOP_TYPE_CLICKERS]     = new ClickersShopDialog(gameManager);
       shops[SHOP_TYPE_BUILDINGS]    = new BuildingsShopDialog(gameManager);
       shops[SHOP_TYPE_WORKERS]      = new WorkersShopDialog(gameManager, scene);
-      shops[SHOP_TYPE_GOLD]         = new GoldShopDialog(gameManager);
+      shops[SHOP_TYPE_GOLD]         = new MarketShopDialog(gameManager);
       
       addOnDialogClosedListenerToAllDialogs();
    }
