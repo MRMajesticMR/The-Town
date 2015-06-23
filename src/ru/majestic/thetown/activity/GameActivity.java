@@ -23,6 +23,7 @@ import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
 import ru.majestic.thetown.game.impl.BillingManager;
 import ru.majestic.thetown.game.impl.GameManager;
+import ru.majestic.thetown.game.listener.OnBillingOperationCompleteListener;
 import ru.majestic.thetown.game.listener.OnTimeToAttackListener;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
@@ -46,6 +47,11 @@ import ru.majestic.thetown.view.counters.impl.DefenceCounterView;
 import ru.majestic.thetown.view.counters.impl.GameResourcesCounterPanel;
 import ru.majestic.thetown.view.counters.impl.HomeCounterView;
 import ru.majestic.thetown.view.dialogs.IDialog;
+import ru.majestic.thetown.view.dialogs.billing.BillingProductsDictionary;
+import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog;
+import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog.State;
+import ru.majestic.thetown.view.dialogs.billing.impl.BillingResultDialog;
+import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedListener;
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
@@ -78,7 +84,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnTimeToAttackListener,
                                                               OnAttackDialogClosedListener,
                                                               OnSoundStateChangedListener, 
-                                                              OnBuyGoldListener {
+                                                              OnBuyGoldListener,
+                                                              OnBillingDialogClosedListener,
+                                                              OnBillingOperationCompleteListener {
+   
+   private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
 	private Camera 	        camera;	
 	private Scene             scene;
@@ -98,6 +108,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private ISoundStateView         soundStateView;
 	
 	private IAttackView             attackView;
+	private IBillingResultDialog    billingResultDialog;
 	
 	private IShopsMenu shopsMenu;		
 	private IShopsDialogsManager shopsDialogManager;
@@ -128,6 +139,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.getAttackManager().setOnTimeToAttackListener(this);
       
       billingManager = new BillingManager();
+      billingManager.setOnBillingOperationCompleteListener(this);
       
       foodClicker = new FoodClickerView();
       woodClicker = new WoodClickerView();
@@ -137,9 +149,12 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       defenceCountView        = new DefenceCounterView   (10, 130);      
       townView                = new SimpleTownView(gameManager.getTown());
       attackTimeView          = new SimpleAttackTimeView(TheTownCamera.CAMERA_WIDTH - 90, 100, gameManager.getAttackManager());
-      soundStateView          = new SoundStateView(TheTownCamera.CAMERA_WIDTH - 50, 40);
-      
+      soundStateView          = new SoundStateView(TheTownCamera.CAMERA_WIDTH - 50, 40);      
       attackView              = new SimpleAttackView();
+      billingResultDialog     = new BillingResultDialog();
+      
+      billingResultDialog.setOnBillingDialogClosedListener(this);      
+      
       attackView.setOnAttackDialogClosedListener(this);
       
       soundStateView.setOnSoundStateChangedListener(this);
@@ -184,10 +199,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   homeCountView.attachToParent(scene);
 	   defenceCountView.attachToParent(scene);	   
 	   townView.attachToParent(scene);
-	   attackTimeView.attachToParent(scene);
-	   
-	   soundStateView.attachToParent(scene);
-	   
+	   attackTimeView.attachToParent(scene);	   
+	   soundStateView.attachToParent(scene);	   
 	   attackView.attachToParent(scene);
 	   
 	   shopsMenu.attachToParent(scene);
@@ -199,6 +212,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   soundStateView.registerTouchArea(scene);
 	   
 	   shopsMenu.registerTouchArea(scene);
+	   
+	   billingResultDialog.attachToParent(scene);
 	   
 	   resourcesCounterPanel.update();
 	   
@@ -250,7 +265,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       }
       
       if(billingManager != null) {
-         billingManager.deinit(this);
+         billingManager.deinit();
       }
    }
 
@@ -316,8 +331,12 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
     
    @Override
    public void onBackPressed() {
-      if(attackView.isVisible()) {
+      if(billingResultDialog.isVisible()) {
+         onBillingDialogClosed();
+         
+      } else if(attackView.isVisible()) {
          onAttackDialogClosed();
+         
       } else if(shopsDialogManager.hasOpenedShop()) {
          shopsDialogManager.closeShop(shopsDialogManager.getOpenedShopIndex(), scene);
          
@@ -327,6 +346,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          woodClicker.registerTouchArea(scene);
          
          soundStateView.registerTouchArea(scene);
+         
       } else {
          super.onBackPressed();
       }
@@ -447,40 +467,64 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyGold(BuyType buyType) {
-      switch(buyType) {
-      case TEN:
-         Log.d("BUY_GOLD", "TEN");
-         try {
-            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_TEN_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
-         } catch (SendIntentException e) {
-            Log.e("BUY_GOLD", "ERROR: " + e.toString());
-         }
-         break;
-      case HUNDRED:
-         Log.d("BUY_GOLD", "HUNDRED");
-         try {
-            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_HUNDRED_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
-         } catch (SendIntentException e) {
-            Log.e("BUY_GOLD", "ERROR: " + e.toString());
-         }
-         break;
-      case THOUSAND:
-         Log.d("BUY_GOLD", "THOUSAND");
-         try {
-            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(this, IBillingManager.ITEM_TOKEN_THOUSAND_GOLD).getIntentSender(), 1001, new Intent(), 0, 0, 0);
-         } catch (SendIntentException e) {
-            Log.e("BUY_GOLD", "ERROR: " + e.toString());
-         }
-         break;
+      try {
+         switch (buyType) {
+         case TEN:
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(BillingProductsDictionary.ITEM_TOKEN_TEN_GOLD).getIntentSender(), LAUNCH_BILLING_ACTIVITY_REQUEST_CODE, new Intent(), 0, 0, 0);
+            break;
+
+         case HUNDRED:
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD).getIntentSender(), LAUNCH_BILLING_ACTIVITY_REQUEST_CODE, new Intent(), 0, 0, 0);
+            break;
+
+         case THOUSAND:
+            startIntentSenderForResult(billingManager.getPendingIntentForPurchased(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD).getIntentSender(), LAUNCH_BILLING_ACTIVITY_REQUEST_CODE, new Intent(), 0, 0, 0);
+            break;
+         }         
+      } catch (SendIntentException e) {
+         Log.e("BUY_GOLD", "ERROR: " + e.toString());
+         billingResultDialog.show(scene, State.ERROR);
       }
    }
    
    @Override
-   protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-      if(resultCode == Activity.RESULT_OK) {
-         if(requestCode == 1001) {
-            Log.d("BUY_GOLD", "Purchased");
+   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if (requestCode == LAUNCH_BILLING_ACTIVITY_REQUEST_CODE) {
+         if (resultCode == Activity.RESULT_OK) {
+            billingManager.onBillingResultReceived(data);
          }
       }
+   }
+
+   @Override
+   public void onBillingDialogClosed() {
+      billingResultDialog.hide(scene);      
+   }
+
+   @Override
+   public void onBillingOperationComplete(String productId) {
+      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_TEN_GOLD)) {
+         billingResultDialog.show(scene, State.SUCCESS_TEN_GOLD);
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(10);
+         return;
+      }
+      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD)) {
+         billingResultDialog.show(scene, State.SUCCESS_HUNDRED_GOLD);
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(100);
+         return;
+      }
+      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD)) {
+         billingResultDialog.show(scene, State.SUCCESS_THOUSAND_GOLD);
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1000);
+         return;
+      }
+
+      shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).getResoucesShopPanel().update();
+      resourcesCounterPanel.update();
+   }
+
+   @Override
+   public void onBillingOperationError() {
+      billingResultDialog.show(scene, State.ERROR);      
    }
 }

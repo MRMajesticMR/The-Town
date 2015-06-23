@@ -79,6 +79,8 @@ public class ResourceManager {
    private BitmapTextureAtlas attackResultTitleFontTextureAtlas;
    private BitmapTextureAtlas attackResultFontTextureAtlas;
    
+   private BitmapTextureAtlas billingResultFontTextureAtlas;
+   
    private BitmapTextureAtlas errorFontTextureAtlas;
    
    private BitmapTextureAtlas frontBackgroundTextureAtlas;
@@ -98,8 +100,11 @@ public class ResourceManager {
    
    private Font               shopBuildingsTitleFont;
    private Font               shopBuildingsTextFont;
+   
    private Font               attackResultTitleTextFont;
    private Font               attackResultTextFont;
+   
+   private Font               billingResultTextFont;
    
    private Font               errorTextFont;
    
@@ -187,7 +192,8 @@ public class ResourceManager {
       shopBuildingsTextFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);            
       attackResultTitleFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       attackResultFontTextureAtlas        = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-      errorFontTextureAtlas               = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      billingResultFontTextureAtlas       = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      errorFontTextureAtlas               = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);      
       
       int fontsColor = Color.parseColor("#000000");
       
@@ -202,7 +208,8 @@ public class ResourceManager {
       shopBuildingsTextFont   = FontFactory.createFromAsset(engine.getFontManager(), shopBuildingsTextFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 20, true, fontsColor);
       attackResultTitleTextFont = FontFactory.createFromAsset(engine.getFontManager(), attackResultTitleFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 28, true, fontsColor);
       attackResultTextFont    = FontFactory.createFromAsset(engine.getFontManager(), attackResultFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 18, true, fontsColor);
-      errorTextFont           = FontFactory.createFromAsset(engine.getFontManager(), errorFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 32, true, Color.parseColor("#FF0000"));
+      billingResultTextFont   = FontFactory.createFromAsset(engine.getFontManager(), billingResultFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 22, true, fontsColor);
+      errorTextFont           = FontFactory.createFromAsset(engine.getFontManager(), errorFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 32, true, Color.parseColor("#FF0000"));            
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
@@ -215,6 +222,7 @@ public class ResourceManager {
       engine.getTextureManager().loadTexture(shopBuildingsTextFontTextureAtlas);
       engine.getTextureManager().loadTexture(attackResultTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(attackResultFontTextureAtlas);
+      engine.getTextureManager().loadTexture(billingResultFontTextureAtlas);      
       engine.getTextureManager().loadTexture(errorFontTextureAtlas);
       
       engine.getFontManager().loadFont(shopTitleFont);
@@ -228,8 +236,8 @@ public class ResourceManager {
       engine.getFontManager().loadFont(shopBuildingsTextFont);
       engine.getFontManager().loadFont(attackResultTitleTextFont);
       engine.getFontManager().loadFont(attackResultTextFont);
-      engine.getFontManager().loadFont(errorTextFont);
-      
+      engine.getFontManager().loadFont(billingResultTextFont);
+      engine.getFontManager().loadFont(errorTextFont);           
    }
    
    private void loadBackground(Context context) {
@@ -402,5 +410,9 @@ public class ResourceManager {
    public Font getAttackResultTextFont() {
       return attackResultTextFont;
    }
-         
+
+   public Font getBillingResultTextFont() {
+      return billingResultTextFont;
+   }
+              
 }
