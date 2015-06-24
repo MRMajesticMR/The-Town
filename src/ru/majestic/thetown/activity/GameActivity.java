@@ -555,5 +555,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       } else {
          ErrorViewManager.showError(scene, "No enough gold");
       }
+      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 }
