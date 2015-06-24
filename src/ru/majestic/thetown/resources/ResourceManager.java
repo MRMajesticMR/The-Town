@@ -61,6 +61,9 @@ public class ResourceManager {
    private ITextureRegion        workerFoodTextureRegion;
    private ITextureRegion        workerDefenceTextureRegion;
    
+   private BitmapTextureAtlas    marketShopTextureAtals;
+   private ITextureRegion        marketShopItemBackgroundTextureRegion;
+   
    private BitmapTextureAtlas    attackTextureAtals;
    private ITiledTextureRegion   closeButtonTextureRegion;
    private ITextureRegion        attackDialogBgndTextureRegion;
@@ -163,6 +166,9 @@ public class ResourceManager {
       workerFoodTextureRegion                   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/worker_food_icon.png", 128, 256);
       workerDefenceTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(workersShopTextureAtals, context, "gfx/shops/workers/worker_defence_icon.png", 128, 384);
       
+      marketShopTextureAtals                    = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);
+      marketShopItemBackgroundTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(marketShopTextureAtals, context, "gfx/shops/market/market_item_background.png", 0, 0);
+      
       attackTextureAtals                        = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024);
       closeButtonTextureRegion                  = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(attackTextureAtals, context, "gfx/attack/close_btn.png", 0, 0, 2, 1);
       attackDialogBgndTextureRegion             = BitmapTextureAtlasTextureRegionFactory.createFromAsset(attackTextureAtals, context, "gfx/attack/attack_dialog_background.png", 0, 64);
@@ -174,6 +180,7 @@ public class ResourceManager {
       shopBitmapTextureAtlas.load();
       clickersShopTextureAtals.load();
       workersShopTextureAtals.load();
+      marketShopTextureAtals.load();
       attackTextureAtals.load();
       
       loadFonts(context);
@@ -414,5 +421,11 @@ public class ResourceManager {
    public Font getBillingResultTextFont() {
       return billingResultTextFont;
    }
+
+   public ITextureRegion getMarketShopItemBackgroundTextureRegion() {
+      return marketShopItemBackgroundTextureRegion;
+   }
+   
+   
               
 }

@@ -12,7 +12,7 @@ public interface IShopsDialogsManager {
    public static final int SHOP_TYPE_CLICKERS   = 0;
    public static final int SHOP_TYPE_BUILDINGS  = 1;
    public static final int SHOP_TYPE_WORKERS    = 2;
-   public static final int SHOP_TYPE_GOLD       = 3;   
+   public static final int SHOP_TYPE_MARKET       = 3;   
    
    public void setOnShopsCloseButtonClickedListener   (OnShopsCloseButtonCLickedListener onShopsClosedListener);
    public void setOnBuyGoldListener                   (OnBuyGoldListener onBuyGoldListener);

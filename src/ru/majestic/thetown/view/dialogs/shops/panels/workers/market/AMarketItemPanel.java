@@ -8,10 +8,13 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.market.IMarketItem;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.market.listeners.OnMarketItemBuyBtnClickedListener;
+import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
+import ru.majestic.thetown.view.dialogs.utils.impl.AvailableShadow;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public abstract class AMarketItemPanel extends Sprite implements IMarketItemPanel,
@@ -22,7 +25,11 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
    private static final int HIEGHT  = 80;
    
    private OnMarketItemBuyBtnClickedListener onMarketItemBuyBtnClickedListener;
+   
+   private ICargoManager cargoManager;
 
+   private IAvailableShadow availableShadow;
+   
    private IMarketItem     marketItem;
    
    private Sprite          priceImage;   
@@ -33,9 +40,10 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
       
    private ButtonSprite    buyButton;
    
-   public AMarketItemPanel(float x, float y, IShopDialog shopDialog, ITextureRegion goodTextureRegion, IMarketItem marketItem) {
-      super(x, y, (shopDialog.getWidth() - MARGIN) / 2, HIEGHT, ResourceManager.getInstance().getShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+   public AMarketItemPanel(float x, float y, IShopDialog shopDialog, ITextureRegion goodTextureRegion, IMarketItem marketItem, ICargoManager cargoManager) {
+      super(x, y, (shopDialog.getWidth() - MARGIN) / 2, HIEGHT, ResourceManager.getInstance().getMarketShopItemBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
+      this.cargoManager = cargoManager;
       this.marketItem   = marketItem;
       
       priceImage        = new Sprite(PADDING + 4, PADDING + 4, 26, 26, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
@@ -46,10 +54,14 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
       
       buyButton         = new ButtonSprite(0, 0, ResourceManager.getInstance().getBuyBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
+      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
+      
       buyButton.setHeight((getHeight() - (PADDING * 2)) / 2);
       buyButton.setWidth(100);
       buyButton.setX(getWidth() - PADDING - buyButton.getWidth());
       buyButton.setY(getHeight() - PADDING - buyButton.getHeight());
+      
+      buyButton.setOnClickListener(this);
       
       attachChild(priceImage);
       attachChild(priceCountText);
@@ -58,6 +70,8 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
       attachChild(goodCountText);
       
       attachChild(buyButton);
+      
+      availableShadow.attachToParent(this);
    }
 
    @Override
@@ -73,7 +87,7 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
    @Override
    public void attachToParent(Entity parent) {
       parent.attachChild(this);
-   }
+   }      
 
    @Override
    public void setOnMarketItemBuyBtnClickedListener(OnMarketItemBuyBtnClickedListener onMarketItemBuyBtnClickedListener) {
@@ -83,6 +97,15 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
    @Override
    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
       onMarketItemBuyBtnClickedListener.onMarketItemBuyBtnClicked(marketItem);
+   }
+   
+   @Override
+   public void update() {
+      if(cargoManager.getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount() >= marketItem.getGoldPrice()) {
+         availableShadow.hide();
+      } else {
+         availableShadow.show();
+      }
    }
 
 }

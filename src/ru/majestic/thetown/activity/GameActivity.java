@@ -25,6 +25,7 @@ import ru.majestic.thetown.game.impl.BillingManager;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.listener.OnBillingOperationCompleteListener;
 import ru.majestic.thetown.game.listener.OnTimeToAttackListener;
+import ru.majestic.thetown.game.market.IMarketItem;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
@@ -55,10 +56,12 @@ import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedL
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
+import ru.majestic.thetown.view.dialogs.shops.impl.MarketShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.WorkersShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.BuildingsShopDialogActionListeners;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
+import ru.majestic.thetown.view.dialogs.shops.listeners.MarketShopDialogActionListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
@@ -86,7 +89,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnSoundStateChangedListener, 
                                                               OnBuyGoldListener,
                                                               OnBillingDialogClosedListener,
-                                                              OnBillingOperationCompleteListener {
+                                                              OnBillingOperationCompleteListener,
+                                                              MarketShopDialogActionListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -180,6 +184,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       WorkersShopDialog workersShopDialog = (WorkersShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_WORKERS);
       workersShopDialog.setWorkersShopDialogActionListener(this);
+      
+      MarketShopDialog marketShopDialog = (MarketShopDialog) shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_MARKET);
+      marketShopDialog.setMarketShopDialogActionListener(this);
       
       homeCountView.changeCount(gameManager.getWorkersManager().getTotalHomeForWorkers());
       homeCountView.onMaxValueChanged(gameManager.getBuildingsManager().getTotalHomePlacesCount());	
@@ -526,5 +533,27 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onBillingOperationError() {
       billingResultDialog.show(scene, State.ERROR);      
+   }
+
+   @Override
+   public void onBuyItemFromMarket(IMarketItem marketItem) {
+      if(marketItem.getGoldPrice() <= gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount()) {
+         switch(marketItem.getItemType()) {
+         case WOOD:
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(marketItem.getProductCount());            
+            break;
+         case FOOD:
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(marketItem.getProductCount());
+            break;
+         }
+         
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).remove(marketItem.getGoldPrice());
+         
+         resourcesCounterPanel.update();
+         shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();         
+         
+      } else {
+         ErrorViewManager.showError(scene, "No enough gold");
+      }
    }
 }

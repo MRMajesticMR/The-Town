@@ -7,4 +7,5 @@ public interface IMarketItemPanel extends IClickableView {
    
    public void setOnMarketItemBuyBtnClickedListener(OnMarketItemBuyBtnClickedListener onMarketItemBuyBtnClickedListener);
 
+   public void update();
 }
