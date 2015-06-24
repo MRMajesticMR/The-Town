@@ -229,16 +229,16 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	@Override
 	public void onResumeGame() {
-	   super.onResumeGame();
-	   
-	   if(workersProductionHandler == null) {
-	      workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
-	      workersProductionHandler.setOnWokersProductionCompleteListener(this);	      
-	   }	   	   
+	   super.onResumeGame();	   	   
 	   
 	   gameManager.getAttackManager().startAttackTimeObserve();
-	   workersProductionHandler.load(this);
-      workersProductionHandler.start();
+	   
+	   if(workersProductionHandler == null) {
+   	   workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
+         workersProductionHandler.setOnWokersProductionCompleteListener(this);
+   	   workersProductionHandler.load(this);
+         workersProductionHandler.start();
+	   }
       
       billingManager.init(this);
 	}
@@ -260,7 +260,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    
    @Override
    public void onPause() {
-      super.onPause();
+      super.onPause();            
       if(gameManager != null) {
          gameManager.save(this);
          gameManager.getAttackManager().stopAttackTimeObserve();
@@ -269,6 +269,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(workersProductionHandler != null) {
          workersProductionHandler.save(this);
          workersProductionHandler.stop();
+         workersProductionHandler = null;
       }
       
       if(billingManager != null) {

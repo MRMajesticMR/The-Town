@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class WorkersProductionHandler implements Runnable, IWorkersProductionHandler {
-
+   
    private static final int TIMEOUT = 1000;
    
    private static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
@@ -46,16 +46,16 @@ public class WorkersProductionHandler implements Runnable, IWorkersProductionHan
    }
 
    @Override
-   public void run() {
+   public void run() {      
       while(working) {
          try {
             Thread.sleep(TIMEOUT);
          } catch (InterruptedException e) {}
                   
-         if(working)
+         if(working) {
             onWokersProductionCompleteListener.onWorkersProductionComplete(workersManager.getResourcesPerSecond(WorkerType.FOOD), workersManager.getResourcesPerSecond(WorkerType.WOOD));
-      }
-      
+         }
+      }      
    }
 
    @Override
