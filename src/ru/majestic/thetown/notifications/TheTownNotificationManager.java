@@ -24,6 +24,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       
    private static final long TIME_TO_ATTACK_HALF_HOUR    = 1000 * 60 * 30;
    private static final long TIME_TO_ATTACK_HOUR         = TIME_TO_ATTACK_HALF_HOUR * 2;   
+      
    
    private static final String SAVE_TAG_HALF_HOUR  = "SAVE_TAG_HALF_HOUR";
    private static final String SAVE_TAG_HOUR       = "SAVE_TAG_HOUR";
@@ -97,7 +98,8 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
             .setSmallIcon(R.drawable.swords_icon)
             .setContentTitle(getTitleString(attackTimeType))
-            .setContentText("You haven't enough defence force for protect your Town! Come and buy more defenders!");
+            .setContentText("You haven't enough defence force for protect your Town! Come and buy more defenders!")
+            .setAutoCancel(true);
 
       Intent resultIntent = new Intent(context, GameActivity.class);
 
@@ -126,12 +128,14 @@ public class TheTownNotificationManager extends BroadcastReceiver {
          mBuilder = new NotificationCompat.Builder(context)
                .setSmallIcon(R.drawable.swords_icon)
                .setContentTitle("You've been attacked!")
-               .setContentText("Come and check your Town. New wave of attackers come soon.");
+               .setContentText("Come and check your Town. New wave of attackers come soon.")
+               .setAutoCancel(true);         
       } else {
          mBuilder = new NotificationCompat.Builder(context)
             .setSmallIcon(R.drawable.swords_icon)
             .setContentTitle("Attackers have been defeated!")
-            .setContentText("Come and take your reward!");
+            .setContentText("Come and take your reward!")
+            .setAutoCancel(true);
       }
 
       Intent resultIntent = new Intent(context, GameActivity.class);
