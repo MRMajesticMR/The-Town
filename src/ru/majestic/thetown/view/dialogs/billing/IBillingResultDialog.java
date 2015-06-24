@@ -9,9 +9,9 @@ public interface IBillingResultDialog extends IClickableView {
    
    public enum State {      
       ERROR,
-      SUCCESS_TEN_GOLD,
-      SUCCESS_HUNDRED_GOLD,
-      SUCCESS_THOUSAND_GOLD
+      SUCCESS_100_GOLD,
+      SUCCESS_1000_GOLD,
+      SUCCESS_10000_GOLD
    }
    
    public void setOnBillingDialogClosedListener(OnBillingDialogClosedListener onBillingDialogClosedListener);

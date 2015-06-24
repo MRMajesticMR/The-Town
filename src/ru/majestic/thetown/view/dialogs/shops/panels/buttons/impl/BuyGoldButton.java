@@ -14,7 +14,7 @@ import ru.majestic.thetown.view.utils.BigValueFormatter;
 
 public class BuyGoldButton extends Rectangle implements IBuyGoldButton {
 
-   private static final int PADDING = 14;
+   private static final int PADDING = 8;
    
    private int index;
    private OnBuyGoldButtonClickedListener onBuyGoldButtonClickedListener;
@@ -27,9 +27,9 @@ public class BuyGoldButton extends Rectangle implements IBuyGoldButton {
       super(x, y, width, height, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       this.index = index;
       
-      goldCountTxt      = new Text(PADDING, PADDING + 4, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      goldIcon          = new Sprite(0, PADDING, 40, 40, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      dollarsCountTxt   = new Text(34, PADDING + 4, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      goldCountTxt      = new Text(PADDING, 18, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      goldIcon          = new Sprite(0, 14, 40, 40, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      dollarsCountTxt   = new Text(34, 18, ResourceManager.getInstance().getCountersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(goldCountTxt);
       attachChild(goldIcon);

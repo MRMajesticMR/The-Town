@@ -72,14 +72,14 @@ public class BillingResultDialog extends Rectangle implements IBillingResultDial
       case ERROR:
          return "Buy product error. Try again later.";
          
-      case SUCCESS_TEN_GOLD:
-         return "10 gold successfully obtained!";
-         
-      case SUCCESS_HUNDRED_GOLD:
+      case SUCCESS_100_GOLD:
          return "100 gold successfully obtained!";
          
-      case SUCCESS_THOUSAND_GOLD:
-         return "1000 gold successfully obtained!";
+      case SUCCESS_1000_GOLD:
+         return "1.00T gold successfully obtained!";
+         
+      case SUCCESS_10000_GOLD:
+         return "10.00T gold successfully obtained!";
          
       default:
          return null;

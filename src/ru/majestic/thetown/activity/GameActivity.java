@@ -511,18 +511,18 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onBillingOperationComplete(String productId) {
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_TEN_GOLD)) {
-         billingResultDialog.show(scene, State.SUCCESS_TEN_GOLD);
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(10);
-         return;
-      }
-      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD)) {
-         billingResultDialog.show(scene, State.SUCCESS_HUNDRED_GOLD);
+         billingResultDialog.show(scene, State.SUCCESS_100_GOLD);
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(100);
          return;
       }
-      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD)) {
-         billingResultDialog.show(scene, State.SUCCESS_THOUSAND_GOLD);
+      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD)) {
+         billingResultDialog.show(scene, State.SUCCESS_1000_GOLD);
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1000);
+         return;
+      }
+      if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD)) {
+         billingResultDialog.show(scene, State.SUCCESS_10000_GOLD);
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(10000);
          return;
       }
 
