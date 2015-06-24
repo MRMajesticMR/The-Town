@@ -5,6 +5,8 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -119,6 +121,12 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
    private IWorkersProductionHandler workersProductionHandler;
 	
+   @Override
+   public void onStart() {
+      super.onStart();
+      FlurryAgent.onStartSession(this);
+   }
+   
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		
@@ -275,6 +283,12 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(billingManager != null) {
          billingManager.deinit();
       }
+   }
+   
+   @Override
+   public void onStop() {
+      super.onStop();
+      FlurryAgent.onEndSession(this);
    }
 
    @Override
