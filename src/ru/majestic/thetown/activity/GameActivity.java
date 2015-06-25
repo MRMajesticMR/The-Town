@@ -237,18 +237,20 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	@Override
 	public void onResumeGame() {
-	   super.onResumeGame();	   	   
+	   if(getEngine() != null) {
+	      super.onResumeGame();	   	   
 	   
-	   gameManager.getAttackManager().startAttackTimeObserve();
-	   
-	   if(workersProductionHandler == null) {
-   	   workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
-         workersProductionHandler.setOnWokersProductionCompleteListener(this);
-   	   workersProductionHandler.load(this);
-         workersProductionHandler.start();
+   	   gameManager.getAttackManager().startAttackTimeObserve();
+   	   
+   	   if(workersProductionHandler == null) {
+      	   workersProductionHandler = new WorkersProductionHandler(gameManager.getWorkersManager());
+            workersProductionHandler.setOnWokersProductionCompleteListener(this);
+      	   workersProductionHandler.load(this);
+            workersProductionHandler.start();
+   	   }
+         
+         billingManager.init(this);
 	   }
-      
-      billingManager.init(this);
 	}
 
    @Override
