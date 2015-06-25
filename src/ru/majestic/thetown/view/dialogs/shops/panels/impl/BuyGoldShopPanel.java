@@ -30,7 +30,7 @@ public class BuyGoldShopPanel extends Rectangle implements IBuyGoldShopPanel, On
    private IBuyGoldButton[] buyGoldBtns;
    
    public BuyGoldShopPanel(IShopDialog shopDialog) {
-      super(0, shopDialog.getHeight() - HEIGHT - 17, shopDialog.getWidth(), HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, shopDialog.getHeight() - HEIGHT, shopDialog.getWidth(), HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       buyGoldBtns = new IBuyGoldButton[TOTAL_BTNS_COUNT];
       
