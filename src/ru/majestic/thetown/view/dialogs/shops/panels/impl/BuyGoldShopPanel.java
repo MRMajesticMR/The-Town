@@ -1,8 +1,8 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
@@ -13,7 +13,7 @@ import ru.majestic.thetown.view.dialogs.shops.panels.buttons.listeners.OnBuyGold
 import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener.BuyType;
 
-public class BuyGoldShopPanel extends Rectangle implements IBuyGoldShopPanel, OnBuyGoldButtonClickedListener {
+public class BuyGoldShopPanel extends Sprite implements IBuyGoldShopPanel, OnBuyGoldButtonClickedListener {
 
    private static final int HEIGHT = 60;
    
@@ -30,7 +30,7 @@ public class BuyGoldShopPanel extends Rectangle implements IBuyGoldShopPanel, On
    private IBuyGoldButton[] buyGoldBtns;
    
    public BuyGoldShopPanel(IShopDialog shopDialog) {
-      super(0, shopDialog.getHeight() - HEIGHT, shopDialog.getWidth(), HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(0, shopDialog.getHeight() - HEIGHT, shopDialog.getWidth(), HEIGHT, ResourceManager.getInstance().getBuyGoldPanelBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       buyGoldBtns = new IBuyGoldButton[TOTAL_BTNS_COUNT];
       
