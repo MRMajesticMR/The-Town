@@ -1,10 +1,10 @@
 package ru.majestic.thetown.view.dialogs.billing.impl;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
@@ -12,7 +12,7 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedListener;
 
-public class BillingResultDialog extends Rectangle implements IBillingResultDialog, OnClickListener {
+public class BillingResultDialog extends Sprite implements IBillingResultDialog, OnClickListener {
 
    private static final int MARGIN     = 30;
    private static final int HEIGHT     = 140;
@@ -24,7 +24,7 @@ public class BillingResultDialog extends Rectangle implements IBillingResultDial
    private OnBillingDialogClosedListener onBillingDialogClosedListener;
    
    public BillingResultDialog() {
-      super(MARGIN, 230, TheTownCamera.CAMERA_WIDTH - (MARGIN * 2), HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(MARGIN, 230, TheTownCamera.CAMERA_WIDTH - (MARGIN * 2), HEIGHT, ResourceManager.getInstance().getBillingResultBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setVisible(false);
       

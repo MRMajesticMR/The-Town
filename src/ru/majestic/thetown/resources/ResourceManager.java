@@ -50,7 +50,8 @@ public class ResourceManager {
    private ITextureRegion        shopItemBackgroundTextureRegion;
    private ITextureRegion        shopResPanelBackgroundTextureRegion;
    private ITiledTextureRegion   closeBtnTextureRegion;
-   private ITextureRegion        buyGoldPanelBackgroundTextureRegion;   
+   private ITextureRegion        buyGoldPanelBackgroundTextureRegion;
+   private ITextureRegion        billingResultBackgroundTextureRegion;
    
    private BitmapTextureAtlas    clickersShopTextureAtals;
    private ITextureRegion        clickersUpgraderBackgroundTextureRegion;
@@ -152,12 +153,13 @@ public class ResourceManager {
       buyBtnTextureRegion                 = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/buttons/buy_btn.png", 0, 0, 2, 1);
       expIconTextureRegion                = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildingShopPanelIconsTextureAtlas, context, "gfx/exp_icon.png", 0, 128);
       
-      shopBitmapTextureAtlas              = new BitmapTextureAtlas(engine.getTextureManager(), 2048, 2048);
-      shopBackgroundTextureRegion         = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_background.png", 0, 0);                     /*1024 1820*/
-      shopItemBackgroundTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_item_background.png", 1024, 0);             /*1024 193*/
-      shopResPanelBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_res_panel_background.png", 1024, 200);      /*1024 171*/
-      closeBtnTextureRegion               = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(shopBitmapTextureAtlas, context, "gfx/buttons/close_dialog_btn.png", 1024, 400, 2, 1);  /*256 128*/
-      buyGoldPanelBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/buy_gold_panel_background.png", 1024, 600);      /*960 120*/
+      shopBitmapTextureAtlas                 = new BitmapTextureAtlas(engine.getTextureManager(), 2048, 2048);
+      shopBackgroundTextureRegion            = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_background.png", 0, 0);                     /*1024 1820*/
+      shopItemBackgroundTextureRegion        = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_item_background.png", 1024, 0);             /*1024 193*/
+      shopResPanelBackgroundTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/shop_res_panel_background.png", 1024, 200);      /*1024 171*/
+      closeBtnTextureRegion                  = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(shopBitmapTextureAtlas, context, "gfx/buttons/close_dialog_btn.png", 1024, 400, 2, 1);  /*256 128*/
+      buyGoldPanelBackgroundTextureRegion    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/buy_gold_panel_background.png", 1024, 600);      /*960 120*/
+      billingResultBackgroundTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/billing_result_dialog_background.png", 1024, 800);      /*1024 668*/
       
       clickersShopTextureAtals                  = new BitmapTextureAtlas(engine.getTextureManager(), 512, 512);
       clickersUpgraderBackgroundTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(shopBitmapTextureAtlas, context, "gfx/shops/clickers/clickers_upgrader_background.png", 0, 0);
@@ -221,7 +223,7 @@ public class ResourceManager {
       attackResultTextFont    = FontFactory.createFromAsset(engine.getFontManager(), attackResultFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 18, true, fontsColor);
       billingResultTextFont   = FontFactory.createFromAsset(engine.getFontManager(), billingResultFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 22, true, fontsColor);
       errorTextFont           = FontFactory.createFromAsset(engine.getFontManager(), errorFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 32, true, Color.parseColor("#FF0000"));            
-      buyGoldBtnTextFont          = FontFactory.createFromAsset(engine.getFontManager(), buyGoldBtnFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 16, true, fontsColor);
+      buyGoldBtnTextFont      = FontFactory.createFromAsset(engine.getFontManager(), buyGoldBtnFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 16, true, fontsColor);
       
       engine.getTextureManager().loadTexture(shopTitleFontTextureAtlas);
       engine.getTextureManager().loadTexture(countersFontTextureAtlas);
@@ -439,6 +441,10 @@ public class ResourceManager {
 
    public Font getBuyGoldBtnTextFont() {
       return buyGoldBtnTextFont;
+   }
+
+   public ITextureRegion getBillingResultBackgroundTextureRegion() {
+      return billingResultBackgroundTextureRegion;
    }
     
    
