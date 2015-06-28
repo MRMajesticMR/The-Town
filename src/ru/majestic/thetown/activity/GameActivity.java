@@ -5,13 +5,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import com.flurry.android.FlurryAgent;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.util.Log;
-
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
@@ -77,6 +70,11 @@ import ru.majestic.thetown.view.sound.impl.SoundStateView;
 import ru.majestic.thetown.view.sound.listener.OnSoundStateChangedListener;
 import ru.majestic.thetown.view.town.ITownView;
 import ru.majestic.thetown.view.town.impl.SimpleTownView;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+
+import com.flurry.android.FlurryAgent;
 
 
 public class GameActivity extends BaseGameActivity implements OnClickerClickedListener,
@@ -506,7 +504,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
             break;
          }         
       } catch (SendIntentException e) {
-         Log.e("BUY_GOLD", "ERROR: " + e.toString());
          billingResultDialog.show(scene, State.ERROR);
       }
    }
@@ -530,19 +527,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_TEN_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_100_GOLD);
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(100);
-         return;
       }
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_1000_GOLD);
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1000);
-         return;
       }
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_10000_GOLD);
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(10000);
-         return;
       }
 
+      gameManager.save(this);
       shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).getResoucesShopPanel().update();
       resourcesCounterPanel.update();
    }
@@ -566,6 +561,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).remove(marketItem.getGoldPrice());
          
+         gameManager.save(this);
          resourcesCounterPanel.update();
          shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();         
          
