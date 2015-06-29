@@ -21,6 +21,8 @@ import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.listener.OnBillingOperationCompleteListener;
 import ru.majestic.thetown.game.listener.OnTimeToAttackListener;
 import ru.majestic.thetown.game.market.IMarketItem;
+import ru.majestic.thetown.game.town.ITownLevelReward;
+import ru.majestic.thetown.game.town.listeners.OnTownNewLevelObtainedListener;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
@@ -48,6 +50,7 @@ import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog.State;
 import ru.majestic.thetown.view.dialogs.billing.impl.BillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedListener;
+import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.impl.ClickersShopDialog;
@@ -60,6 +63,7 @@ import ru.majestic.thetown.view.dialogs.shops.listeners.MarketShopDialogActionLi
 import ru.majestic.thetown.view.dialogs.shops.listeners.OnShopsCloseButtonCLickedListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.WorkersShopDialogActionListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.listeners.OnBuyGoldListener;
+import ru.majestic.thetown.view.dialogs.townlevel.impl.TownLevelRewardDialog;
 import ru.majestic.thetown.view.errors.impl.ErrorViewManager;
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 import ru.majestic.thetown.view.menu.IShopsMenu;
@@ -90,7 +94,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnBuyGoldListener,
                                                               OnBillingDialogClosedListener,
                                                               OnBillingOperationCompleteListener,
-                                                              MarketShopDialogActionListener {
+                                                              MarketShopDialogActionListener,
+                                                              OnDialogClosedListener,
+                                                              OnTownNewLevelObtainedListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -113,6 +119,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
 	private IAttackView             attackView;
 	private IBillingResultDialog    billingResultDialog;
+	
+	private TownLevelRewardDialog   townLevelRewardDialog;
 	
 	private IShopsMenu shopsMenu;		
 	private IShopsDialogsManager shopsDialogManager;
@@ -162,8 +170,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       soundStateView          = new SoundStateView(TheTownCamera.CAMERA_WIDTH - 50, 40);      
       attackView              = new SimpleAttackView();
       billingResultDialog     = new BillingResultDialog();
+      townLevelRewardDialog   = new TownLevelRewardDialog(scene);      
       
-      billingResultDialog.setOnBillingDialogClosedListener(this);      
+      townLevelRewardDialog.setOnDialogClosedListener(this);
+      
+      billingResultDialog.setOnBillingDialogClosedListener(this);            
       
       attackView.setOnAttackDialogClosedListener(this);
       
@@ -199,6 +210,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
       
+      gameManager.getTown().addOnTownNewLevelObtainedListener(townLevelRewardDialog);
+      gameManager.getTown().addOnTownNewLevelObtainedListener(this);
+      
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
@@ -214,7 +228,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   townView.attachToParent(scene);
 	   attackTimeView.attachToParent(scene);	   
 	   soundStateView.attachToParent(scene);	   
-	   attackView.attachToParent(scene);
+	   attackView.attachToParent(scene);	   
 	   
 	   shopsMenu.attachToParent(scene);
 	   
@@ -227,6 +241,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   shopsMenu.registerTouchArea(scene);
 	   
 	   billingResultDialog.attachToParent(scene);
+	   townLevelRewardDialog.attachToParent(scene);
 	   
 	   resourcesCounterPanel.update();
 	   
@@ -358,6 +373,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
       } else if(attackView.isVisible()) {
          onAttackDialogClosed();
+         
+      } else if (townLevelRewardDialog.isVisible()) {
+         townLevelRewardDialog.hide();
          
       } else if(shopsDialogManager.hasOpenedShop()) {
          shopsDialogManager.closeShop(shopsDialogManager.getOpenedShopIndex(), scene);
@@ -570,5 +588,22 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       }
       
       ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
+   }
+
+   @Override
+   public void onDialogClosed(IDialog dialog) {
+      if(dialog == townLevelRewardDialog) {
+         
+      }
+   }
+
+   @Override
+   public void onTownNewLevelObtained(ITownLevelReward townLevelReward) {
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(townLevelReward.getWoodReward());
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(townLevelReward.getFoodReward());
+      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(townLevelReward.getGoldReward());
+      
+      resourcesCounterPanel.update();
+      shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
    }
 }
