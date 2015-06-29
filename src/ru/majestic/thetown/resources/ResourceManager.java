@@ -19,7 +19,7 @@ public class ResourceManager {
    
    private Engine engine;
    
-   private SoundsManager soundsManager;
+   private SoundsManager            soundsManager;
    
    private BitmapTextureAtlas clickersBitmapTextureAtlas;
    
@@ -445,9 +445,6 @@ public class ResourceManager {
 
    public ITextureRegion getBillingResultBackgroundTextureRegion() {
       return billingResultBackgroundTextureRegion;
-   }
-    
-   
-   
+   }  
    
 }
