@@ -41,13 +41,13 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
       
       availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
                   
-      currentLvlTxt           = new Text(0, PANEL_PADDING + 6, ResourceManager.getInstance().getShopTitleFont(), "1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      currentLvlTxt           = new Text(0, PANEL_PADDING + 6, ResourceManager.getInstance().getShopTitleFont(), "1000000", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
             
       perClickResourceIcon   = new Sprite(PANEL_PADDING, PANEL_PADDING, 30, 30, perSecondResourceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      perClickResourceTxt    = new Text(perClickResourceIcon.getX() + perClickResourceIcon.getWidth() + 8, perClickResourceIcon.getY() + 10, ResourceManager.getInstance().getShopTextFont(), "100.00AA PC", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
+      perClickResourceTxt    = new Text(perClickResourceIcon.getX() + perClickResourceIcon.getWidth() + 8, perClickResourceIcon.getY() + 10, ResourceManager.getInstance().getShopTextFont(), "100.00AA PC", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
       upgradePriceIcon        = new Sprite(PANEL_PADDING, perClickResourceIcon.getY() + perClickResourceIcon.getHeight() + 8, 30, 30, upgradePriceIconTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      upgradePriceTxt         = new Text(upgradePriceIcon.getX() + upgradePriceIcon.getWidth() + 4, upgradePriceIcon.getY() + 8, ResourceManager.getInstance().getShopTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      upgradePriceTxt         = new Text(upgradePriceIcon.getX() + upgradePriceIcon.getWidth() + 4, upgradePriceIcon.getY() + 8, ResourceManager.getInstance().getShopTextFont(), "100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       
       upgradeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       

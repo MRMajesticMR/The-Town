@@ -37,10 +37,10 @@ public class SimpleAttackView extends Sprite implements IAttackView, OnClickList
       resultText            = new Text(0, PANEL_PADDING, ResourceManager.getInstance().getAttackResultTitleTextFont(), "You've been attacked!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       woodIcon              = new Sprite(180, 85, 40, 40, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      woodResultText        = new Text(woodIcon.getX() + woodIcon.getWidth() + 4, woodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      woodResultText        = new Text(woodIcon.getX() + woodIcon.getWidth() + 4, woodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       foodIcon              = new Sprite(20, 85, 40, 40, ResourceManager.getInstance().getFoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      foodResultText        = new Text(foodIcon.getX() + foodIcon.getWidth() + 4, foodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      foodResultText        = new Text(foodIcon.getX() + foodIcon.getWidth() + 4, foodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       closeBtn.setWidth(100);
       closeBtn.setHeight(40);            
