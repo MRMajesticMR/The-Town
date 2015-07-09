@@ -35,6 +35,8 @@ import ru.majestic.thetown.view.attack.IAttackView;
 import ru.majestic.thetown.view.attack.impl.SimpleAttackTimeView;
 import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
 import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
+import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
+import ru.majestic.thetown.view.bonuses.handler.BonusesViewHandler;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
@@ -102,7 +104,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	private Camera 	        camera;	
 	private Scene             scene;
-	
+				
 	private IGameManager      gameManager;
 	private IBillingManager   billingManager;
 	
@@ -126,7 +128,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private IShopsDialogsManager shopsDialogManager;
 	
    private IWorkersProductionHandler workersProductionHandler;
-	
+   
+   private IBonusesViewHandler bonusesViewHandler;
+   
    @Override
    public void onStart() {
       super.onStart();
@@ -150,7 +154,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-		scene = new TheTownScene();
+		scene = new TheTownScene();		
 		
 		gameManager = new GameManager();
       gameManager.load(this);         
@@ -211,16 +215,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
       
       gameManager.getTown().addOnTownNewLevelObtainedListener(townLevelRewardDialog);
-      gameManager.getTown().addOnTownNewLevelObtainedListener(this);
+      gameManager.getTown().addOnTownNewLevelObtainedListener(this);      
+      
+      bonusesViewHandler = new BonusesViewHandler(scene, scene);
       
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
 	@Override
 	public void onPopulateScene(Scene scene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
-		
-	   foodClicker.attachToParent(scene);
-	   woodClicker.attachToParent(scene);	  
+		foodClicker.attachToParent(scene);
+	   woodClicker.attachToParent(scene);
 	   
 	   resourcesCounterPanel.attachToParent(scene);
 	   homeCountView.attachToParent(scene);
@@ -243,7 +248,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   billingResultDialog.attachToParent(scene);
 	   townLevelRewardDialog.attachToParent(scene);
 	   
-	   resourcesCounterPanel.update();
+	   resourcesCounterPanel.update();	   	   
+	   
+	   bonusesViewHandler.begin();
 	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -606,4 +613,5 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       resourcesCounterPanel.update();
       shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
    }
+   
 }

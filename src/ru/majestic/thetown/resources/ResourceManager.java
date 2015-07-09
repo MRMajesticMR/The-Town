@@ -10,6 +10,9 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
+import ru.majestic.thetown.resources.bonuses.IBonusesResourcesManager;
+import ru.majestic.thetown.resources.bonuses.impl.BonusesResourcesManager;
+
 import android.content.Context;
 import android.graphics.Color;
 
@@ -115,6 +118,8 @@ public class ResourceManager {
    private Font               errorTextFont;
    private Font               buyGoldBtnTextFont;
    
+   private IBonusesResourcesManager bonusesResourcesManager;
+   
    private ResourceManager() {
       
    }
@@ -190,6 +195,10 @@ public class ResourceManager {
       
       loadFonts(context);
       loadBackground(context);
+      
+      
+      bonusesResourcesManager = new BonusesResourcesManager();
+      bonusesResourcesManager.load(context, engine);
    }
    
    private void loadFonts(Context context) {
@@ -445,6 +454,10 @@ public class ResourceManager {
 
    public ITextureRegion getBillingResultBackgroundTextureRegion() {
       return billingResultBackgroundTextureRegion;
+   }
+
+   public IBonusesResourcesManager getBonusesResourcesManager() {
+      return bonusesResourcesManager;
    }  
    
 }
