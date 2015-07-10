@@ -22,7 +22,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
                                            OnBonusTouchTheGroundListener,
                                            Runnable {
 
-   private static final int PERIOD = 10000;
+   private static final int PERIOD = 30000;
    
    private final Scene  scene;
    
