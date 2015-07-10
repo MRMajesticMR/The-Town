@@ -1,26 +1,34 @@
 package ru.majestic.thetown.game.bonuses.factories;
 
+import java.util.Random;
+
+import ru.majestic.thetown.game.ICargoManager;
+import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
+import ru.majestic.thetown.game.bonuses.impl.AddFoodGameBonus;
 import ru.majestic.thetown.game.bonuses.impl.AddWoodGameBonus;
+import ru.majestic.thetown.game.cargo.impl.FoodCargo;
+import ru.majestic.thetown.game.cargo.impl.WoodCargo;
 
 public class GameBonusFactory implements IGameBonusFactory {
 
-   private static final int GAME_BONUSES_COUNT = 1;
+   private IGameManager gameManager;
    
-   private static final int BONUS_INDEX_WOOD = 0;
-   
-   private IGameBonus[] gameBonuses;
-   
-   public GameBonusFactory() {
-      gameBonuses = new IGameBonus[GAME_BONUSES_COUNT];
-      
-      gameBonuses[BONUS_INDEX_WOOD] = new AddWoodGameBonus();
+   public GameBonusFactory(IGameManager gameManager) {
+      this.gameManager = gameManager;
    }
    
    @Override
    public IGameBonus createBonus() {
-      return gameBonuses[BONUS_INDEX_WOOD];
+      switch(new Random(System.currentTimeMillis()).nextInt(2)) {
+      case 0:
+         return new AddWoodGameBonus((WoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD), gameManager.getTown().getLvl());
+      case 1:
+         return new AddFoodGameBonus((FoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD), gameManager.getTown().getLvl());
+      default:
+         return null;
+      }
    }
 
    

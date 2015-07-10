@@ -10,7 +10,7 @@ public interface IBonusesResourcesManager {
    public void load     (Context context, Engine engine);
    public void unload   ();
    
-   public ITextureRegion getPlaneTextureRegion();
-   public ITextureRegion getCargoTextureRegion();
+   public ITextureRegion         getPlaneTextureRegion();
+   public ITextureRegion         getCargoTextureRegion();
    
 }

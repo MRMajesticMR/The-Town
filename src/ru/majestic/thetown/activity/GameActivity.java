@@ -12,6 +12,7 @@ import ru.majestic.thetown.game.IBillingManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
@@ -37,6 +38,7 @@ import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
 import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
 import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.handler.BonusesViewHandler;
+import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusDropedListener;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
@@ -98,7 +100,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnBillingOperationCompleteListener,
                                                               MarketShopDialogActionListener,
                                                               OnDialogClosedListener,
-                                                              OnTownNewLevelObtainedListener {
+                                                              OnTownNewLevelObtainedListener,
+                                                              OnBonusDropedListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -217,7 +220,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.getTown().addOnTownNewLevelObtainedListener(townLevelRewardDialog);
       gameManager.getTown().addOnTownNewLevelObtainedListener(this);      
       
-      bonusesViewHandler = new BonusesViewHandler(scene, scene);
+      bonusesViewHandler = new BonusesViewHandler(scene, scene, gameManager.getGameBonusFactory());
+      bonusesViewHandler.setOnBonusDropedListener(this);
       
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
@@ -250,7 +254,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   resourcesCounterPanel.update();	   	   
 	   
-	   bonusesViewHandler.begin();
+	   bonusesViewHandler.begin();	   
 	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -612,6 +616,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       resourcesCounterPanel.update();
       shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
+   }
+
+   @Override
+   public void onBonusDropedListener(IGameBonus gameBonus) {      
+      gameBonus.execute();
    }
    
 }

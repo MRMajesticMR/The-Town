@@ -2,7 +2,7 @@ package ru.majestic.thetown.game.bonuses;
 
 public abstract class AGameBonus implements IGameBonus {
 
-   private boolean bonusDoubled;
+   private boolean bonusDoubled;   
    
    public AGameBonus() {
       bonusDoubled = false;

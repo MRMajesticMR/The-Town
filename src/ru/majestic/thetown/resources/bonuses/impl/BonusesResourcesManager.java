@@ -5,16 +5,15 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
-import android.content.Context;
-
 import ru.majestic.thetown.resources.bonuses.IBonusesResourcesManager;
+import android.content.Context;
 
 public class BonusesResourcesManager implements IBonusesResourcesManager {
 
    private BitmapTextureAtlas bonusesTextureAtlas;
    
-   private ITextureRegion planeTextureRegion;
-   private ITextureRegion cargoTextureRegion;
+   private ITextureRegion   planeTextureRegion;
+   private ITextureRegion   cargoTextureRegion;
    
    @Override
    public void load(Context context, Engine engine) {

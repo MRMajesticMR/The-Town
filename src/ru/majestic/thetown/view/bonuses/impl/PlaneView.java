@@ -3,6 +3,7 @@ package ru.majestic.thetown.view.bonuses.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.resources.ResourceManager;
@@ -20,11 +21,13 @@ public class PlaneView extends Sprite implements IPlaneView {
    private OnPlaneOutOfViewListener onPlaneOutOfViewListener;   
    private OnPlaneClickedListener   onPlaneClickedListener;
    
+   private boolean hasBonus;
+   
    public PlaneView() {
       super(-WIDTH, 0, WIDTH, HEIGHT, ResourceManager.getInstance().getBonusesResourcesManager().getPlaneTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      xSpeed = 1.0f;
-      
+      xSpeed = 1.0f;       
+      hasBonus = true;
       pause();
    }   
    
@@ -40,7 +43,7 @@ public class PlaneView extends Sprite implements IPlaneView {
 
    @Override
    public void attachToParent(Entity parent) {
-      parent.attachChild(this);
+      parent.attachChild(this);      
    }
 
    @Override
@@ -64,12 +67,33 @@ public class PlaneView extends Sprite implements IPlaneView {
 
    @Override
    public void unpause() {
-      setIgnoreUpdate(false);
+      setIgnoreUpdate(false);            
    }
 
    @Override
    public void setOnPlaneOutOfViewListener(OnPlaneOutOfViewListener onPlaneOutOfViewListener) {
       this.onPlaneOutOfViewListener = onPlaneOutOfViewListener;
    }
+   
+   @Override
+   public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
+   {
+       if (pSceneTouchEvent.isActionDown())
+       {          
+          onPlaneClickedListener.onPlaneClicked(this);
+          hasBonus = false;
+       }
+       return true;
+   }
+
+   @Override
+   public boolean hasBonus() {
+      return hasBonus;
+   }
+
+   @Override
+   public void setBonus() {
+      hasBonus = true;
+   };
 
 }
