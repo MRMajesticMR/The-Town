@@ -3,7 +3,6 @@ package ru.majestic.thetown.view.bonuses.impl;
 import org.andengine.entity.Entity;
 import org.andengine.entity.sprite.Sprite;
 
-import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.bonuses.IBonusCargoView;
 import ru.majestic.thetown.view.bonuses.listeners.OnBonusTouchTheGroundListener;
@@ -15,11 +14,9 @@ public class BonusCargoView extends Sprite implements IBonusCargoView {
    
    private static final float SPEED = 2.0f;
    
-   private static final float GROUND_LINE = 500;
+   private static final float GROUND_LINE = 470;
    
    private OnBonusTouchTheGroundListener onBonusTouchTheGroundListener;
-   
-   private IGameBonus   gameBonus;
    
    public BonusCargoView() {
       super(0, 0, WIDTH, HEIGHT, ResourceManager.getInstance().getBonusesResourcesManager().getCargoTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -40,32 +37,27 @@ public class BonusCargoView extends Sprite implements IBonusCargoView {
    @Override
    public void unpause() {
       setVisible(true);
-      setIgnoreUpdate(false);      
+      setIgnoreUpdate(false);
    }
    
    @Override
    public void onManagedUpdate(float pSecondsElapsed) {
+      setWidth(getWidth() + 0.1f);
+      setHeight(getHeight() + 0.1f); 
+      
       setY(getY() + SPEED);
       
-      if(getY() + getHeight() >= GROUND_LINE) {
-         pause();
-         onBonusTouchTheGroundListener.onBonusTouchTheGround(this);
+      if(getY() + getHeight() >= GROUND_LINE) {                  
+         pause();         
+         setWidth(WIDTH);
+         setHeight(HEIGHT);         
+         onBonusTouchTheGroundListener.onBonusTouchTheGround();
       }
    }
 
    @Override
    public void setOnBonusTouchTheGroundListener(OnBonusTouchTheGroundListener onBonusTouchTheGroundListener) {
       this.onBonusTouchTheGroundListener = onBonusTouchTheGroundListener;
-   }
-
-   @Override
-   public void setBonus(IGameBonus gameBonus) {
-      this.gameBonus = gameBonus;
-   }
-
-   @Override
-   public IGameBonus getBonus() {
-      return gameBonus;
    }
 
 }

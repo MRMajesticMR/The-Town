@@ -12,7 +12,6 @@ import ru.majestic.thetown.game.IBillingManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
-import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
@@ -38,7 +37,7 @@ import ru.majestic.thetown.view.attack.impl.SimpleAttackView;
 import ru.majestic.thetown.view.attack.listeners.OnAttackDialogClosedListener;
 import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.handler.BonusesViewHandler;
-import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusDropedListener;
+import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusViewLandedListener;
 import ru.majestic.thetown.view.clickers.IClickerView;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
@@ -101,7 +100,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               MarketShopDialogActionListener,
                                                               OnDialogClosedListener,
                                                               OnTownNewLevelObtainedListener,
-                                                              OnBonusDropedListener {
+                                                              OnBonusViewLandedListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -132,7 +131,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
    private IWorkersProductionHandler workersProductionHandler;
    
-   private IBonusesViewHandler bonusesViewHandler;
+   private IBonusesViewHandler bonusesViewHandler;   
    
    @Override
    public void onStart() {
@@ -220,8 +219,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.getTown().addOnTownNewLevelObtainedListener(townLevelRewardDialog);
       gameManager.getTown().addOnTownNewLevelObtainedListener(this);      
       
-      bonusesViewHandler = new BonusesViewHandler(scene, scene, gameManager.getGameBonusFactory());
-      bonusesViewHandler.setOnBonusDropedListener(this);
+      bonusesViewHandler = new BonusesViewHandler(scene, scene);
+      bonusesViewHandler.setOnBonusViewLandedListener(this);
       
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
@@ -602,10 +601,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    }
 
    @Override
-   public void onDialogClosed(IDialog dialog) {
-      if(dialog == townLevelRewardDialog) {
-         
-      }
+   public void onDialogClosed(final IDialog dialog) {
+      
    }
 
    @Override
@@ -619,8 +616,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    }
 
    @Override
-   public void onBonusDropedListener(IGameBonus gameBonus) {      
-      gameBonus.execute();
+   public void onBonusViewLandedListener() {      
+      gameManager.getGameBonusFactory().createBonus().execute();
    }
    
 }

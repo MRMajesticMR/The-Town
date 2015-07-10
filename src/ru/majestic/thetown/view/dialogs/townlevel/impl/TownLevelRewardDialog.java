@@ -55,7 +55,7 @@ public class TownLevelRewardDialog extends ADialog implements OnTownNewLevelObta
       
       closeBtn.setWidth(100);
       closeBtn.setHeight(40);            
-      closeBtn.setX((getWidth() - (PADDING * 2) - closeBtn.getWidth()) / 2); 
+      closeBtn.setX((getWidth() - closeBtn.getWidth()) / 2); 
       closeBtn.setY(getHeight() - PADDING - closeBtn.getHeight());
       
       closeBtn.setOnClickListener(this);
@@ -74,18 +74,6 @@ public class TownLevelRewardDialog extends ADialog implements OnTownNewLevelObta
       attachChild(goldIcon);
       attachChild(goldResultText);
    }   
-   
-   @Deprecated
-   @Override
-   public void registerTouchArea(Scene scene) {
-      //.
-   }
-   
-   @Deprecated
-   @Override
-   public void unregisterTouchArea(Scene scene) {
-      //.
-   }
 
    @Override
    public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {      

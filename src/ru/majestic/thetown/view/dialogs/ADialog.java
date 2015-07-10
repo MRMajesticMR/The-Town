@@ -1,6 +1,7 @@
 package ru.majestic.thetown.view.dialogs;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
@@ -18,6 +19,16 @@ public abstract class ADialog extends Sprite implements IDialog {
    protected final void notifyOnDialogClosedListener() {
       if(onDialogClosedListener != null)
          onDialogClosedListener.onDialogClosed(this);
+   }
+   
+   @Deprecated
+   @Override
+   public void registerTouchArea(Scene scene) {      
+   }
+
+   @Deprecated
+   @Override   
+   public void unregisterTouchArea(Scene scene) {      
    }
 
    @Override

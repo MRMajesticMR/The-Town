@@ -5,11 +5,10 @@ import java.util.Random;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
-import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
 import ru.majestic.thetown.view.bonuses.IBonusCargoView;
 import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.IPlaneView;
-import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusDropedListener;
+import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusViewLandedListener;
 import ru.majestic.thetown.view.bonuses.impl.BonusCargoView;
 import ru.majestic.thetown.view.bonuses.impl.PlaneView;
 import ru.majestic.thetown.view.bonuses.listeners.OnBonusTouchTheGroundListener;
@@ -22,21 +21,20 @@ public class BonusesViewHandler implements IBonusesViewHandler,
                                            OnBonusTouchTheGroundListener,
                                            Runnable {
 
-   private static final int PERIOD = 30000;
+//   private static final int PERIOD = 30000;
+   private static final int PERIOD = 1000;
    
    private final Scene  scene;
    
    private IPlaneView         planeView;
    private IBonusCargoView    bonusCargoView;
-   private IGameBonusFactory  gameBonusFactory;
    
    private boolean         working;
    
-   private OnBonusDropedListener onBonusDropedListener;
+   private OnBonusViewLandedListener onBonusDropedListener;
    
-   public BonusesViewHandler(Scene scene, Entity parentLayer, IGameBonusFactory gameBonusFactory) {
+   public BonusesViewHandler(Scene scene, Entity parentLayer) {
       this.scene              = scene;
-      this.gameBonusFactory   = gameBonusFactory;
       
       planeView = new PlaneView();      
       planeView.setOnPlaneOutOfViewListener(this);     
@@ -45,7 +43,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
       
       bonusCargoView = new BonusCargoView();
       bonusCargoView.setOnBonusTouchTheGroundListener(this);
-      bonusCargoView.attachToParent(parentLayer);
+      bonusCargoView.attachToParent(parentLayer);            
    }
 
    @Override
@@ -78,7 +76,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
    }
    
    @Override
-   public void setOnBonusDropedListener(OnBonusDropedListener onBonusDropedListener) {
+   public void setOnBonusViewLandedListener(OnBonusViewLandedListener onBonusDropedListener) {
       this.onBonusDropedListener = onBonusDropedListener;
    }
 
@@ -98,7 +96,6 @@ public class BonusesViewHandler implements IBonusesViewHandler,
    @Override
    public void onPlaneClicked(IPlaneView planeView) {
       if(planeView.hasBonus()) {
-         bonusCargoView.setBonus(gameBonusFactory.createBonus());
          bonusCargoView.setX(planeView.getX() + (planeView.getWidth() - bonusCargoView.getWidth()) / 2);
          bonusCargoView.setY(planeView.getY() + planeView.getHeight());
          bonusCargoView.unpause();
@@ -106,8 +103,8 @@ public class BonusesViewHandler implements IBonusesViewHandler,
    }
 
    @Override
-   public void onBonusTouchTheGround(IBonusCargoView bonusCargoView) {
-      onBonusDropedListener.onBonusDropedListener(bonusCargoView.getBonus());
+   public void onBonusTouchTheGround() {
+      onBonusDropedListener.onBonusViewLandedListener();      
    }   
    
 }

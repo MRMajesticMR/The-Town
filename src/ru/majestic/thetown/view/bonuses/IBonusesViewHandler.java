@@ -1,6 +1,7 @@
 package ru.majestic.thetown.view.bonuses;
 
-import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusDropedListener;
+import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusViewLandedListener;
+
 
 
 public interface IBonusesViewHandler {           
@@ -8,6 +9,6 @@ public interface IBonusesViewHandler {
    public void begin ();
    public void end   ();
    
-   public void setOnBonusDropedListener(OnBonusDropedListener onBonusDropedListener);
+   public void setOnBonusViewLandedListener(OnBonusViewLandedListener onBonusDropedListener);
    
 }
