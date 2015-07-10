@@ -60,7 +60,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
    
    private void startPlane() {
       planeView.setX(- planeView.getWidth());
-      planeView.setY(new Random(System.currentTimeMillis()).nextInt(200) + 50);
+      planeView.setY(new Random(System.currentTimeMillis()).nextInt(130) + 70);
       planeView.setBonus();
       planeView.registerTouchArea(scene);
       planeView.unpause();
