@@ -6,13 +6,11 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
+import ru.majestic.thetown.resources.dialogs.bonus.IBonusRewardDialogsResourceManager;
 import android.content.Context;
 import android.graphics.Color;
-
-import ru.majestic.thetown.resources.dialogs.bonus.IBonusRewardDialogsResourceManager;
 
 public class BonusRewardDialogsResourceManager implements IBonusRewardDialogsResourceManager {
 
@@ -26,20 +24,18 @@ public class BonusRewardDialogsResourceManager implements IBonusRewardDialogsRes
    private ITiledTextureRegion   improveButtonTexture;   
    private Font                  bonusDialogTitleFont;
    private Font                  improveNoteFont;
-   private ITextureRegion        improveBoteTexture;
    private Font                  bonusDialogMessageFont;
    
    @Override
    public void load(Context context, Engine engine) {
       this.engine = engine;
       
-      textureAtlas                        = new BitmapTextureAtlas(engine.getTextureManager(), 256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);      
+      textureAtlas                        = new BitmapTextureAtlas(engine.getTextureManager(), 512, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);      
       improveNoteFontTextureAtlas         = new BitmapTextureAtlas(engine.getTextureManager(), 128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       bonusDialogsTitleFontTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       bonusDialogsMessageFontTextureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
       improveButtonTexture          = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, "gfx/dialogs/bonus/improve_btn.png", 0, 0, 2, 1);
-      improveBoteTexture            = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "gfx/dialogs/bonus/improve_note.png", 0, 64);
       
       improveNoteFont               = FontFactory.createFromAsset(engine.getFontManager(), improveNoteFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 16, true, Color.parseColor("#000000"));
       bonusDialogTitleFont          = FontFactory.createFromAsset(engine.getFontManager(), bonusDialogsTitleFontTextureAtlas, context.getAssets(), "fonts/main.ttf", 22, true, Color.parseColor("#000000"));
@@ -80,12 +76,7 @@ public class BonusRewardDialogsResourceManager implements IBonusRewardDialogsRes
    @Override
    public Font getBonusDialogTitleFont() {
       return bonusDialogTitleFont;
-   }
-   
-   @Override
-   public ITextureRegion getImproveNoteTexture() {
-      return improveBoteTexture;
-   }
+   }   
    
    @Override
    public Font getImproveNoteFont() {
