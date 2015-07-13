@@ -6,8 +6,6 @@ import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.IWorkersManager;
-import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
-import ru.majestic.thetown.game.bonuses.factories.GameBonusFactory;
 import ru.majestic.thetown.game.town.ITown;
 import ru.majestic.thetown.game.town.impl.Town;
 import android.content.Context;
@@ -24,7 +22,6 @@ public class GameManager implements IGameManager {
    private final IWorkersManager    workersManager;
    private final ICargoManager      cargoManager;
    private final IAttackManager     attackManager;
-   private final IGameBonusFactory  gameBonusFactory;
    
    
    public GameManager() {
@@ -33,8 +30,7 @@ public class GameManager implements IGameManager {
       town              = new Town();
       workersManager    = new WorkersManager();
       cargoManager      = new CargoManager();
-      attackManager     = new AttackManager();      
-      gameBonusFactory  = new GameBonusFactory(this);
+      attackManager     = new AttackManager();       
    }
    
    @Override
@@ -94,9 +90,4 @@ public class GameManager implements IGameManager {
       return attackManager;
    }
 
-   @Override
-   public IGameBonusFactory getGameBonusFactory() {
-      return gameBonusFactory;
-   }
-   
 }

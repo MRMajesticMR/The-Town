@@ -12,6 +12,8 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 import ru.majestic.thetown.resources.bonuses.IBonusesResourcesManager;
 import ru.majestic.thetown.resources.bonuses.impl.BonusesResourcesManager;
+import ru.majestic.thetown.resources.dialogs.IDialogsResourceManager;
+import ru.majestic.thetown.resources.dialogs.impl.DialogsResourceManager;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -118,10 +120,12 @@ public class ResourceManager {
    private Font               errorTextFont;
    private Font               buyGoldBtnTextFont;
    
-   private IBonusesResourcesManager bonusesResourcesManager;
+   private final IBonusesResourcesManager bonusesResourcesManager;
+   private final IDialogsResourceManager  dialogsResourceManager;
    
    private ResourceManager() {
-      
+      bonusesResourcesManager = new BonusesResourcesManager();
+      dialogsResourceManager  = new DialogsResourceManager();
    }
    
    public static ResourceManager getInstance() {
@@ -197,8 +201,9 @@ public class ResourceManager {
       loadBackground(context);
       
       
-      bonusesResourcesManager = new BonusesResourcesManager();
-      bonusesResourcesManager.load(context, engine);
+      
+      bonusesResourcesManager.load(context, engine);            
+      dialogsResourceManager.load(context, engine);
    }
    
    private void loadFonts(Context context) {
@@ -456,8 +461,14 @@ public class ResourceManager {
       return billingResultBackgroundTextureRegion;
    }
 
+   
+   //MANAGERS
    public IBonusesResourcesManager getBonusesResourcesManager() {
       return bonusesResourcesManager;
-   }  
+   }
+
+   public IDialogsResourceManager getDialogsResourceManager() {
+      return dialogsResourceManager;
+   }        
    
 }

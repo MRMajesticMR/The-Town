@@ -5,6 +5,9 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import ru.majestic.thetown.ads.IAdsManager;
+import ru.majestic.thetown.ads.impl.AppodealAdsManager;
+import ru.majestic.thetown.ads.listeners.OnAdShowenListener;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
@@ -12,6 +15,9 @@ import ru.majestic.thetown.game.IBillingManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.bonuses.IGameBonus;
+import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
+import ru.majestic.thetown.game.bonuses.factories.GameBonusFactory;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
@@ -53,6 +59,10 @@ import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog.State;
 import ru.majestic.thetown.view.dialogs.billing.impl.BillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedListener;
+import ru.majestic.thetown.view.dialogs.bonus.ABonusRewardDialog;
+import ru.majestic.thetown.view.dialogs.bonus.factory.IBonusRewardDialogsFactory;
+import ru.majestic.thetown.view.dialogs.bonus.factory.impl.BonusRewardDialogsFactory;
+import ru.majestic.thetown.view.dialogs.bonus.listeners.OnImproveBtnClickedListener;
 import ru.majestic.thetown.view.dialogs.listeners.OnDialogClosedListener;
 import ru.majestic.thetown.view.dialogs.shops.IShopsDialogsManager;
 import ru.majestic.thetown.view.dialogs.shops.impl.BuildingsShopDialog;
@@ -80,6 +90,7 @@ import ru.majestic.thetown.view.town.impl.SimpleTownView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.os.Bundle;
 
 import com.flurry.android.FlurryAgent;
 
@@ -100,7 +111,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               MarketShopDialogActionListener,
                                                               OnDialogClosedListener,
                                                               OnTownNewLevelObtainedListener,
-                                                              OnBonusViewLandedListener {
+                                                              OnBonusViewLandedListener,
+                                                              OnImproveBtnClickedListener,
+                                                              OnAdShowenListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -131,7 +144,21 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	
    private IWorkersProductionHandler workersProductionHandler;
    
-   private IBonusesViewHandler bonusesViewHandler;   
+   private IBonusesViewHandler         bonusesViewHandler;
+   private IGameBonusFactory           gameBonusFactory;
+   private IBonusRewardDialogsFactory  bonusRewardDialogsFactory;
+   
+   private ABonusRewardDialog          bonusRewardDialog;
+   private IGameBonus                  currentGameBonus;
+   private IAdsManager                 adsManager;
+   
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      
+      adsManager = new AppodealAdsManager(this);
+      adsManager.setOnAdShowenListener(this);
+   }
    
    @Override
    public void onStart() {
@@ -222,6 +249,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       bonusesViewHandler = new BonusesViewHandler(scene, scene);
       bonusesViewHandler.setOnBonusViewLandedListener(this);
       
+      gameBonusFactory  = new GameBonusFactory(gameManager);
+      
+      bonusRewardDialogsFactory = new BonusRewardDialogsFactory(scene);
+      
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
@@ -272,7 +303,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
             workersProductionHandler.start();
    	   }
          
-         billingManager.init(this);
+         billingManager.init(this);         
 	   }
 	}
 
@@ -397,6 +428,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          
          soundStateView.registerTouchArea(scene);
          
+      } else if(bonusRewardDialog != null && bonusRewardDialog.isVisible()) {
+         closeRewardDialogAndExecuteBonus();      
       } else {
          super.onBackPressed();
       }
@@ -602,7 +635,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onDialogClosed(final IDialog dialog) {
-      
+      if(dialog == bonusRewardDialog) {
+         closeRewardDialogAndExecuteBonus();
+      }
    }
 
    @Override
@@ -617,7 +652,42 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBonusViewLandedListener() {      
-      gameManager.getGameBonusFactory().createBonus().execute();
+      currentGameBonus = gameBonusFactory.createBonus();
+      
+      bonusRewardDialog = bonusRewardDialogsFactory.createBonusRewardDialog(currentGameBonus);
+      bonusRewardDialog.setOnDialogClosedListener(this);
+      bonusRewardDialog.attachToParent(scene);
+      if(adsManager.isAdReady()) {
+         bonusRewardDialog.setOnImproveBtnClickedListener(this);
+         bonusRewardDialog.showImproveButton(true);
+      } else
+         bonusRewardDialog.showImproveButton(false);
+      bonusRewardDialog.show();      
    }
    
+   private void closeRewardDialogAndExecuteBonus() {
+      bonusRewardDialog.hide();
+      currentGameBonus.execute();
+      resourcesCounterPanel.update();
+      
+      runOnUpdateThread(new Runnable() {
+         
+         @Override
+         public void run() {
+            bonusRewardDialog.detachSelf();               
+         }
+      });
+   }
+
+   @Override
+   public void onImproveBtnClickedListener() {
+      adsManager.show();
+      bonusRewardDialog.showImproveButton(false);
+   }
+
+   @Override
+   public void onAdShowen() {
+      currentGameBonus.doubleBonus();        
+      bonusRewardDialogsFactory.updateBonusRewardDialog(currentGameBonus, bonusRewardDialog);      
+   }
 }

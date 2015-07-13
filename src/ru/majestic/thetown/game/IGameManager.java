@@ -1,6 +1,5 @@
 package ru.majestic.thetown.game;
 
-import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
 import ru.majestic.thetown.game.town.ITown;
 import android.content.Context;
 
@@ -15,5 +14,5 @@ public interface IGameManager {
    public IWorkersManager     getWorkersManager    ();
    public ICargoManager       getCargoManager      ();
    public IAttackManager      getAttackManager     ();
-   public IGameBonusFactory   getGameBonusFactory  ();
+   
 }

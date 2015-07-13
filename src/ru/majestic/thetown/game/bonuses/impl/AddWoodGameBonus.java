@@ -2,11 +2,11 @@ package ru.majestic.thetown.game.bonuses.impl;
 
 import ru.majestic.thetown.game.bonuses.AGameBonus;
 import ru.majestic.thetown.game.cargo.impl.WoodCargo;
-import android.util.Log;
+import ru.majestic.thetown.view.dialogs.bonus.impl.AddWoodBonusRewardDialog;
 
 public class AddWoodGameBonus extends AGameBonus {
 
-   private final long woodBonus;
+   private long woodBonus;
    
    private final WoodCargo woodCargo;
    
@@ -15,19 +15,23 @@ public class AddWoodGameBonus extends AGameBonus {
       this.woodBonus = calculateBonus(townLvl);
    }
    
-   @Override
-   protected void executeBonus() {
-      Log.d("BONUS", "Add wood: " + woodBonus);
-      woodCargo.add(woodBonus);
+   private long calculateBonus(int townLvl) {
+      return (long) Math.pow((townLvl * 10), 1.4f);
+   }
+   
+   public void configDialog(AddWoodBonusRewardDialog dialog) {
+      dialog.setAddWoodCount(woodBonus);
    }
 
    @Override
-   protected void executeDoubledBonus() {
-      woodCargo.add(woodBonus * 2);
+   public void doubleBonus() {
+      woodBonus *= 2;
+      
    }
-   
-   private long calculateBonus(int townLvl) {
-      return (long) Math.pow((townLvl * 10), 1.4f);
+
+   @Override
+   public void execute() {
+      woodCargo.add(woodBonus);      
    }
 
 }

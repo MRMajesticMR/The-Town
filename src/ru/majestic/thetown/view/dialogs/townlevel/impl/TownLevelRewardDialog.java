@@ -99,7 +99,7 @@ public class TownLevelRewardDialog extends ADialog implements OnTownNewLevelObta
 
    @Override
    public void hide() {
-      scene.unregisterTouchArea(this);
+      scene.unregisterTouchArea(closeBtn);
       setVisible(false);
    }
 

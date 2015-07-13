@@ -2,11 +2,11 @@ package ru.majestic.thetown.game.bonuses.impl;
 
 import ru.majestic.thetown.game.bonuses.AGameBonus;
 import ru.majestic.thetown.game.cargo.impl.FoodCargo;
-import android.util.Log;
+import ru.majestic.thetown.view.dialogs.bonus.impl.AddFoodBonusRewardDialog;
 
 public class AddFoodGameBonus extends AGameBonus {
 
-   private final long foodBonus;
+   private long foodBonus;
    
    private final FoodCargo foodCargo;
    
@@ -15,19 +15,22 @@ public class AddFoodGameBonus extends AGameBonus {
       this.foodBonus = calculateBonus(townLvl);
    }
    
-   @Override
-   protected void executeBonus() {
-      Log.d("BONUS", "Add food: " + foodBonus);
-      foodCargo.add(foodBonus);
+   private long calculateBonus(int townLvl) {
+      return (long) Math.pow((townLvl * 10), 1.4f);
+   }
+   
+   public void configDialog(AddFoodBonusRewardDialog dialog) {
+      dialog.setAddFoodCount(foodBonus);
    }
 
    @Override
-   protected void executeDoubledBonus() {
-      foodCargo.add(foodBonus * 2);
+   public void doubleBonus() {
+      foodBonus *= 2;
    }
-   
-   private long calculateBonus(int townLvl) {
-      return (long) Math.pow((townLvl * 10), 1.4f);
+
+   @Override
+   public void execute() {
+      foodCargo.add(foodBonus);      
    }
 
 

@@ -24,8 +24,10 @@ public class GameBonusFactory implements IGameBonusFactory {
       switch(new Random(System.currentTimeMillis()).nextInt(2)) {
       case 0:
          return new AddWoodGameBonus((WoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD), gameManager.getTown().getLvl());
+         
       case 1:
          return new AddFoodGameBonus((FoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD), gameManager.getTown().getLvl());
+         
       default:
          return null;
       }
