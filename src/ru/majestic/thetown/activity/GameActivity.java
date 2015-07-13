@@ -662,8 +662,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          bonusRewardDialog.setOnImproveBtnClickedListener(this);
          bonusRewardDialog.showImproveButton(true);
       } else
-//         bonusRewardDialog.showImproveButton(false);
-         bonusRewardDialog.showImproveButton(true);
+         bonusRewardDialog.showImproveButton(false);
       bonusRewardDialog.show();      
    }
    
