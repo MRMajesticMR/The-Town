@@ -312,9 +312,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       if(clicker == foodClicker) {         
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
          foodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
-      }
-      
-      if(clicker == woodClicker) {
+      } else if(clicker == woodClicker) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
          woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
       }            
@@ -526,13 +524,13 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
       if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).clear();
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();        
-         resourcesCounterPanel.update();            
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();                             
       } else {
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getAttackManager().getAttack().getWoodReward());
          gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getAttackManager().getAttack().getFoodReward());
-         resourcesCounterPanel.update();
       }
+      
+      resourcesCounterPanel.update();
       
       gameManager.getAttackManager().getAttack().update(gameManager.getTown());
       gameManager.save(this);
