@@ -36,6 +36,7 @@ import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.notifications.TheTownNotificationManager;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.statistic.StatisticsEventsManager;
 import ru.majestic.thetown.view.attack.IAttackTimeView;
 import ru.majestic.thetown.view.attack.IAttackView;
 import ru.majestic.thetown.view.attack.impl.SimpleAttackTimeView;
@@ -150,7 +151,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    
    private ABonusRewardDialog          bonusRewardDialog;
    private IGameBonus                  currentGameBonus;
-   private IAdsManager                 adsManager;
+   private IAdsManager                 adsManager;   
    
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -158,6 +159,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       
       adsManager = new AppodealAdsManager(this);
       adsManager.setOnAdShowenListener(this);
+                              
+      StatisticsEventsManager.getInstance().onApplicationLaunched(getIntent().getStringExtra(StatisticsEventsManager.LAUNCH_MODE_TAG));            
    }
    
    @Override

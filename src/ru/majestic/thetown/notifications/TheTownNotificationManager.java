@@ -8,6 +8,7 @@ import ru.majestic.thetown.game.attack.impl.Attack;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.impl.WorkersManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
+import ru.majestic.thetown.statistic.StatisticsEventsManager;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,8 +24,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
    private static final long ALARM_MANAGER_INTERVAL      = 1000 * 60 * 10; //30 MIN
       
    private static final long TIME_TO_ATTACK_HALF_HOUR    = 1000 * 60 * 30;
-   private static final long TIME_TO_ATTACK_HOUR         = TIME_TO_ATTACK_HALF_HOUR * 2;   
-      
+   private static final long TIME_TO_ATTACK_HOUR         = TIME_TO_ATTACK_HALF_HOUR * 2;     
    
    private static final String SAVE_TAG_HALF_HOUR  = "SAVE_TAG_HALF_HOUR";
    private static final String SAVE_TAG_HOUR       = "SAVE_TAG_HOUR";
@@ -102,6 +102,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
             .setAutoCancel(true);
 
       Intent resultIntent = new Intent(context, GameActivity.class);
+      resultIntent.putExtra(StatisticsEventsManager.LAUNCH_MODE_TAG, StatisticsEventsManager.LAUNCH_MODE_NOTIFICATION_BEFORE_ATTACK);
 
       PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
 
@@ -139,7 +140,8 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       }
 
       Intent resultIntent = new Intent(context, GameActivity.class);
-
+      resultIntent.putExtra(StatisticsEventsManager.LAUNCH_MODE_TAG, StatisticsEventsManager.LAUNCH_MODE_NOTIFICATION_AFTER_ATTACK);
+      
       PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
 
       mBuilder.setContentIntent(resultPendingIntent);
