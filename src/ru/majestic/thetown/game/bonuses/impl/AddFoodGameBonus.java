@@ -16,7 +16,7 @@ public class AddFoodGameBonus extends AGameBonus {
    }
    
    private long calculateBonus(int townLvl) {
-      return (long) Math.pow((townLvl * 10), 1.4f);
+      return (long) Math.pow((townLvl * 100), 1.4f);
    }
    
    public void configDialog(AddFoodBonusRewardDialog dialog) {
