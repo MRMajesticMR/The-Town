@@ -2,7 +2,6 @@ package ru.majestic.thetown.view.clickers.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.AClickerViewSkeleton;
-import ru.majestic.thetown.view.clickers.IClickersAdderView;
 
 public class WoodClickerView extends AClickerViewSkeleton {
 
@@ -11,11 +10,6 @@ public class WoodClickerView extends AClickerViewSkeleton {
    
    public WoodClickerView() {
       super(X, Y, 235, 265, ResourceManager.getInstance().getWoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-   }
-
-   @Override
-   protected IClickersAdderView getClickersAdderView() {
-      return new WoodAdderView();
    }
 
 }

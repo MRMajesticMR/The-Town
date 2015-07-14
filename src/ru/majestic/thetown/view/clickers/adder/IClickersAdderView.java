@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.clickers;
+package ru.majestic.thetown.view.clickers.adder;
 
 import ru.majestic.thetown.view.IView;
 

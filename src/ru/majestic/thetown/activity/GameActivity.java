@@ -46,6 +46,9 @@ import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.handler.BonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusViewLandedListener;
 import ru.majestic.thetown.view.clickers.IClickerView;
+import ru.majestic.thetown.view.clickers.adder.IAddersViewManager;
+import ru.majestic.thetown.view.clickers.adder.IAddersViewManager.AdderType;
+import ru.majestic.thetown.view.clickers.adder.impl.AddersViewManager;
 import ru.majestic.thetown.view.clickers.impl.FoodClickerView;
 import ru.majestic.thetown.view.clickers.impl.WoodClickerView;
 import ru.majestic.thetown.view.counters.ICountView;
@@ -124,8 +127,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	private IGameManager      gameManager;
 	private IBillingManager   billingManager;
 	
-	private IClickerView foodClicker;
-	private IClickerView woodClicker;
+	private IClickerView         foodClicker;
+	private IClickerView         woodClicker;
+	private IAddersViewManager   addersViewManager;
 
 	private IResourcesCounterPanel  resourcesCounterPanel;
 	private ICountWithMaxValueView  homeCountView;
@@ -195,8 +199,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       billingManager = new BillingManager();
       billingManager.setOnBillingOperationCompleteListener(this);
       
-      foodClicker = new FoodClickerView();
-      woodClicker = new WoodClickerView();
+      foodClicker          = new FoodClickerView();
+      woodClicker          = new WoodClickerView();
+      addersViewManager    = new AddersViewManager();
       
       resourcesCounterPanel   = new GameResourcesCounterPanel(gameManager);
       homeCountView           = new HomeCounterView      (10, 90);
@@ -263,6 +268,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	public void onPopulateScene(Scene scene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
 		foodClicker.attachToParent(scene);
 	   woodClicker.attachToParent(scene);
+	   addersViewManager.attachAdders(scene);
 	   
 	   resourcesCounterPanel.attachToParent(scene);
 	   homeCountView.attachToParent(scene);
@@ -312,13 +318,18 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onClickerClicked(float x, float y, IClickerView clicker) {
-      if(clicker == foodClicker) {         
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
-         foodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
-      } else if(clicker == woodClicker) {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
-         woodClicker.showAdder(x, y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());
-      }            
+      if(gameManager.getGoldFromClickerHandler().isGoldChance()) {
+         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1);
+         addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, 1, AdderType.GOLD);
+      } else {
+         if(clicker == foodClicker) {         
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
+            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.FOOD);
+         } else if(clicker == woodClicker) {
+            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());         
+            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.WOOD);
+         }
+      }
       
       resourcesCounterPanel.update();
    }

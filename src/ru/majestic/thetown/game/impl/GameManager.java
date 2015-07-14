@@ -5,6 +5,7 @@ import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
+import ru.majestic.thetown.game.IGoldFromClickerHandler;
 import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.town.ITown;
 import ru.majestic.thetown.game.town.impl.Town;
@@ -16,21 +17,22 @@ public class GameManager implements IGameManager {
    
    public static final String PREFFS_NAME               = "THE_TOWN_PREFFS";
    
-   private final IBuildingsManager  buildingsManager;
-   private final IClickersManager   clickersManager;
-   private final ITown              town;
-   private final IWorkersManager    workersManager;
-   private final ICargoManager      cargoManager;
-   private final IAttackManager     attackManager;
-   
+   private final IBuildingsManager        buildingsManager;
+   private final IClickersManager         clickersManager;
+   private final ITown                    town;
+   private final IWorkersManager          workersManager;
+   private final ICargoManager            cargoManager;
+   private final IAttackManager           attackManager;
+   private final IGoldFromClickerHandler  goldFromClickerHandler;
    
    public GameManager() {
-      buildingsManager  = new BuildingsManager();
-      clickersManager   = new ClickersManager();
-      town              = new Town();
-      workersManager    = new WorkersManager();
-      cargoManager      = new CargoManager();
-      attackManager     = new AttackManager();       
+      buildingsManager        = new BuildingsManager();
+      clickersManager         = new ClickersManager();
+      town                    = new Town();
+      workersManager          = new WorkersManager();
+      cargoManager            = new CargoManager();
+      attackManager           = new AttackManager();  
+      goldFromClickerHandler  = new GoldFromClickerHandler();
    }
    
    @Override
@@ -88,6 +90,11 @@ public class GameManager implements IGameManager {
    @Override
    public IAttackManager getAttackManager() {
       return attackManager;
+   }
+
+   @Override
+   public IGoldFromClickerHandler getGoldFromClickerHandler() {
+      return goldFromClickerHandler;
    }
 
 }

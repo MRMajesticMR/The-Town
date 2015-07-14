@@ -1,7 +1,7 @@
-package ru.majestic.thetown.view.clickers.impl;
+package ru.majestic.thetown.view.clickers.adder.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.clickers.AClickersAdderView;
+import ru.majestic.thetown.view.clickers.adder.AClickersAdderView;
 
 public class FoodAdderView extends AClickersAdderView {
 

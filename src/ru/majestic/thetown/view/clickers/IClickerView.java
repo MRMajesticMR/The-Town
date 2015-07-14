@@ -9,6 +9,4 @@ public interface IClickerView extends IClickableView {
    
 	public void setOnClickerClickedListener      (OnClickerClickedListener onClickerClickedListener);
 	
-	public void showAdder(float x, float y, long value);
-	
 }

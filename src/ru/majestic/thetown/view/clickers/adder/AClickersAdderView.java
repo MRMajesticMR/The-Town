@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.clickers;
+package ru.majestic.thetown.view.clickers.adder;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
@@ -22,6 +22,7 @@ public class AClickersAdderView extends Rectangle implements IClickersAdderView 
       super(0, 0, WIDTH, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
 
       setAlpha(0.0f);
+      setVisible(false);
       
       countText      = new Text(44, 6, ResourceManager.getInstance().getAddersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       counterImage   = new Sprite(0, 0, 40, 40, imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());

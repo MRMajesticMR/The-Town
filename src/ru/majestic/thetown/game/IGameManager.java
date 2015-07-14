@@ -8,11 +8,12 @@ public interface IGameManager {
    public void load(Context context);
    public void save(Context context);
    
-   public IBuildingsManager   getBuildingsManager  ();
-   public IClickersManager    getClickersManager   ();
-   public ITown               getTown              ();
-   public IWorkersManager     getWorkersManager    ();
-   public ICargoManager       getCargoManager      ();
-   public IAttackManager      getAttackManager     ();
+   public IBuildingsManager         getBuildingsManager        ();
+   public IClickersManager          getClickersManager         ();
+   public ITown                     getTown                    ();
+   public IWorkersManager           getWorkersManager          ();
+   public ICargoManager             getCargoManager            ();
+   public IAttackManager            getAttackManager           ();
+   public IGoldFromClickerHandler   getGoldFromClickerHandler  ();
    
 }

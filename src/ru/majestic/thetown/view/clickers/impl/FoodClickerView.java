@@ -2,7 +2,6 @@ package ru.majestic.thetown.view.clickers.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.view.clickers.AClickerViewSkeleton;
-import ru.majestic.thetown.view.clickers.IClickersAdderView;
 
 public class FoodClickerView extends AClickerViewSkeleton {
 
@@ -11,11 +10,6 @@ public class FoodClickerView extends AClickerViewSkeleton {
    
    public FoodClickerView() {
       super(X, Y, CLICKER_WIDTH_AND_HEIGHT, CLICKER_WIDTH_AND_HEIGHT, ResourceManager.getInstance().getFoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-   }
-
-   @Override
-   protected IClickersAdderView getClickersAdderView() {
-      return new FoodAdderView();
-   }
+   }   
 
 }
