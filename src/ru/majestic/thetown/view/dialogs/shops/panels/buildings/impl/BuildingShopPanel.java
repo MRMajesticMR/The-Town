@@ -71,7 +71,7 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       buyButton.setX(getWidth() - PADDING - buyButton.getWidth() - 4);
       buyButton.setY(getHeight() - PADDING - buyButton.getHeight() - 4);
       
-      buildingsCount = new Text(0, PADDING - 2, ResourceManager.getInstance().getShopBuildingsTitleFont(), "999999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      buildingsCount = new Text(0, PADDING - 2, ResourceManager.getInstance().getShopBuildingsTitleFont(), "999999", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
             
       attachChild(buildingImage);

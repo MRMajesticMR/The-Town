@@ -21,8 +21,8 @@ public abstract class ABonusRewardDialog extends ADialog implements OnClickListe
    private static final float DEFAULT_CLOSE_BTN_WIDTH    = 100;
    private static final float DEFAULT_CLOSE_BTN_HEIGHT   = 40;   
    
-   private static final float DEFAULT_IMPROVE_BTN_WIDTH    = 110;
-   private static final float DEFAULT_IMPROVE_BTN_HEIGHT   = 27;
+   private static final float DEFAULT_IMPROVE_BTN_WIDTH    = 120;
+   private static final float DEFAULT_IMPROVE_BTN_HEIGHT   = 28;
    
    private final Scene           scene;
    
@@ -87,7 +87,7 @@ public abstract class ABonusRewardDialog extends ADialog implements OnClickListe
    }
    
    private float getImproveBtnXPosition() {
-      return 240;
+      return 245;
    }
    
    private float getImproveBtnYPosition() {
@@ -95,7 +95,7 @@ public abstract class ABonusRewardDialog extends ADialog implements OnClickListe
    }      
    
    private float getImproveNoteXPosition() {
-      return 190;
+      return 220;
    }
    
    private float getImproveNoteYPosition() {
