@@ -5,6 +5,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.bonus.ABonusRewardDialog;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -16,7 +17,7 @@ public class AddWoodBonusRewardDialog extends ABonusRewardDialog {
    public AddWoodBonusRewardDialog(Scene scene) {
       super(scene);
       
-      woodCountTxt      = new Text(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getBonusRewardDialogsResourceManager().getBonusDialogMessageFont(), "+100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      woodCountTxt      = new Text(0, 0, FontsManager.getInstance().getFont(28), "+100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       woodIcon          = new Sprite(0, 0, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       updateCounterPosition();

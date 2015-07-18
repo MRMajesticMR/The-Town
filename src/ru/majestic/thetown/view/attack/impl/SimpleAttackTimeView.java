@@ -7,6 +7,7 @@ import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.game.IAttackManager;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.attack.IAttackTimeView;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -31,8 +32,8 @@ public class SimpleAttackTimeView extends Rectangle implements IAttackTimeView {
       setAlpha(0.0f);
       
       attackImage    = new Sprite((getWidth() - 40) / 2, 0, 40, 40, ResourceManager.getInstance().getSwordsIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
-      attackPowerText   = new Text(0, attackImage.getY() + attackImage.getHeight() + 4, ResourceManager.getInstance().getCountersFont(), "00000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      timeText       = new Text(0, attackPowerText.getY() + attackPowerText.getHeight() + 2, ResourceManager.getInstance().getCountersFont(), "00:00:00", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      attackPowerText   = new Text(0, attackImage.getY() + attackImage.getHeight() + 4, FontsManager.getInstance().getFont(16), "00000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      timeText       = new Text(0, attackPowerText.getY() + attackPowerText.getHeight() + 2, FontsManager.getInstance().getFont(16), "00:00:00", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(attackImage);
       attachChild(attackPowerText);

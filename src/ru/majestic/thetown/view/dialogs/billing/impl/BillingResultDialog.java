@@ -9,6 +9,7 @@ import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.billing.IBillingResultDialog;
 import ru.majestic.thetown.view.dialogs.billing.listeners.OnBillingDialogClosedListener;
 
@@ -29,7 +30,7 @@ public class BillingResultDialog extends Sprite implements IBillingResultDialog,
       setVisible(false);
       
       
-      resultTitleTxt        = new Text(PADDING + 160, PADDING, ResourceManager.getInstance().getBillingResultTextFont(), "Buy product error. Try again later.", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      resultTitleTxt        = new Text(PADDING + 160, PADDING, FontsManager.getInstance().getFont(22), "Buy product error. Try again later.", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getCloseButtonTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       closeBtn.setWidth(100);

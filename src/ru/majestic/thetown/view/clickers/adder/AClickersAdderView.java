@@ -7,6 +7,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.clickers.animation.AdderHideAnimation;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -24,7 +25,7 @@ public class AClickersAdderView extends Rectangle implements IClickersAdderView 
       setAlpha(0.0f);
       setVisible(false);
       
-      countText      = new Text(44, 6, ResourceManager.getInstance().getAddersFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      countText      = new Text(44, 6, FontsManager.getInstance().getFont(18), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       counterImage   = new Sprite(0, 0, 40, 40, imageTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(countText);

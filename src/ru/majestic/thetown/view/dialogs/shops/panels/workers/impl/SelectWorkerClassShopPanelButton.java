@@ -7,6 +7,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.ISelectWorkerClassShopPanelButton;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.OnWorkerClassShopButtonClickedListener;
 
@@ -19,7 +20,7 @@ public class SelectWorkerClassShopPanelButton extends Sprite implements ISelectW
    public SelectWorkerClassShopPanelButton(String text) {
       super(0, 0, 0, 0, ResourceManager.getInstance().getWorkersTypeBtnBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      menuText = new Text(0, 0, ResourceManager.getInstance().getMenuButtonsFont(), text, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
+      menuText = new Text(0, 0, FontsManager.getInstance().getFont(18), text, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
       attachChild(menuText);
       

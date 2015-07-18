@@ -8,6 +8,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.buttons.IBuyGoldButton;
 import ru.majestic.thetown.view.dialogs.shops.panels.buttons.listeners.OnBuyGoldButtonClickedListener;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
@@ -29,9 +30,9 @@ public class BuyGoldButton extends Rectangle implements IBuyGoldButton {
       
       setAlpha(0.0f);
       
-      goldCountTxt      = new Text(PADDING + 5, 20, ResourceManager.getInstance().getBuyGoldBtnTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      goldCountTxt      = new Text(PADDING + 5, 20, FontsManager.getInstance().getFont(16), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       goldIcon          = new Sprite(0, 16, 30, 30, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      dollarsCountTxt   = new Text(34, 20, ResourceManager.getInstance().getBuyGoldBtnTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      dollarsCountTxt   = new Text(34, 20, FontsManager.getInstance().getFont(16), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(goldCountTxt);
       attachChild(goldIcon);

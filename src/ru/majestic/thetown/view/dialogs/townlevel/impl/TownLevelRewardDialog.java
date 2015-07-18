@@ -10,6 +10,7 @@ import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.game.town.ITownLevelReward;
 import ru.majestic.thetown.game.town.listeners.OnTownNewLevelObtainedListener;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.ADialog;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -42,16 +43,16 @@ public class TownLevelRewardDialog extends ADialog implements OnTownNewLevelObta
       this.scene            = scene;
       
       closeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getCloseButtonTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      resultText            = new Text(0, PADDING, ResourceManager.getInstance().getAttackResultTitleTextFont(), "Town level increased!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      resultText            = new Text(0, PADDING, FontsManager.getInstance().getFont(28), "Town level increased!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       woodIcon              = new Sprite(160, 85, 40, 40, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      woodResultText        = new Text(woodIcon.getX() + woodIcon.getWidth() + 4, woodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      woodResultText        = new Text(woodIcon.getX() + woodIcon.getWidth() + 4, woodIcon.getY() + 8, FontsManager.getInstance().getFont(18), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       foodIcon              = new Sprite(PADDING, 85, 40, 40, ResourceManager.getInstance().getFoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      foodResultText        = new Text(foodIcon.getX() + foodIcon.getWidth() + 4, foodIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      foodResultText        = new Text(foodIcon.getX() + foodIcon.getWidth() + 4, foodIcon.getY() + 8, FontsManager.getInstance().getFont(18), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       goldIcon              = new Sprite(310, 85, 40, 40, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      goldResultText        = new Text(goldIcon.getX() + goldIcon.getWidth() + 4, goldIcon.getY() + 8, ResourceManager.getInstance().getAttackResultTextFont(), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      goldResultText        = new Text(goldIcon.getX() + goldIcon.getWidth() + 4, goldIcon.getY() + 8, FontsManager.getInstance().getFont(18), "+100.00TT", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       closeBtn.setWidth(100);
       closeBtn.setHeight(40);            

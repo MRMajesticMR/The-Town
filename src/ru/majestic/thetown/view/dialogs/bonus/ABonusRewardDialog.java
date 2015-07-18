@@ -6,6 +6,7 @@ import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.ADialog;
 import ru.majestic.thetown.view.dialogs.bonus.listeners.OnImproveBtnClickedListener;
 
@@ -40,8 +41,8 @@ public abstract class ABonusRewardDialog extends ADialog implements OnClickListe
       
       this.scene = scene;
       
-      title          = new Text(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getBonusRewardDialogsResourceManager().getBonusDialogTitleFont(), "You've got bonus!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      improveNoteTxt = new Text(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getBonusRewardDialogsResourceManager().getImproveNoteFont(), "Improve your bonus!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      title          = new Text(0, 0, FontsManager.getInstance().getFont(22), "You've got bonus!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      improveNoteTxt = new Text(0, 0, FontsManager.getInstance().getFont(16), "Improve your bonus!", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       closeBtn       = new ButtonSprite(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getCloseButtonTexture(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       improveBtn     = new ButtonSprite(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getBonusRewardDialogsResourceManager().getImproveButtonTexture(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
             

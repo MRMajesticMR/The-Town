@@ -5,6 +5,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.bonus.ABonusRewardDialog;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -16,7 +17,7 @@ public class AddFoodBonusRewardDialog extends ABonusRewardDialog {
    public AddFoodBonusRewardDialog(Scene scene) {
       super(scene);
       
-      foodCountTxt      = new Text(0, 0, ResourceManager.getInstance().getDialogsResourceManager().getBonusRewardDialogsResourceManager().getBonusDialogMessageFont(), "+100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      foodCountTxt      = new Text(0, 0, FontsManager.getInstance().getFont(28), "+100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       foodIcon          = new Sprite(0, 0, ResourceManager.getInstance().getFoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       updateCounterPosition();

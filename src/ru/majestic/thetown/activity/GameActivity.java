@@ -36,6 +36,7 @@ import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
 import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.notifications.TheTownNotificationManager;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.statistic.StatisticsEventsManager;
 import ru.majestic.thetown.view.attack.IAttackTimeView;
 import ru.majestic.thetown.view.attack.IAttackView;
@@ -183,7 +184,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-	   ResourceManager.getInstance().loadResources(this, getEngine());	   	   
+	   ResourceManager.getInstance().loadResources(this, getEngine());
+	   FontsManager.getInstance().load(this, getEngine());
 	   
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}

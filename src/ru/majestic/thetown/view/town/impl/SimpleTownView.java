@@ -5,6 +5,7 @@ import org.andengine.entity.text.Text;
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.game.town.ITown;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.town.ATownView;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
@@ -19,8 +20,8 @@ public class SimpleTownView extends ATownView {
    public SimpleTownView(ITown town) {
       super((TheTownCamera.CAMERA_WIDTH - WIDTH) / 2, 60, WIDTH, HEIGHT, town);
       
-      lvlTxt      = new Text(0, 0, ResourceManager.getInstance().getTownLvlFont(), "LVL: 1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      expTxt      = new Text(0, 0, ResourceManager.getInstance().getTownLvlFont(), "100.00AA/100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      lvlTxt      = new Text(0, 0, FontsManager.getInstance().getFont(12), "LVL: 1000000", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      expTxt      = new Text(0, 0, FontsManager.getInstance().getFont(12), "100.00AA/100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       attachChild(lvlTxt);
       attachChild(expTxt);

@@ -7,8 +7,11 @@ import org.andengine.entity.text.Text;
 import org.andengine.util.modifier.IModifier;
 import org.andengine.util.modifier.IModifier.IModifierListener;
 
+import android.graphics.Color;
+
 import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.errors.IErrorView;
 import ru.majestic.thetown.view.errors.animation.ErrorShowAndHideAnimation;
 
@@ -23,7 +26,7 @@ public class ErrorView extends Rectangle implements IErrorView, IModifierListene
       
       setAlpha(0.0f);
       
-      errorText = new Text(0, 0, ResourceManager.getInstance().getErrorTextFont(), "                                                                         ", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                 
+      errorText = new Text(0, 0, FontsManager.getInstance().getFont(32, Color.parseColor("#FF0000")), "", 50, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                 
       
       errorShowAndHideAnimation = new ErrorShowAndHideAnimation();
       errorShowAndHideAnimation.addModifierListener(this);

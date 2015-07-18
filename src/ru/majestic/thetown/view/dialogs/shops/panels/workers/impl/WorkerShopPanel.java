@@ -14,6 +14,7 @@ import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.IWorkerShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.listeners.WorkerShopPanelActionListener;
 import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
@@ -58,21 +59,21 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
       
       workerImage  = new Sprite(PADDING, PADDING, getHeight() - (PADDING * 2), getHeight() - (PADDING * 2), worker.getWorkerImage(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager()); 
-      workerTitle  = new Text(workerImage.getX() + workerImage.getHeight() + 8, PADDING - 4, ResourceManager.getInstance().getShopBuildingsTitleFont(), worker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      workerTitle  = new Text(workerImage.getX() + workerImage.getHeight() + 8, PADDING - 4, FontsManager.getInstance().getFont(20), worker.getTitle(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
 
       expImage       = new Sprite(workerImage.getX() + workerImage.getWidth() + 8, workerTitle.getY() + workerTitle.getHeight(), 21, 16, ResourceManager.getInstance().getExpIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());       
-      expText        = new Text(expImage.getX() + expImage.getWidth() + 8, expImage.getY(), ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(worker.getExp()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
+      expText        = new Text(expImage.getX() + expImage.getWidth() + 8, expImage.getY(), FontsManager.getInstance().getFont(12), "+" + BigValueFormatter.format(worker.getExp()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
       resourcePerSecondImage      = new Sprite(workerImage.getX() + workerImage.getWidth() + 8, expImage.getY() + expImage.getHeight() + 4, 16, 16, getTextureForResourcePerClick(worker.getType()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
-      resourcePerSecondText       = new Text(resourcePerSecondImage.getX() + resourcePerSecondImage.getWidth() + 8, resourcePerSecondImage.getY(), ResourceManager.getInstance().getShopTextFont(), "+" + BigValueFormatter.format(worker.getResourcesPerSec()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
+      resourcePerSecondText       = new Text(resourcePerSecondImage.getX() + resourcePerSecondImage.getWidth() + 8, resourcePerSecondImage.getY(), FontsManager.getInstance().getFont(12), "+" + BigValueFormatter.format(worker.getResourcesPerSec()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());        
       
-      priceTitleText = new Text(230, PADDING -4, ResourceManager.getInstance().getShopBuildingsTitleFont(), "price:", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      priceTitleText = new Text(230, PADDING -4, FontsManager.getInstance().getFont(20), "price:", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       
       priceImage     = new Sprite(230, expImage.getY(), 16, 16, ResourceManager.getInstance().getFoodIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      priceText      = new Text(priceImage.getX() + priceImage.getWidth() + 4, priceImage.getY() + 2, ResourceManager.getInstance().getShopTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  
+      priceText      = new Text(priceImage.getX() + priceImage.getWidth() + 4, priceImage.getY() + 2, FontsManager.getInstance().getFont(12), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  
       
       homePriceImage = new Sprite(230, priceImage.getY() + priceImage.getHeight() + 2, 16, 16, ResourceManager.getInstance().getHomeIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      homePriceText  = new Text(homePriceImage.getX() + homePriceImage.getWidth() + 4, homePriceImage.getY() + 2, ResourceManager.getInstance().getShopTextFont(), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                        
+      homePriceText  = new Text(homePriceImage.getX() + homePriceImage.getWidth() + 4, homePriceImage.getY() + 2, FontsManager.getInstance().getFont(12), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                        
       
       buyButton      = new ButtonSprite(0, 0, ResourceManager.getInstance().getBuyBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       buyButton.setHeight((getHeight() - (PADDING * 2)) / 2);
@@ -80,7 +81,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       buyButton.setX(getWidth() - PADDING - buyButton.getWidth() - 4);
       buyButton.setY(getHeight() - PADDING - buyButton.getHeight() - 4);
       
-      workersCount = new Text(0, PADDING - 2, ResourceManager.getInstance().getShopTitleFont(), "99999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      workersCount = new Text(0, PADDING - 2, FontsManager.getInstance().getFont(20), "99999", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       workersCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (workersCount.getWidth() / 2));            
       
       

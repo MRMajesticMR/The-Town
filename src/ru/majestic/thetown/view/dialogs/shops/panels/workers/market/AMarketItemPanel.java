@@ -11,6 +11,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.market.IMarketItem;
 import ru.majestic.thetown.resources.ResourceManager;
+import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.shops.IShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.panels.workers.market.listeners.OnMarketItemBuyBtnClickedListener;
 import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
@@ -47,10 +48,10 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
       this.marketItem   = marketItem;
       
       priceImage        = new Sprite(PADDING + 4, PADDING + 4, 26, 26, ResourceManager.getInstance().getGoldIconTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      priceCountText    = new Text(priceImage.getX() + priceImage.getWidth() + 4, priceImage.getY() + 4, ResourceManager.getInstance().getShopTextFont(), BigValueFormatter.format(marketItem.getGoldPrice()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      priceCountText    = new Text(priceImage.getX() + priceImage.getWidth() + 4, priceImage.getY() + 4, FontsManager.getInstance().getFont(12), BigValueFormatter.format(marketItem.getGoldPrice()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       goodImage         = new Sprite(priceImage.getX(), priceImage.getY() + priceImage.getHeight() + 4, 26, 26, goodTextureRegion, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      goodCountText     = new Text(goodImage.getX() + goodImage.getWidth() + 4, goodImage.getY() + 4, ResourceManager.getInstance().getShopTextFont(), BigValueFormatter.format(marketItem.getProductCount()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      goodCountText     = new Text(goodImage.getX() + goodImage.getWidth() + 4, goodImage.getY() + 4, FontsManager.getInstance().getFont(12), BigValueFormatter.format(marketItem.getProductCount()), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       buyButton         = new ButtonSprite(0, 0, ResourceManager.getInstance().getBuyBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
