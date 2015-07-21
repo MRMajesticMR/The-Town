@@ -15,5 +15,6 @@ public interface ISizeLimitedCargo extends ICargo {
    public long getSize           ();
    public long getUpgradePrice   ();
    public boolean isFull         ();
+   public long getNextLevelSize  ();
    
 }

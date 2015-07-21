@@ -1,5 +1,6 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.cargo;
 
+import ru.majestic.thetown.game.cargo.ISizeLimitedCargo;
 import ru.majestic.thetown.view.IClickableView;
 
 public interface ICargoUpgradePanel extends IClickableView {
@@ -14,6 +15,6 @@ public interface ICargoUpgradePanel extends IClickableView {
    public void removeOnCargoUpgradeButtonClickListener   (OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener);
    
    public void setAvailable   (boolean available);
-   public void updateView     (long cargoSizeDifference, long nextCargoSizePrice, int currentCargoLevel);   
+   public void update         (ISizeLimitedCargo cargo);   
    
 }

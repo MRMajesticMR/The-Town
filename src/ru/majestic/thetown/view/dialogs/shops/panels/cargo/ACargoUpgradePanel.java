@@ -10,6 +10,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import ru.majestic.thetown.game.cargo.ISizeLimitedCargo;
 import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
@@ -115,10 +116,10 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
    }
 
    @Override
-   public void updateView(long sizeCargoDifference, long nextCargoSizePrice, int currentCargoLevel) {
-      sizeValueTxt.setText("+" + BigValueFormatter.format(sizeCargoDifference));
-      priceValueTxt.setText(BigValueFormatter.format(nextCargoSizePrice));
-      cargoLevelTxt.setText(String.valueOf(currentCargoLevel));
+   public void update(ISizeLimitedCargo cargo) {
+      sizeValueTxt.setText("+" + BigValueFormatter.format(cargo.getNextLevelSize() - cargo.getSize()));
+      priceValueTxt.setText(BigValueFormatter.format(cargo.getUpgradePrice()));
+      cargoLevelTxt.setText(String.valueOf(cargo.getLevel()));
       
       cargoLevelTxt.setX(upgradeButton.getX() + (upgradeButton.getWidth() / 2) - (cargoLevelTxt.getWidth() / 2));
    }
