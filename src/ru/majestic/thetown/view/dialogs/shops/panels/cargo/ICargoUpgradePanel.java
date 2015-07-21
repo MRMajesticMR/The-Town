@@ -7,12 +7,12 @@ public interface ICargoUpgradePanel extends IClickableView {
 
    public interface OnCargoUpgradeButtonClickListener {
       
-      public void onCargoUpgradeButtonClick();
+      public void onCargoUpgradeButtonClick(ICargoUpgradePanel cargoUpgradePanel);
       
    }
    
-   public void addOnCargoUpgradeButtonClickListener      (OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener);
-   public void removeOnCargoUpgradeButtonClickListener   (OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener);
+   public void setOnCargoUpgradeButtonClickListener    (OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener);
+   public void removeOnCargoUpgradeButtonClickListener ();
    
    public void setAvailable   (boolean available);
    public void update         (ISizeLimitedCargo cargo);   

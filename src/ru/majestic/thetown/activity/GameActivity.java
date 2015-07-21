@@ -202,6 +202,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.load(this);         
       gameManager.getAttackManager().setOnTimeToAttackListener(this);
       
+      //DEBUG
+//      gameManager.getBuildingsManager().getBuilding(IBuildingsManager.BUILDING_TYPE_BIG_TENT).buy();
+//      gameManager.getWorkersManager().getWorkersByType(WorkerType.FOOD)[2].buy();
+      //
+      
       billingManager = new BillingManager();
       billingManager.setOnBillingOperationCompleteListener(this);
       
@@ -477,8 +482,32 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       }
       
       resourcesCounterPanel.update();
-      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();
+      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();      
+      ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
+   }
+   
+   @Override
+   public void onUpgradeCargoButtonClicker(ISizeLimitedCargo cargo) {      
+      if(cargo == gameManager.getCargoManager().getFoodCargo()) {
+         if(gameManager.getCargoManager().getWoodCargo().getCurrentCount() >= cargo.getUpgradePrice()) {
+            gameManager.getCargoManager().getWoodCargo().remove(cargo.getUpgradePrice());
+            cargo.upgrade();
+         } else {
+            ErrorViewManager.showError(scene, "No enough wood");
+         }
+      }
       
+      if(cargo == gameManager.getCargoManager().getWoodCargo()) {      
+         if(gameManager.getCargoManager().getFoodCargo().getCurrentCount() >= cargo.getUpgradePrice()) {
+            gameManager.getCargoManager().getFoodCargo().remove(cargo.getUpgradePrice());
+            cargo.upgrade();
+         } else {
+            ErrorViewManager.showError(scene, "No enough food");
+         }
+      }            
+      
+      resourcesCounterPanel.update();
+      shopsDialogManager.getShop(IShopsDialogsManager.SHOP_TYPE_CLICKERS).update();      
       ResourceManager.getInstance().getSoundsManager().getMenuClickSound().play();
    }
 
@@ -720,5 +749,5 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
          ErrorViewManager.showError(scene, "Wood cargo is full");
       }
       
-   }
+   }   
 }

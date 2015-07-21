@@ -1,11 +1,9 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.cargo;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -17,7 +15,8 @@ import ru.majestic.thetown.view.dialogs.utils.IAvailableShadow;
 import ru.majestic.thetown.view.dialogs.utils.impl.AvailableShadow;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
-public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
+public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel,
+                                                          OnClickListener {
 
    public  static final float HEIGHT   = 110;
    
@@ -37,7 +36,7 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
    
    private IAvailableShadow availableShadow;
    
-   private Set<OnCargoUpgradeButtonClickListener> onCargoUpgradeButtonClickListeners;
+   private OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener;
    
    public ACargoUpgradePanel(float x, float y, float width, ITextureRegion priceTexture, ITextureRegion sizeTexture) {
       super(x, y, width, HEIGHT, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  
@@ -57,7 +56,9 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
       upgradeButton.setWidth(70);
       upgradeButton.setHeight(35);            
       upgradeButton.setX(getWidth() - upgradeButton.getWidth() - PADDING); 
-      upgradeButton.setY(getHeight() - upgradeButton.getHeight() - PADDING);  
+      upgradeButton.setY(getHeight() - upgradeButton.getHeight() - PADDING);
+      
+      upgradeButton.setOnClickListener(this);
       
       cargoLevelTxt.setY(35);
       cargoLevelTxt.setX(upgradeButton.getX() + (upgradeButton.getWidth() / 2) - (cargoLevelTxt.getWidth() / 2));
@@ -76,8 +77,6 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
       attachChild(upgradeButton);
       
       availableShadow.attachToParent(this);
-      
-      onCargoUpgradeButtonClickListeners = new HashSet<ICargoUpgradePanel.OnCargoUpgradeButtonClickListener>();
       
       setAvailable(true);
    }
@@ -98,13 +97,13 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
    }
 
    @Override
-   public void addOnCargoUpgradeButtonClickListener(OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener) {      
-      onCargoUpgradeButtonClickListeners.add(onCargoUpgradeButtonClickListener);
+   public void setOnCargoUpgradeButtonClickListener(OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener) {      
+      this.onCargoUpgradeButtonClickListener = onCargoUpgradeButtonClickListener;
    }
 
    @Override
-   public void removeOnCargoUpgradeButtonClickListener(OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener) {      
-      onCargoUpgradeButtonClickListeners.remove(onCargoUpgradeButtonClickListener);
+   public void removeOnCargoUpgradeButtonClickListener() {      
+      this.onCargoUpgradeButtonClickListener = null;
    }
 
    @Override
@@ -122,6 +121,12 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel {
       cargoLevelTxt.setText(String.valueOf(cargo.getLevel()));
       
       cargoLevelTxt.setX(upgradeButton.getX() + (upgradeButton.getWidth() / 2) - (cargoLevelTxt.getWidth() / 2));
+   }
+
+   @Override
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      if(onCargoUpgradeButtonClickListener != null)
+         onCargoUpgradeButtonClickListener.onCargoUpgradeButtonClick(this);
    }
 
 }

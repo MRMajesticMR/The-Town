@@ -71,8 +71,13 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
       return calculateSize(getLevel() + 1);
    }
    
+   @Override
+   public void upgrade() {
+      level++;
+   }
+   
    private long calculateSize(int level) {
-      return level;
+      return level * 10;
    }
    
    private long calculateUpgradePrice(int level) {

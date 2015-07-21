@@ -10,12 +10,15 @@ import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ACargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ICargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ICargoUpgradePanel.OnCargoUpgradeButtonClickListener;
 import ru.majestic.thetown.view.dialogs.shops.panels.cargo.impl.FoodCargoUpgradePanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.cargo.impl.WoodCargoUpgradePanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.FoodClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.WoodClickersShopPanel;
 
-public class ClickersShopDialog extends AShopDialog implements ClickersShopPanelActionsListener {
+public class ClickersShopDialog extends AShopDialog implements ClickersShopPanelActionsListener,
+                                                               OnCargoUpgradeButtonClickListener {
    
    private static final int PADDING       = 4;
    
@@ -37,6 +40,8 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
       
       foodClickersShopPanel.setClickersShopPanelActionsListener(this);      
       woodClickersShopPanel.setClickersShopPanelActionsListener(this);
+      woodCargoUpgradePanel.setOnCargoUpgradeButtonClickListener(this);
+      foodCargoUpgradePanel.setOnCargoUpgradeButtonClickListener(this);
       
       woodClickersShopPanel.attachToParent(this);
       foodClickersShopPanel.attachToParent(this);      
@@ -55,21 +60,26 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
    public void registerTouchArea(Scene scene) {
       super.registerTouchArea(scene);
       
-      foodClickersShopPanel.registerTouchArea(scene);
       woodClickersShopPanel.registerTouchArea(scene);
+      foodClickersShopPanel.registerTouchArea(scene);      
+      woodCargoUpgradePanel.registerTouchArea(scene);
+      foodCargoUpgradePanel.registerTouchArea(scene);
    }
 
    @Override
    public void unregisterTouchArea(Scene scene) {
       super.unregisterTouchArea(scene);
       
-      foodClickersShopPanel.unregisterTouchArea(scene);
       woodClickersShopPanel.unregisterTouchArea(scene);
+      foodClickersShopPanel.unregisterTouchArea(scene);      
+      woodCargoUpgradePanel.unregisterTouchArea(scene);
+      foodCargoUpgradePanel.unregisterTouchArea(scene);
    }
    
    @Override
    public void onUpdateButtonClicked(IClicker clicker) {
-      clickersShopDialogActionsListener.onUpgradeClickerButtonClicked(clicker);      
+      if(clickersShopDialogActionsListener != null)
+         clickersShopDialogActionsListener.onUpgradeClickerButtonClicked(clicker);      
    }
    
    @Override
@@ -92,6 +102,17 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
       
       woodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getFoodCargo().getCurrentCount() >= gameManager.getCargoManager().getWoodCargo().getUpgradePrice());
       foodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getWoodCargo().getCurrentCount() >= gameManager.getCargoManager().getFoodCargo().getUpgradePrice());
+   }
+
+   @Override
+   public void onCargoUpgradeButtonClick(ICargoUpgradePanel cargoUpgradePanel) {
+      if(clickersShopDialogActionsListener != null){         
+         if(cargoUpgradePanel == woodCargoUpgradePanel) {
+            clickersShopDialogActionsListener.onUpgradeCargoButtonClicker(gameManager.getCargoManager().getWoodCargo());
+         } else if (cargoUpgradePanel == foodCargoUpgradePanel) {
+            clickersShopDialogActionsListener.onUpgradeCargoButtonClicker(gameManager.getCargoManager().getFoodCargo());
+         }
+      }
    }
 
 }

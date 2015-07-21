@@ -11,10 +11,11 @@ public interface ISizeLimitedCargo extends ICargo {
    public void setOnCargoFullListener(OnCargoFullListener onCargoFullListener);
    public void removeOnCargoFullListener();
    
-   public int  getLevel          ();
-   public long getSize           ();
-   public long getUpgradePrice   ();
-   public boolean isFull         ();
-   public long getNextLevelSize  ();
+   public int     getLevel          ();
+   public long    getSize           ();
+   public long    getUpgradePrice   ();
+   public boolean isFull            ();
+   public long    getNextLevelSize  ();
+   public void    upgrade           ();
    
 }
