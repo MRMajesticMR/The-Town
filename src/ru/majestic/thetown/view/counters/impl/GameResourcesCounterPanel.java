@@ -7,8 +7,6 @@ import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.counters.ICountView;
-import ru.majestic.thetown.view.counters.ICountWithPsRView;
 import ru.majestic.thetown.view.counters.IResourcesCounterPanel;
 
 public class GameResourcesCounterPanel extends Rectangle implements IResourcesCounterPanel {
@@ -17,9 +15,9 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
    
    private IGameManager gameManager;
    
-   private ICountWithPsRView foodCountView;   
-   private ICountWithPsRView woodCountView;
-   private ICountView goldCountView;
+   private FoodCounterView foodCountView;   
+   private WoodCounterView woodCountView;
+   private GoldCounterView goldCountView;
    
    public GameResourcesCounterPanel(IGameManager gameManager) {
       super(0, 0, TheTownCamera.CAMERA_WIDTH, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
@@ -27,8 +25,8 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
       
       this.gameManager = gameManager;
       
-      foodCountView = new FoodCounterWithRpSView(10, 4);
-      woodCountView = new WoodCounterWithRpSView(180, 4);
+      foodCountView = new FoodCounterView(10, 4);
+      woodCountView = new WoodCounterView(180, 4);
       goldCountView = new GoldCounterView(350, 4);      
       
       foodCountView.attachToParent(this);
@@ -45,7 +43,10 @@ public class GameResourcesCounterPanel extends Rectangle implements IResourcesCo
    public void update() {
       foodCountView.changeCount(gameManager.getCargoManager().getFoodCargo().getCurrentCount());
       woodCountView.changeCount(gameManager.getCargoManager().getWoodCargo().getCurrentCount());
-      goldCountView.changeCount(gameManager.getCargoManager().getGoldCargo().getCurrentCount());        
+      goldCountView.changeCount(gameManager.getCargoManager().getGoldCargo().getCurrentCount());
+      
+      foodCountView.onMaxValueChanged(gameManager.getCargoManager().getFoodCargo().getSize());
+      woodCountView.onMaxValueChanged(gameManager.getCargoManager().getWoodCargo().getSize());
       
       foodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.FOOD));
       woodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.WOOD));

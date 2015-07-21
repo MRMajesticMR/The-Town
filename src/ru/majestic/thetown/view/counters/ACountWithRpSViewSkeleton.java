@@ -10,16 +10,16 @@ import ru.majestic.thetown.resources.ResourceManager;
 import ru.majestic.thetown.resources.impl.FontsManager;
 import ru.majestic.thetown.view.utils.BigValueFormatter;
 
-public abstract class ACountWithPsRViewSkeleton extends Rectangle implements ICountWithPsRView {
+public abstract class ACountWithRpSViewSkeleton extends Rectangle implements ICountWithRpSView {
 
    private static final int WIDTH   = 140;
    private static final int HEIGHT  = 40;   
    
-   private Text   countText;
+   protected Text   countText;
    private Text   resourcesPerSecText;
    private Sprite counterImage;
    
-   public ACountWithPsRViewSkeleton(float pX, float pY, ITextureRegion imageTexture) {
+   public ACountWithRpSViewSkeleton(float pX, float pY, ITextureRegion imageTexture) {
       super(pX, pY, WIDTH, HEIGHT, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       setAlpha(0.0f);

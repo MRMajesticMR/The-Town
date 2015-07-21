@@ -1,11 +1,11 @@
 package ru.majestic.thetown.view.counters.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.counters.ACountViewSkeleton;
+import ru.majestic.thetown.view.counters.ACountWithRpSAndMaxValueView;
 
-public class WoodCounterView extends ACountViewSkeleton {
+public class WoodCounterView extends ACountWithRpSAndMaxValueView {
 
-   public WoodCounterView(int x, int y) {
+   public WoodCounterView(float x, float y) {
       super(x, y, ResourceManager.getInstance().getWoodIconTextureRegion());
    }
 
