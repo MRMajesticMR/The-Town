@@ -1,8 +1,8 @@
 package ru.majestic.thetown.game.cargo.impl;
 
-import ru.majestic.thetown.game.cargo.ACargo;
+import ru.majestic.thetown.game.cargo.ASizeLimitedCargo;
 
-public class FoodCargo extends ACargo {
+public class FoodCargo extends ASizeLimitedCargo {
 
    @Override
    protected String getSaveTag() {

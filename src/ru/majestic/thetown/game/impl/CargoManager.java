@@ -2,6 +2,7 @@ package ru.majestic.thetown.game.impl;
 
 import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.cargo.ICargo;
+import ru.majestic.thetown.game.cargo.ISizeLimitedCargo;
 import ru.majestic.thetown.game.cargo.impl.FoodCargo;
 import ru.majestic.thetown.game.cargo.impl.GoldCargo;
 import ru.majestic.thetown.game.cargo.impl.WoodCargo;
@@ -9,34 +10,45 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class CargoManager implements ICargoManager {
-
-   private static final int CARGO_COUNT = 3;
    
-   private ICargo[] cargos;
+   private WoodCargo woodCargo;
+   private FoodCargo foodCargo;
+   private GoldCargo goldCargo;
    
    public CargoManager() {
-      cargos = new ICargo[CARGO_COUNT];
       
-      cargos[CARGO_TYPE_WOOD] = new WoodCargo();
-      cargos[CARGO_TYPE_FOOD] = new FoodCargo();
-      cargos[CARGO_TYPE_GOLD] = new GoldCargo();
-   }
-   
-   @Override
-   public ICargo getCargo(int cargoType) {
-      return cargos[cargoType];
+      woodCargo = new WoodCargo();
+      foodCargo = new FoodCargo();
+      goldCargo = new GoldCargo();
    }
 
    @Override
    public void load(SharedPreferences prefs) {
-      for(ICargo cargo: cargos)
-         cargo.load(prefs);
+      woodCargo.load(prefs);
+      foodCargo.load(prefs);
+      goldCargo.load(prefs);            
    }
 
    @Override
    public void save(Editor prefsEditor) {
-      for(ICargo cargo: cargos)
-         cargo.save(prefsEditor);      
+      woodCargo.save(prefsEditor);
+      foodCargo.save(prefsEditor);
+      goldCargo.save(prefsEditor);     
+   }
+
+   @Override
+   public ICargo getGoldCargo() {
+      return goldCargo;
+   }
+
+   @Override
+   public ISizeLimitedCargo getWoodCargo() {
+      return woodCargo;
+   }
+
+   @Override
+   public ISizeLimitedCargo getFoodCargo() {
+      return foodCargo;
    }
 
 }

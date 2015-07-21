@@ -2,7 +2,6 @@ package ru.majestic.thetown.game.bonuses.factories;
 
 import java.util.Random;
 
-import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
@@ -23,10 +22,10 @@ public class GameBonusFactory implements IGameBonusFactory {
    public IGameBonus createBonus() {
       switch(new Random(System.currentTimeMillis()).nextInt(2)) {
       case 0:
-         return new AddWoodGameBonus((WoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD), gameManager.getTown().getLvl());
+         return new AddWoodGameBonus((WoodCargo) gameManager.getCargoManager().getWoodCargo(), gameManager.getTown().getLvl());
          
       case 1:
-         return new AddFoodGameBonus((FoodCargo) gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD), gameManager.getTown().getLvl());
+         return new AddFoodGameBonus((FoodCargo) gameManager.getCargoManager().getFoodCargo(), gameManager.getTown().getLvl());
          
       default:
          return null;

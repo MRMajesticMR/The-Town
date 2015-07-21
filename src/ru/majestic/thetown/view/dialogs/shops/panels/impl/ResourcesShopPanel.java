@@ -1,6 +1,5 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.impl;
 
-import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.view.counters.ICountView;
@@ -44,9 +43,9 @@ public class ResourcesShopPanel extends AResourcesShopPanelSkeleton {
    
    @Override
    public void update() {
-      foodCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount());
-      woodCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount());
-      goldCountView.changeCount(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount());      
+      foodCountView.changeCount(gameManager.getCargoManager().getFoodCargo().getCurrentCount());
+      woodCountView.changeCount(gameManager.getCargoManager().getWoodCargo().getCurrentCount());
+      goldCountView.changeCount(gameManager.getCargoManager().getGoldCargo().getCurrentCount());      
       
       foodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.FOOD));
       woodCountView.updateResourcesPerSecondValue(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.WOOD));

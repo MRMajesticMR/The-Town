@@ -141,7 +141,7 @@ public class WorkerShopPanel extends Sprite implements IWorkerShopPanel, OnClick
       workersCount.setText(String.valueOf(worker.getCurrentCount()));
       workersCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (workersCount.getWidth() / 2));
       
-      if(cargoManager.getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost()) {
+      if(cargoManager.getFoodCargo().getCurrentCount() < worker.getFoodCost()) {
          availableShadow.show();
       } else if(buildingsManager.getTotalHomePlacesCount() - workersManager.getTotalHomeForWorkers() < worker.getHomePlaces()) {
          availableShadow.show();      

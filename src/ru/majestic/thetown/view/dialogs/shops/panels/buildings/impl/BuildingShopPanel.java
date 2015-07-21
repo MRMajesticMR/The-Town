@@ -131,7 +131,7 @@ public class BuildingShopPanel extends Sprite implements IBuildingShopPanel, OnC
       buildingsCount.setText(String.valueOf(building.getCurrentCount()));
       buildingsCount.setX(buyButton.getX() + (buyButton.getWidth() / 2) - (buildingsCount.getWidth() / 2));
       
-      if(cargoManager.getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= building.getWoodCost())
+      if(cargoManager.getWoodCargo().getCurrentCount() >= building.getWoodCost())
          availableShadow.hide();
       else
          availableShadow.show();

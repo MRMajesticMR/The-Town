@@ -12,7 +12,6 @@ import ru.majestic.thetown.andengine.TheTownCamera;
 import ru.majestic.thetown.andengine.TheTownEngineOptions;
 import ru.majestic.thetown.andengine.TheTownScene;
 import ru.majestic.thetown.game.IBillingManager;
-import ru.majestic.thetown.game.ICargoManager;
 import ru.majestic.thetown.game.IClickersManager;
 import ru.majestic.thetown.game.IGameManager;
 import ru.majestic.thetown.game.bonuses.IGameBonus;
@@ -321,15 +320,24 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onClickerClicked(float x, float y, IClickerView clicker) {
       if(gameManager.getGoldFromClickerHandler().isGoldChance()) {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1);
+         gameManager.getCargoManager().getGoldCargo().add(1);
          addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, 1, AdderType.GOLD);
       } else {
          if(clicker == foodClicker) {         
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
+            gameManager.getCargoManager().getFoodCargo().add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
             addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.FOOD);
+            
+            if(gameManager.getCargoManager().getFoodCargo().isFull()) {
+               ErrorViewManager.showError(scene, "Food cargo is full");
+            }            
+            
          } else if(clicker == woodClicker) {
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());         
+            gameManager.getCargoManager().getWoodCargo().add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());         
             addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.WOOD);
+            
+            if(gameManager.getCargoManager().getWoodCargo().isFull()) {
+               ErrorViewManager.showError(scene, "Food cargo is full");
+            }
          }
       }
       
@@ -388,8 +396,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyBuildingAction(IBuilding building) {
-      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= building.getWoodCost()) {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(building.getWoodCost());
+      if(gameManager.getCargoManager().getWoodCargo().getCurrentCount() >= building.getWoodCost()) {
+         gameManager.getCargoManager().getWoodCargo().remove(building.getWoodCost());
          gameManager.getTown().addExp(building.getExp());
          
          building.buy();
@@ -452,8 +460,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onUpgradeClickerButtonClicked(IClicker clicker) {
       if(clicker instanceof FoodClicker) {
-         if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).remove(clicker.getUpgradePrice());
+         if(gameManager.getCargoManager().getWoodCargo().getCurrentCount() >= clicker.getUpgradePrice()) {
+            gameManager.getCargoManager().getWoodCargo().remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          } else {
             ErrorViewManager.showError(scene, "No enough wood");
@@ -461,8 +469,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       }
       
       if(clicker instanceof WoodClicker) {
-         if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() >= clicker.getUpgradePrice()) {
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(clicker.getUpgradePrice());
+         if(gameManager.getCargoManager().getFoodCargo().getCurrentCount() >= clicker.getUpgradePrice()) {
+            gameManager.getCargoManager().getFoodCargo().remove(clicker.getUpgradePrice());
             clicker.upgrade();                        
          } else {
             ErrorViewManager.showError(scene, "No enough food");
@@ -477,12 +485,12 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyWorkerAction(IWorker worker) {
-      if(gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount() < worker.getFoodCost()) {
+      if(gameManager.getCargoManager().getFoodCargo().getCurrentCount() < worker.getFoodCost()) {
          ErrorViewManager.showError(scene, "No enough food");
       } else if((gameManager.getBuildingsManager().getTotalHomePlacesCount() - gameManager.getWorkersManager().getTotalHomeForWorkers()) < worker.getHomePlaces()) {
          ErrorViewManager.showError(scene, "No enough homes");
       } else {      
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).remove(worker.getFoodCost());
+         gameManager.getCargoManager().getFoodCargo().remove(worker.getFoodCost());
          gameManager.getTown().addExp(worker.getExp());
    
          worker.buy();
@@ -503,8 +511,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onWorkersProductionComplete(int addFood, int addWood) {
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(addFood);
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(addWood);
+      gameManager.getCargoManager().getFoodCargo().add(addFood);
+      gameManager.getCargoManager().getWoodCargo().add(addWood);
       
       resourcesCounterPanel.update();
       
@@ -522,7 +530,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       attackView.registerTouchArea(scene);
       
       if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
-         attackView.show(true, gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).getCurrentCount(), gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).getCurrentCount());
+         attackView.show(true, gameManager.getCargoManager().getWoodCargo().getCurrentCount(), gameManager.getCargoManager().getFoodCargo().getCurrentCount());
       } else {      
          attackView.show(false, gameManager.getAttackManager().getAttack().getWoodReward(), gameManager.getAttackManager().getAttack().getFoodReward());         
       }
@@ -539,11 +547,11 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       attackView.close();
 
       if(gameManager.getAttackManager().getAttack().getAttackPower() > gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE)) {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).clear();
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).clear();                             
+         gameManager.getCargoManager().getWoodCargo().clear();
+         gameManager.getCargoManager().getFoodCargo().clear();                             
       } else {
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(gameManager.getAttackManager().getAttack().getWoodReward());
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(gameManager.getAttackManager().getAttack().getFoodReward());
+         gameManager.getCargoManager().getWoodCargo().add(gameManager.getAttackManager().getAttack().getWoodReward());
+         gameManager.getCargoManager().getFoodCargo().add(gameManager.getAttackManager().getAttack().getFoodReward());
       }
       
       resourcesCounterPanel.update();
@@ -601,15 +609,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onBillingOperationComplete(String productId) {
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_TEN_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_100_GOLD);
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(100);
+         gameManager.getCargoManager().getGoldCargo().add(100);
       }
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_HUNDRED_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_1000_GOLD);
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(1000);
+         gameManager.getCargoManager().getGoldCargo().add(1000);
       }
       if(productId.equals(BillingProductsDictionary.ITEM_TOKEN_THOUSAND_GOLD)) {
          billingResultDialog.show(scene, State.SUCCESS_10000_GOLD);
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(10000);
+         gameManager.getCargoManager().getGoldCargo().add(10000);
       }
 
       gameManager.save(this);
@@ -624,17 +632,17 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onBuyItemFromMarket(IMarketItem marketItem) {
-      if(marketItem.getGoldPrice() <= gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).getCurrentCount()) {
+      if(marketItem.getGoldPrice() <= gameManager.getCargoManager().getGoldCargo().getCurrentCount()) {
          switch(marketItem.getItemType()) {
          case WOOD:
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(marketItem.getProductCount());            
+            gameManager.getCargoManager().getWoodCargo().add(marketItem.getProductCount());            
             break;
          case FOOD:
-            gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(marketItem.getProductCount());
+            gameManager.getCargoManager().getFoodCargo().add(marketItem.getProductCount());
             break;
          }
          
-         gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).remove(marketItem.getGoldPrice());
+         gameManager.getCargoManager().getGoldCargo().remove(marketItem.getGoldPrice());
          
          gameManager.save(this);
          resourcesCounterPanel.update();
@@ -656,9 +664,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 
    @Override
    public void onTownNewLevelObtained(ITownLevelReward townLevelReward) {
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_WOOD).add(townLevelReward.getWoodReward());
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_FOOD).add(townLevelReward.getFoodReward());
-      gameManager.getCargoManager().getCargo(ICargoManager.CARGO_TYPE_GOLD).add(townLevelReward.getGoldReward());
+      gameManager.getCargoManager().getWoodCargo().add(townLevelReward.getWoodReward());
+      gameManager.getCargoManager().getFoodCargo().add(townLevelReward.getFoodReward());
+      gameManager.getCargoManager().getGoldCargo().add(townLevelReward.getGoldReward());
       
       resourcesCounterPanel.update();
       shopsDialogManager.getShop(shopsDialogManager.getOpenedShopIndex()).update();
