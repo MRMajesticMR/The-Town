@@ -202,11 +202,6 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       gameManager.load(this);         
       gameManager.getAttackManager().setOnTimeToAttackListener(this);
       
-      //DEBUG
-//      gameManager.getBuildingsManager().getBuilding(IBuildingsManager.BUILDING_TYPE_BIG_TENT).buy();
-//      gameManager.getWorkersManager().getWorkersByType(WorkerType.FOOD)[2].buy();
-      //
-      
       billingManager = new BillingManager();
       billingManager.setOnBillingOperationCompleteListener(this);
       
@@ -744,9 +739,9 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    @Override
    public void onCargoFull(ISizeLimitedCargo cargo) {
       if(cargo instanceof FoodCargo) {
-         ErrorViewManager.showError(scene, "Food cargo is full");
+         ErrorViewManager.showError(scene, "Food warehouse is full");
       } else if(cargo instanceof WoodCargo) {
-         ErrorViewManager.showError(scene, "Wood cargo is full");
+         ErrorViewManager.showError(scene, "Wood warehouse is full");
       }
       
    }   

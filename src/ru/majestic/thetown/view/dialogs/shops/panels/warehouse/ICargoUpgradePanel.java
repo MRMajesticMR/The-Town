@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.dialogs.shops.panels.cargo;
+package ru.majestic.thetown.view.dialogs.shops.panels.warehouse;
 
 import ru.majestic.thetown.game.cargo.ISizeLimitedCargo;
 import ru.majestic.thetown.view.IClickableView;

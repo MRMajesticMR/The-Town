@@ -9,13 +9,13 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ACargoUpgradePanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ICargoUpgradePanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ICargoUpgradePanel.OnCargoUpgradeButtonClickListener;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.impl.FoodCargoUpgradePanel;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.impl.WoodCargoUpgradePanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.FoodClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.WoodClickersShopPanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.ACargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.ICargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.ICargoUpgradePanel.OnCargoUpgradeButtonClickListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.impl.FoodCargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.impl.WoodCargoUpgradePanel;
 
 public class ClickersShopDialog extends AShopDialog implements ClickersShopPanelActionsListener,
                                                                OnCargoUpgradeButtonClickListener {

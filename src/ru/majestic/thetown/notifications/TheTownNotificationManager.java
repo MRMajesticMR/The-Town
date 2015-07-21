@@ -5,9 +5,14 @@ import ru.majestic.thetown.activity.GameActivity;
 import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.attack.IAttack;
 import ru.majestic.thetown.game.attack.impl.Attack;
+import ru.majestic.thetown.game.cargo.impl.FoodCargo;
+import ru.majestic.thetown.game.cargo.impl.WoodCargo;
 import ru.majestic.thetown.game.impl.GameManager;
 import ru.majestic.thetown.game.impl.WorkersManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
+import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
+import ru.majestic.thetown.game.workers.impl.WorkersProductionHandler;
+import ru.majestic.thetown.game.workers.listeners.OnWokersProductionCompleteListener;
 import ru.majestic.thetown.statistic.StatisticsEventsManager;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -21,14 +26,16 @@ import android.support.v4.app.NotificationCompat;
 
 public class TheTownNotificationManager extends BroadcastReceiver {
 
-   private static final long ALARM_MANAGER_INTERVAL      = 1000 * 60 * 10; //30 MIN
+   private static final long ALARM_MANAGER_INTERVAL      = 1000 * 60 * 10; //30 MIN   
       
    private static final long TIME_TO_ATTACK_HALF_HOUR    = 1000 * 60 * 30;
    private static final long TIME_TO_ATTACK_HOUR         = TIME_TO_ATTACK_HALF_HOUR * 2;     
    
    private static final String SAVE_TAG_HALF_HOUR  = "SAVE_TAG_HALF_HOUR";
    private static final String SAVE_TAG_HOUR       = "SAVE_TAG_HOUR";
-   private static final String SAVE_TAG_ATTACKED   = "SAVE_TAG_ATTACKED";   
+   private static final String SAVE_TAG_ATTACKED   = "SAVE_TAG_ATTACKED";
+   
+   private static final int NOTIFICATION_ID_CARGO_FULL = 100;
    
    public enum AttackTimeType {
       HOUR, 
@@ -57,6 +64,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
          startAlarmManager(context);
       } else {      
          showNotificationIfItNeed(context);
+         showCargoFullNotification(context);
       }
    }        
    
@@ -91,6 +99,71 @@ public class TheTownNotificationManager extends BroadcastReceiver {
             showAttackedNotificaton(context, false);
             return;
          }
+      }
+   }
+   
+   private void showCargoFullNotification(Context context) {
+      SharedPreferences gameState = context.getSharedPreferences(GameManager.PREFFS_NAME, Context.MODE_PRIVATE); 
+      
+      IWorkersManager workersManager = new WorkersManager();
+      workersManager.load(gameState);
+      
+      final FoodCargo foodCargo = new FoodCargo();
+      foodCargo.load(gameState);
+      
+      final WoodCargo woodCargo = new WoodCargo();
+      woodCargo.load(gameState);
+      
+      IWorkersProductionHandler workersProductionHandler = new WorkersProductionHandler(workersManager);
+      workersProductionHandler.setOnWokersProductionCompleteListener(new OnWokersProductionCompleteListener() {
+         
+         @Override
+         public void onWorkersProductionComplete(int addFood, int addWood) {
+            foodCargo.add(addFood);
+            woodCargo.add(addWood);
+         }
+      });
+      workersProductionHandler.load(context);            
+      workersProductionHandler.save(context);
+      
+      Editor editor = gameState.edit();
+      
+      foodCargo.save(editor);
+      woodCargo.save(editor);
+      
+      editor.commit();
+                  
+      NotificationCompat.Builder mBuilder = null;
+      
+      if(foodCargo.isFull() && woodCargo.isFull()) {      
+         mBuilder = new NotificationCompat.Builder(context)
+         .setSmallIcon(R.drawable.swords_icon)
+         .setContentTitle("All warehouses is full")
+         .setContentText("Wood and food warehouse is full. Come and upgrade it!")
+         .setAutoCancel(true);                  
+      } else if(foodCargo.isFull()) {
+         mBuilder = new NotificationCompat.Builder(context)
+         .setSmallIcon(R.drawable.swords_icon)
+         .setContentTitle("Food warehouse is full")
+         .setContentText("Food warehouse is full. Come and upgrade it!")
+         .setAutoCancel(true);
+      } else if(woodCargo.isFull()) {
+         mBuilder = new NotificationCompat.Builder(context)
+         .setSmallIcon(R.drawable.swords_icon)
+         .setContentTitle("Wood warehouse is full")
+         .setContentText("Wood warehouse is full. Come and upgrade it!")
+         .setAutoCancel(true);
+      }
+      
+      if(mBuilder != null) {
+         Intent resultIntent = new Intent(context, GameActivity.class);
+         resultIntent.putExtra(StatisticsEventsManager.LAUNCH_MODE_TAG, StatisticsEventsManager.LAUNCH_MODE_NOTIFICATION_CARGO_FULL);
+      
+         PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
+      
+         mBuilder.setContentIntent(resultPendingIntent);
+         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+         mNotificationManager.notify(NOTIFICATION_ID_CARGO_FULL, mBuilder.build());
       }
    }
    

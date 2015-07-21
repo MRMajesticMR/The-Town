@@ -10,6 +10,7 @@ public class StatisticsEventsManager {
    
    public static final String LAUNCH_MODE_TAG = "launch_mode";
    
+   public static final String LAUNCH_MODE_NOTIFICATION_CARGO_FULL    = "cargo_full";
    public static final String LAUNCH_MODE_NOTIFICATION_BEFORE_ATTACK = "notif_before_attack";
    public static final String LAUNCH_MODE_NOTIFICATION_AFTER_ATTACK  = "notif_after_attack";
    public static final String LAUNCH_MODE_HOME_SCREEN                = "home_screen";

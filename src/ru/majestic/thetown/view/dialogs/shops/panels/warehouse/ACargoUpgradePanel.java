@@ -1,4 +1,4 @@
-package ru.majestic.thetown.view.dialogs.shops.panels.cargo;
+package ru.majestic.thetown.view.dialogs.shops.panels.warehouse;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
@@ -42,25 +42,25 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel,
       super(x, y, width, HEIGHT, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());                  
       
       panelTitleImg     = new Sprite(PADDING, PADDING + 4, 25, 25, sizeTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      panelTitleTxt     = new Text(panelTitleImg.getX() + panelTitleImg.getWidth() + 4, PADDING + 4, FontsManager.getInstance().getFont(18), "CARGO SIZE", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
+      panelTitleTxt     = new Text(panelTitleImg.getX() + panelTitleImg.getWidth() + 4, PADDING + 4, FontsManager.getInstance().getFont(18), "WAREHOUSE SIZE", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
       sizeValueTxt      = new Text(PADDING + 21, 42, FontsManager.getInstance().getFont(16), "+100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       priceImg          = new Sprite(PADDING + 4, 68, 22, 22, priceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       priceValueTxt     = new Text(40, 68, FontsManager.getInstance().getFont(16), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
 
-      cargoLevelTxt     = new Text(40, 68, FontsManager.getInstance().getFont(20), "100", 10, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      cargoLevelTxt     = new Text(40, 68, FontsManager.getInstance().getFont(16), "100", 10, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       upgradeButton     = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       upgradeButton.setWidth(70);
-      upgradeButton.setHeight(35);            
+      upgradeButton.setHeight(39);            
       upgradeButton.setX(getWidth() - upgradeButton.getWidth() - PADDING); 
       upgradeButton.setY(getHeight() - upgradeButton.getHeight() - PADDING);
       
       upgradeButton.setOnClickListener(this);
       
-      cargoLevelTxt.setY(35);
+      cargoLevelTxt.setY(40);
       cargoLevelTxt.setX(upgradeButton.getX() + (upgradeButton.getWidth() / 2) - (cargoLevelTxt.getWidth() / 2));
       
       availableShadow   = new AvailableShadow(0, 0, getWidth(), getHeight());            
@@ -97,8 +97,8 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel,
    }
 
    @Override
-   public void setOnCargoUpgradeButtonClickListener(OnCargoUpgradeButtonClickListener onCargoUpgradeButtonClickListener) {      
-      this.onCargoUpgradeButtonClickListener = onCargoUpgradeButtonClickListener;
+   public void setOnCargoUpgradeButtonClickListener(OnCargoUpgradeButtonClickListener onWarehouseUpgradeButtonClickListener) {      
+      this.onCargoUpgradeButtonClickListener = onWarehouseUpgradeButtonClickListener;
    }
 
    @Override

@@ -1,7 +1,7 @@
-package ru.majestic.thetown.view.dialogs.shops.panels.cargo.impl;
+package ru.majestic.thetown.view.dialogs.shops.panels.warehouse.impl;
 
 import ru.majestic.thetown.resources.ResourceManager;
-import ru.majestic.thetown.view.dialogs.shops.panels.cargo.ACargoUpgradePanel;
+import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.ACargoUpgradePanel;
 
 public class WoodCargoUpgradePanel extends ACargoUpgradePanel {
 
