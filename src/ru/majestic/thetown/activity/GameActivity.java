@@ -18,6 +18,10 @@ import ru.majestic.thetown.game.bonuses.IGameBonus;
 import ru.majestic.thetown.game.bonuses.IGameBonusFactory;
 import ru.majestic.thetown.game.bonuses.factories.GameBonusFactory;
 import ru.majestic.thetown.game.buildings.IBuilding;
+import ru.majestic.thetown.game.cargo.ISizeLimitedCargo;
+import ru.majestic.thetown.game.cargo.ISizeLimitedCargo.OnCargoFullListener;
+import ru.majestic.thetown.game.cargo.impl.FoodCargo;
+import ru.majestic.thetown.game.cargo.impl.WoodCargo;
 import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.game.clickers.impl.FoodClicker;
 import ru.majestic.thetown.game.clickers.impl.WoodClicker;
@@ -117,7 +121,8 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
                                                               OnTownNewLevelObtainedListener,
                                                               OnBonusViewLandedListener,
                                                               OnImproveBtnClickedListener,
-                                                              OnAdShowenListener {
+                                                              OnAdShowenListener,
+                                                              OnCargoFullListener {
    
    private static final int LAUNCH_BILLING_ACTIVITY_REQUEST_CODE = 1001;   
 
@@ -253,7 +258,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       defenceCountView.changeCount(gameManager.getWorkersManager().getResourcesPerSecond(WorkerType.DEFENCE));
       
       gameManager.getTown().addOnTownNewLevelObtainedListener(townLevelRewardDialog);
-      gameManager.getTown().addOnTownNewLevelObtainedListener(this);      
+      gameManager.getTown().addOnTownNewLevelObtainedListener(this);
+      
+      gameManager.getCargoManager().getWoodCargo().setOnCargoFullListener(this);
+      gameManager.getCargoManager().getFoodCargo().setOnCargoFullListener(this);
       
       bonusesViewHandler = new BonusesViewHandler(scene, scene);
       bonusesViewHandler.setOnBonusViewLandedListener(this);
@@ -325,19 +333,10 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
       } else {
          if(clicker == foodClicker) {         
             gameManager.getCargoManager().getFoodCargo().add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick());
-            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.FOOD);
-            
-            if(gameManager.getCargoManager().getFoodCargo().isFull()) {
-               ErrorViewManager.showError(scene, "Food cargo is full");
-            }            
-            
+            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.FOOD);                                               
          } else if(clicker == woodClicker) {
             gameManager.getCargoManager().getWoodCargo().add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());         
             addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.WOOD);
-            
-            if(gameManager.getCargoManager().getWoodCargo().isFull()) {
-               ErrorViewManager.showError(scene, "Food cargo is full");
-            }
          }
       }
       
@@ -711,5 +710,15 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
    public void onAdShowen() {
       currentGameBonus.doubleBonus();        
       bonusRewardDialogsFactory.updateBonusRewardDialog(currentGameBonus, bonusRewardDialog);      
+   }
+
+   @Override
+   public void onCargoFull(ISizeLimitedCargo cargo) {
+      if(cargo instanceof FoodCargo) {
+         ErrorViewManager.showError(scene, "Food cargo is full");
+      } else if(cargo instanceof WoodCargo) {
+         ErrorViewManager.showError(scene, "Wood cargo is full");
+      }
+      
    }
 }

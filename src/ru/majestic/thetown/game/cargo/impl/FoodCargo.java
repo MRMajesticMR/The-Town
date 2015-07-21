@@ -7,6 +7,6 @@ public class FoodCargo extends ASizeLimitedCargo {
    @Override
    protected String getSaveTag() {
       return "CARGO_FOOD";
-   }
+   }   
 
 }

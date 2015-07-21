@@ -9,6 +9,8 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
    
    private int level;
    
+   private OnCargoFullListener onCargoFullListener;
+   
    @Override
    public void load(SharedPreferences prefs) {
       super.load(prefs);
@@ -28,12 +30,25 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
       super.add(count);
       if(getCurrentCount() > getSize()) {
          remove(getCurrentCount() - getSize());
+         
+         if(onCargoFullListener != null)
+            onCargoFullListener.onCargoFull(this);
       }      
    }
    
    @Override
    public int getLevel() {
       return level;
+   }
+   
+   @Override
+   public void setOnCargoFullListener(OnCargoFullListener onCargoFullListener) {
+      this.onCargoFullListener = onCargoFullListener;      
+   }
+
+   @Override
+   public void removeOnCargoFullListener() {
+      this.onCargoFullListener = null;
    }
 
    @Override
