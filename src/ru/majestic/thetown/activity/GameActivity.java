@@ -336,7 +336,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
             addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.FOOD);                                               
          } else if(clicker == woodClicker) {
             gameManager.getCargoManager().getWoodCargo().add(gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick());         
-            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD).getResourcesPerClick(), AdderType.WOOD);
+            addersViewManager.showAdder(clicker.getX() + x, clicker.getY() + y, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD).getResourcesPerClick(), AdderType.WOOD);
          }
       }
       

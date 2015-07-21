@@ -77,11 +77,11 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
    }
    
    private long calculateSize(int level) {
-      return level * 10;
+      return (long) Math.pow((level * 100.0f), 1.3f);            
    }
    
    private long calculateUpgradePrice(int level) {
-      return level;
+      return (long) Math.pow((level * 100.0f), 1.0005f);
    }   
 
 }
