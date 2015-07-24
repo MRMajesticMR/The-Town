@@ -20,7 +20,9 @@ import ru.majestic.thetown.view.utils.BigValueFormatter;
 public abstract class AClickersShopPanelSkeleton extends Sprite implements IClickersShopPanel,
                                                                               OnClickListener {
 
-   private static final int PANEL_PADDING = 12;
+   public static final int HEIGHT = 110;
+   
+   private static final int PADDING = 10;
    
    private ClickersShopPanelActionsListener clickersShopPanelActionsListener;
    
@@ -28,42 +30,54 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
    
    private IAvailableShadow availableShadow;
    
-   private final Text         currentLvlTxt;
+   private final Sprite       panelTitleImg;
+   private final Text         panelTitleTxt;
+      
    private final Text         perClickResourceTxt;
-   private final Sprite       perClickResourceIcon;   
-   private final ButtonSprite upgradeBtn;
-   private final Text         upgradePriceTxt;
-   private final Sprite       upgradePriceIcon;
+   
+   private final Text         priceValueTxt;
+   private final Sprite       priceImg;
+   
+   private final Text         currentLvlTxt;
+   private final ButtonSprite upgradeBtn;   
    
    
-   public AClickersShopPanelSkeleton(float x, float y, float width, float height, IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
-      super(x, y, width, height, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      this.clicker = clicker;
+   public AClickersShopPanelSkeleton(float x, float y, float width, IClicker clicker, ITextureRegion perSecondResourceTexture, ITextureRegion upgradePriceIconTexture) {
+      super(x, y, width, HEIGHT, ResourceManager.getInstance().getClickersUpgraderBackgroundTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      this.clicker = clicker;                                  
+         
+      panelTitleImg           = new Sprite(PADDING, PADDING + 4, 25, 25, perSecondResourceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      panelTitleTxt           = new Text(panelTitleImg.getX() + panelTitleImg.getWidth() + 4, PADDING + 4, FontsManager.getInstance().getFont(18), "CLICKER", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+               
+      perClickResourceTxt     = new Text(PADDING + 30, 42, FontsManager.getInstance().getFont(16), "100.00AA PC", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
       
-      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
-                  
-      currentLvlTxt           = new Text(0, PANEL_PADDING + 6, FontsManager.getInstance().getFont(20), "1000000", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-            
-      perClickResourceIcon   = new Sprite(PANEL_PADDING, PANEL_PADDING, 30, 30, perSecondResourceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      perClickResourceTxt    = new Text(perClickResourceIcon.getX() + perClickResourceIcon.getWidth() + 8, perClickResourceIcon.getY() + 10, FontsManager.getInstance().getFont(12), "100.00AA PC", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());            
+      priceImg                = new Sprite(PADDING + 4, 68, 22, 22, upgradePriceIconTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      priceValueTxt           = new Text(40, 68, FontsManager.getInstance().getFont(16), "100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       
-      upgradePriceIcon        = new Sprite(PANEL_PADDING, perClickResourceIcon.getY() + perClickResourceIcon.getHeight() + 8, 30, 30, upgradePriceIconTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
-      upgradePriceTxt         = new Text(upgradePriceIcon.getX() + upgradePriceIcon.getWidth() + 4, upgradePriceIcon.getY() + 8, FontsManager.getInstance().getFont(12), "100.00AA", 25, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
-      
+      currentLvlTxt           = new Text(0, 0, FontsManager.getInstance().getFont(16), "100", 10, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
       upgradeBtn              = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
+      availableShadow = new AvailableShadow(0, 0, getWidth(), getHeight());
+      
       upgradeBtn.setWidth(70);
-      upgradeBtn.setHeight(35);            
-      upgradeBtn.setX(215 - upgradeBtn.getWidth() - PANEL_PADDING); 
-      upgradeBtn.setY(upgradePriceIcon.getY());
+      upgradeBtn.setHeight(39);            
+      upgradeBtn.setX(getWidth() - upgradeBtn.getWidth() - PADDING); 
+      upgradeBtn.setY(getHeight() - upgradeBtn.getHeight() - PADDING);
       
       upgradeBtn.setOnClickListener(this);
       
+      currentLvlTxt.setY(40);
+      currentLvlTxt.setX(upgradeBtn.getX() + (upgradeBtn.getWidth() / 2) - (currentLvlTxt.getWidth() / 2));
+      
+      attachChild(panelTitleImg);
+      attachChild(panelTitleTxt);
+      
+      attachChild(perClickResourceTxt);
+      
+      attachChild(priceImg);
+      attachChild(priceValueTxt);
+      
       attachChild(currentLvlTxt);
-      attachChild(perClickResourceIcon);
-      attachChild(perClickResourceTxt);      
-      attachChild(upgradePriceIcon);
-      attachChild(upgradePriceTxt); 
       attachChild(upgradeBtn);      
       
       availableShadow.attachToParent(this);
@@ -103,9 +117,9 @@ public abstract class AClickersShopPanelSkeleton extends Sprite implements IClic
    public void update(ICargoManager cargoManager) {
       currentLvlTxt.setText(String.valueOf(clicker.getCurrentLvl()));
       perClickResourceTxt.setText(BigValueFormatter.format(clicker.getResourcesPerClick()) + " PC");
-      upgradePriceTxt.setText(BigValueFormatter.format(clicker.getUpgradePrice()));
+      priceValueTxt.setText(BigValueFormatter.format(clicker.getUpgradePrice()));
       
-      currentLvlTxt.setX(getWidth() - 100 - PANEL_PADDING + (100 - currentLvlTxt.getWidth()) / 2);
+      currentLvlTxt.setX(upgradeBtn.getX() + (upgradeBtn.getWidth() / 2) - (currentLvlTxt.getWidth() / 2));
       
       if(isUpgradeAvailable(cargoManager))
          availableShadow.hide();

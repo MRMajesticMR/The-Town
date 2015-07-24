@@ -9,6 +9,7 @@ import ru.majestic.thetown.game.clickers.IClicker;
 import ru.majestic.thetown.view.dialogs.shops.AShopDialog;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopDialogActionsListener;
 import ru.majestic.thetown.view.dialogs.shops.listeners.ClickersShopPanelActionsListener;
+import ru.majestic.thetown.view.dialogs.shops.panels.clickers.AClickersShopPanelSkeleton;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.FoodClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.clickers.impl.WoodClickersShopPanel;
 import ru.majestic.thetown.view.dialogs.shops.panels.warehouse.ACargoUpgradePanel;
@@ -33,20 +34,20 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
    public ClickersShopDialog(IGameManager gameManager) {
       super(gameManager);
       
-      woodClickersShopPanel   = new WoodClickersShopPanel((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3), getHeight() - PADDING - 100 - getBuyGoldShopPanel().getHeight(), (getWidth() - (PADDING * 4)) / 2, 100, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD));
-      foodClickersShopPanel   = new FoodClickersShopPanel(PADDING, getHeight() - PADDING  - 100 - getBuyGoldShopPanel().getHeight(), (getWidth() - (PADDING * 4)) / 2, 100, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD));            
-      woodCargoUpgradePanel   = new WoodCargoUpgradePanel((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3), woodClickersShopPanel.getY() - ACargoUpgradePanel.HEIGHT - PADDING, (getWidth() - (PADDING * 4)) / 2);
-      foodCargoUpgradePanel   = new FoodCargoUpgradePanel(PADDING, foodClickersShopPanel.getY() - ACargoUpgradePanel.HEIGHT - PADDING, (getWidth() - (PADDING * 4)) / 2);      
+      foodClickersShopPanel   = new FoodClickersShopPanel(PADDING, getHeight() - PADDING  - AClickersShopPanelSkeleton.HEIGHT - getBuyGoldShopPanel().getHeight(), (getWidth() - (PADDING * 4)) / 2, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_FOOD));
+      woodClickersShopPanel   = new WoodClickersShopPanel((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3), getHeight() - PADDING - AClickersShopPanelSkeleton.HEIGHT - getBuyGoldShopPanel().getHeight(), (getWidth() - (PADDING * 4)) / 2, gameManager.getClickersManager().getClicker(IClickersManager.CLICKER_TYPE_WOOD));
+      foodCargoUpgradePanel   = new FoodCargoUpgradePanel(PADDING, foodClickersShopPanel.getY() - ACargoUpgradePanel.HEIGHT - PADDING, (getWidth() - (PADDING * 4)) / 2);
+      woodCargoUpgradePanel   = new WoodCargoUpgradePanel((getWidth() - (PADDING * 4)) / 2 + (PADDING * 3), woodClickersShopPanel.getY() - ACargoUpgradePanel.HEIGHT - PADDING, (getWidth() - (PADDING * 4)) / 2);           
       
       foodClickersShopPanel.setClickersShopPanelActionsListener(this);      
       woodClickersShopPanel.setClickersShopPanelActionsListener(this);
-      woodCargoUpgradePanel.setOnCargoUpgradeButtonClickListener(this);
       foodCargoUpgradePanel.setOnCargoUpgradeButtonClickListener(this);
+      woodCargoUpgradePanel.setOnCargoUpgradeButtonClickListener(this);
       
-      woodClickersShopPanel.attachToParent(this);
       foodClickersShopPanel.attachToParent(this);      
-      woodCargoUpgradePanel.attachToParent(this);
+      woodClickersShopPanel.attachToParent(this);
       foodCargoUpgradePanel.attachToParent(this);
+      woodCargoUpgradePanel.attachToParent(this);
       
       updatePanels();
    }
@@ -60,20 +61,20 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
    public void registerTouchArea(Scene scene) {
       super.registerTouchArea(scene);
       
-      woodClickersShopPanel.registerTouchArea(scene);
       foodClickersShopPanel.registerTouchArea(scene);      
-      woodCargoUpgradePanel.registerTouchArea(scene);
+      woodClickersShopPanel.registerTouchArea(scene);
       foodCargoUpgradePanel.registerTouchArea(scene);
+      woodCargoUpgradePanel.registerTouchArea(scene);
    }
 
    @Override
    public void unregisterTouchArea(Scene scene) {
       super.unregisterTouchArea(scene);
       
-      woodClickersShopPanel.unregisterTouchArea(scene);
       foodClickersShopPanel.unregisterTouchArea(scene);      
-      woodCargoUpgradePanel.unregisterTouchArea(scene);
+      woodClickersShopPanel.unregisterTouchArea(scene);
       foodCargoUpgradePanel.unregisterTouchArea(scene);
+      woodCargoUpgradePanel.unregisterTouchArea(scene);
    }
    
    @Override

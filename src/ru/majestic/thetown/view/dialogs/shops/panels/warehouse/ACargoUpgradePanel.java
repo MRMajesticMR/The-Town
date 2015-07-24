@@ -49,7 +49,7 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel,
       priceImg          = new Sprite(PADDING + 4, 68, 22, 22, priceTexture, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       priceValueTxt     = new Text(40, 68, FontsManager.getInstance().getFont(16), "100.00AA", ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
 
-      cargoLevelTxt     = new Text(40, 68, FontsManager.getInstance().getFont(16), "100", 10, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      cargoLevelTxt     = new Text(0, 0, FontsManager.getInstance().getFont(16), "100", 10, ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
       upgradeButton     = new ButtonSprite(0, 0, ResourceManager.getInstance().getUpgBtnTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       

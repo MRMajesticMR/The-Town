@@ -7,8 +7,8 @@ import ru.majestic.thetown.view.dialogs.shops.panels.clickers.AClickersShopPanel
 
 public class WoodClickersShopPanel extends AClickersShopPanelSkeleton {
 
-   public WoodClickersShopPanel(float x, float y, float width, float height, IClicker clicker) {
-      super(x, y, width, height, clicker, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getFoodIconTextureRegion());
+   public WoodClickersShopPanel(float x, float y, float width, IClicker clicker) {
+      super(x, y, width, clicker, ResourceManager.getInstance().getWoodIconTextureRegion(), ResourceManager.getInstance().getFoodIconTextureRegion());
    }
 
    @Override
