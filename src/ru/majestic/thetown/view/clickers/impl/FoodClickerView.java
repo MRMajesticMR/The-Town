@@ -6,10 +6,13 @@ import ru.majestic.thetown.view.clickers.AClickerViewSkeleton;
 public class FoodClickerView extends AClickerViewSkeleton {
 
    private static final int X = 0;
-   private static final int Y = 520;             
+   private static final int Y = 570;        
+   
+   private static final float WIDTH    = 200.0f;
+   private static final float HEIGHT   = 210.0f;
    
    public FoodClickerView() {
-      super(X, Y, CLICKER_WIDTH_AND_HEIGHT, CLICKER_WIDTH_AND_HEIGHT, ResourceManager.getInstance().getFoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
+      super(X, Y, WIDTH, HEIGHT, ResourceManager.getInstance().getFoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());      
    }   
 
 }

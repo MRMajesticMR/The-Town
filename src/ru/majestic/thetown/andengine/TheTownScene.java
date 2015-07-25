@@ -10,10 +10,10 @@ import ru.majestic.thetown.resources.ResourceManager;
 public class TheTownScene extends Scene {
    
 	public TheTownScene() {
-	   AutoParallaxBackground background = new AutoParallaxBackground(1, 1, 1, 50);
+	   AutoParallaxBackground background = new AutoParallaxBackground(1, 1, 1, 60);
 	   
-	   background.attachParallaxEntity(new ParallaxEntity(1.0f, new Sprite(0, 0, ResourceManager.getInstance().getBackgroundMidLayerTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
-	   background.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, 100, TheTownCamera.CAMERA_WIDTH, TheTownCamera.CAMERA_HEIGHT, ResourceManager.getInstance().getBackgroundFrontLayerTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
+	   background.attachParallaxEntity(new ParallaxEntity(0.3f, new Sprite(0, 0, 850, 550, ResourceManager.getInstance().getCloudsTexture(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
+	   background.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, 180, TheTownCamera.CAMERA_WIDTH, 620, ResourceManager.getInstance().getRocksTexture(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager())));
       
 		setBackground(background);
 		setBackgroundEnabled(true);

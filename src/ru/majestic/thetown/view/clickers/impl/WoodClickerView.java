@@ -8,8 +8,11 @@ public class WoodClickerView extends AClickerViewSkeleton {
    private static final int X = 245;
    private static final int Y = 500;
    
+   private static final float WIDTH    = 235.0f;
+   private static final float HEIGHT   = 265.0f;   
+   
    public WoodClickerView() {
-      super(X, Y, 235, 265, ResourceManager.getInstance().getWoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
+      super(X, Y, WIDTH, HEIGHT, ResourceManager.getInstance().getWoodClickerBgndTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
    }
 
 }

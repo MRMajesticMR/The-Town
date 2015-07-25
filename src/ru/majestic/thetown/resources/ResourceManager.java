@@ -70,11 +70,11 @@ public class ResourceManager {
    private ITiledTextureRegion   closeButtonTextureRegion;
    private ITextureRegion        attackDialogBgndTextureRegion;
    
-   private BitmapTextureAtlas frontBackgroundTextureAtlas;
-   private BitmapTextureAtlas midBackgroundTextureAtlas;
+   private BitmapTextureAtlas rocksTextureAtlas;
+   private BitmapTextureAtlas cloudsTextureAtlas;
    
-   private ITextureRegion     backgroundMidLayerTextureRegion;
-   private ITextureRegion     backgroundFrontLayerTextureRegion;        
+   private ITextureRegion     cloudsTexture;
+   private ITextureRegion     rocksTexture;        
    
    private final IBonusesResourcesManager bonusesResourcesManager;
    private final IDialogsResourceManager  dialogsResourceManager;
@@ -95,7 +95,7 @@ public class ResourceManager {
       
       soundsManager = new SoundsManager(engine.getSoundManager(), context);
       
-      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512);      
+      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512, TextureOptions.BILINEAR);      
       
       foodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker.png", 0, 0);
       woodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/wood_clicker.png", 512, 0);
@@ -163,14 +163,14 @@ public class ResourceManager {
    
    
    private void loadBackground(Context context) {
-      midBackgroundTextureAtlas     = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
-      frontBackgroundTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      cloudsTextureAtlas      = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      rocksTextureAtlas       = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
       
-      backgroundMidLayerTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(midBackgroundTextureAtlas, context, "gfx/environment/clouds/light_day.png", 0, 0);
-      backgroundFrontLayerTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(frontBackgroundTextureAtlas, context, "gfx/environment/midground.png", 0, 0);
+      cloudsTexture     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(cloudsTextureAtlas, context, "gfx/environment/clouds.png", 1, 0);
+      rocksTexture      = BitmapTextureAtlasTextureRegionFactory.createFromAsset(rocksTextureAtlas, context, "gfx/environment/rocks.png", 0, 0);
       
-      midBackgroundTextureAtlas.load();
-      frontBackgroundTextureAtlas.load();
+      cloudsTextureAtlas.load();
+      rocksTextureAtlas.load();
    }
    
    public Engine getEngine() {
@@ -221,12 +221,12 @@ public class ResourceManager {
       return swordsIconTextureRegion;
    }
 
-   public ITextureRegion getBackgroundMidLayerTextureRegion() {
-      return backgroundMidLayerTextureRegion;
+   public ITextureRegion getCloudsTexture() {
+      return cloudsTexture;
    }
 
-   public ITextureRegion getBackgroundFrontLayerTextureRegion() {
-      return backgroundFrontLayerTextureRegion;
+   public ITextureRegion getRocksTexture() {
+      return rocksTexture;
    }
 
    public ITextureRegion getMenuButtonTextureRegion() {
