@@ -22,7 +22,8 @@ public class BonusesViewHandler implements IBonusesViewHandler,
 
    static final float GROUND_LEVEL = 430;
    
-   private static final int PERIOD = 30000;
+   static final int PERIOD = 1000;
+//   static final int PERIOD = 30000;
    
    private final Scene  scene;
    

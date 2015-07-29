@@ -4,6 +4,8 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.LoopEntityModifier;
+import org.andengine.entity.modifier.RotationByModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.util.modifier.IModifier;
@@ -22,12 +24,14 @@ public class BonusCargoView extends AnimatedSprite implements IBonusCargoView,
    
    static final long    ANIMATION_FRAME_DURATION = 60;
    static final int     FRAME_COUNT = 5;
+   static final float   ROTATION_ANGLE = 20;
    
    float groundLevel;
    OnBonusTouchTheGroundListener onBonusTouchTheGroundListener;      
    boolean groundReached;
    
    SequenceEntityModifier hideBoxModifier;
+   LoopEntityModifier      rotationModifier;
    
    public BonusCargoView() {
       super(0, 0, WIDTH, HEIGHT, ResourceManager.getInstance().getBonusesResourcesManager().getCargoTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
@@ -38,11 +42,18 @@ public class BonusCargoView extends AnimatedSprite implements IBonusCargoView,
             new DelayModifier((ANIMATION_FRAME_DURATION / 1000.0f) * FRAME_COUNT),
             new AlphaModifier(1.0f, 1.0f, 0.0f));
       
-      hideBoxModifier.addModifierListener(this);
+      rotationModifier = new LoopEntityModifier(
+            new SequenceEntityModifier(
+                  new RotationByModifier(0.5f, ROTATION_ANGLE / 2),
+                  new RotationByModifier(0.5f, -ROTATION_ANGLE),
+                  new RotationByModifier(0.5f, ROTATION_ANGLE / 2)
+                  ));
+      
+      hideBoxModifier.addModifierListener(this);       
       
       setAlpha(0.0f);
       setIgnoreUpdate(true);
-   }
+   }      
    
    public void drop(float x, float y) {
       groundReached = false;
@@ -50,7 +61,12 @@ public class BonusCargoView extends AnimatedSprite implements IBonusCargoView,
       setX(x);
       setY(y);            
       setCurrentTileIndex(0);
-      setAlpha(1.0f);
+      setAlpha(1.0f);      
+      setRotation(0);
+      
+      rotationModifier.reset();
+      registerEntityModifier(rotationModifier);
+      
       setIgnoreUpdate(false);
    }
 
@@ -78,6 +94,8 @@ public class BonusCargoView extends AnimatedSprite implements IBonusCargoView,
             groundReached = true;
             
             onBonusTouchTheGroundListener.onBonusTouchTheGround();
+            
+            unregisterEntityModifier(rotationModifier);
             animate(ANIMATION_FRAME_DURATION, false);
             hideBoxModifier.reset();
             registerEntityModifier(hideBoxModifier);
