@@ -302,7 +302,7 @@ public class GameActivity extends BaseGameActivity implements OnClickerClickedLi
 	   
 	   resourcesCounterPanel.update();	   	   
 	   
-	   bonusesViewHandler.begin();	   
+	   bonusesViewHandler.begin();
 	   
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}

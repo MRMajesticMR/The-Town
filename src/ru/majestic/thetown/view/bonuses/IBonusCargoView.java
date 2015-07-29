@@ -5,6 +5,7 @@ import ru.majestic.thetown.view.bonuses.listeners.OnBonusTouchTheGroundListener;
 
 public interface IBonusCargoView extends IMoveableView {
    
-   public void setOnBonusTouchTheGroundListener(OnBonusTouchTheGroundListener onBonusTouchTheGroundListener);
+   public void setGroundLevel                   (float groundLevel);
+   public void setOnBonusTouchTheGroundListener (OnBonusTouchTheGroundListener onBonusTouchTheGroundListener);
 
 }

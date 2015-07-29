@@ -5,7 +5,6 @@ import java.util.Random;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
-import ru.majestic.thetown.view.bonuses.IBonusCargoView;
 import ru.majestic.thetown.view.bonuses.IBonusesViewHandler;
 import ru.majestic.thetown.view.bonuses.IPlaneView;
 import ru.majestic.thetown.view.bonuses.handler.listeners.OnBonusViewLandedListener;
@@ -21,12 +20,14 @@ public class BonusesViewHandler implements IBonusesViewHandler,
                                            OnBonusTouchTheGroundListener,
                                            Runnable {
 
-   private static final int PERIOD = 1000;
+   static final float GROUND_LEVEL = 430;
+   
+   private static final int PERIOD = 30000;
    
    private final Scene  scene;
    
    private IPlaneView         planeView;
-   private IBonusCargoView    bonusCargoView;
+   private BonusCargoView     bonusCargoView;
    
    private boolean         working;
    
@@ -41,6 +42,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
       planeView.attachToParent(parentLayer);
       
       bonusCargoView = new BonusCargoView();
+      bonusCargoView.setGroundLevel(GROUND_LEVEL);
       bonusCargoView.setOnBonusTouchTheGroundListener(this);
       bonusCargoView.attachToParent(parentLayer);            
    }
@@ -95,9 +97,7 @@ public class BonusesViewHandler implements IBonusesViewHandler,
    @Override
    public void onPlaneClicked(IPlaneView planeView) {
       if(planeView.hasBonus()) {
-         bonusCargoView.setX(planeView.getX() + (planeView.getWidth() - bonusCargoView.getWidth()) / 2);
-         bonusCargoView.setY(planeView.getY() + planeView.getHeight());
-         bonusCargoView.unpause();
+         bonusCargoView.drop(planeView.getX() + (planeView.getWidth() - bonusCargoView.getWidth()) / 2, planeView.getY() + planeView.getHeight());
       }
    }
 
