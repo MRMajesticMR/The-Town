@@ -13,8 +13,8 @@ import ru.majestic.thetown.view.bonuses.listeners.OnPlaneOutOfViewListener;
 
 public class PlaneView extends Sprite implements IPlaneView {
 
-   private static final int WIDTH   = 80;
-   private static final int HEIGHT  = 80;   
+   private static final int WIDTH   = 95;
+   private static final int HEIGHT  = (int) (WIDTH * 0.44f);   
    
    private float xSpeed;
    
