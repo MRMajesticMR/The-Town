@@ -12,8 +12,8 @@ import ru.majestic.thetown.resources.ResourceManager;
 
 public class FoodClickerAnimalView extends AnimatedSprite implements IModifierListener<IEntity> {
       
-   static final long    ANIMATION_FRAME_LENGTH  = 700;
-   static final float   DISTANCE               = 30;
+   static final long    ANIMATION_FRAME_LENGTH  = 200;
+   static final float   DISTANCE                = 30;
    
    MoveXModifier moveLeftModifier;
    DelayModifier delayModifier;

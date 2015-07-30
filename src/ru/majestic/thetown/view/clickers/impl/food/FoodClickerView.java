@@ -46,7 +46,7 @@ public class FoodClickerView extends AClickerViewSkeleton {
       
       farmPic = new Sprite(5, 0, FARM_WIDTH, FARM_HEIGHT, ResourceManager.getInstance().getFoodClickerFarmTextureRegion(), ResourceManager.getInstance().getEngine().getVertexBufferObjectManager());
       
-      brownCow          = new FoodClickerAnimalView(80, 60, COW_BROWN_WIDTH, COW_BROWN_HEIGHT, ResourceManager.getInstance().getFoodClickerCowBrownTexture(), 30, true);           
+      brownCow          = new FoodClickerAnimalView(80, 65, COW_BROWN_WIDTH, COW_BROWN_HEIGHT, ResourceManager.getInstance().getFoodClickerCowBrownTexture(), 30, true);           
       brownCowNearest   = new FoodClickerAnimalView(5, 130, COW_BROWN_NEAREST_WIDTH, COW_BROWN_NEAREST_HEIGHT, ResourceManager.getInstance().getFoodClickerCowBrownTexture(), 60, false);
       
       sheepFar          = new FoodClickerAnimalView(5, 85, SHEEP_WIDTH, SHEEP_HEIGHT, ResourceManager.getInstance().getFoodCliclerSheepTexture(), 44, false);
