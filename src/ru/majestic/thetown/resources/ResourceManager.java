@@ -23,8 +23,12 @@ public class ResourceManager {
    
    private BitmapTextureAtlas clickersBitmapTextureAtlas;
    
-   private ITextureRegion  foodClickerBgndTextureRegion;
-   private ITextureRegion  woodClickerBgndTextureRegion;
+   private ITextureRegion        foodClickerFarmTexture;
+   private ITiledTextureRegion   foodClickerCowBrownTexture;
+   private ITiledTextureRegion   foodClickerChickenTexture;
+   private ITiledTextureRegion   foodClickerSheepTexture;
+   
+   private ITextureRegion        woodClickerBgndTextureRegion;
    
    private BitmapTextureAtlas    iconsBitmapTextureAtlas;   
    private ITextureRegion        foodIconTextureRegion;
@@ -95,10 +99,14 @@ public class ResourceManager {
       
       soundsManager = new SoundsManager(engine.getSoundManager(), context);
       
-      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512, TextureOptions.BILINEAR);      
+      clickersBitmapTextureAtlas    = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);      
       
-      foodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker.png", 0, 0);
-      woodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/wood_clicker.png", 512, 0);
+      foodClickerFarmTexture        = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker/farm.png", 0, 0);
+      foodClickerCowBrownTexture    = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker/cow_brown.png", 256, 0, 2, 1);
+      foodClickerChickenTexture     = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker/chicken.png", 0, 169, 2, 1);
+      foodClickerSheepTexture       = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/food_clicker/sheep.png", 248, 169, 2, 1);
+      
+      woodClickerBgndTextureRegion  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(clickersBitmapTextureAtlas, context, "gfx/clickers/wood_clicker.png", 513, 0);
       
       buttonsBitmapTextureAtlas     = new BitmapTextureAtlas(engine.getTextureManager(), 512, 256);
       
@@ -181,9 +189,21 @@ public class ResourceManager {
       return soundsManager;
    }
    
-   public ITextureRegion getFoodClickerBgndTextureRegion() {
-      return foodClickerBgndTextureRegion;
+   public ITextureRegion getFoodClickerFarmTextureRegion() {
+      return foodClickerFarmTexture;
    }
+   
+   public ITiledTextureRegion getFoodClickerCowBrownTexture() {
+      return foodClickerCowBrownTexture;
+   }
+   
+   public ITiledTextureRegion getFoodClickerChickenTexture() {
+      return foodClickerChickenTexture;
+   }
+   
+   public ITiledTextureRegion getFoodCliclerSheepTexture() {
+      return foodClickerSheepTexture;
+   }      
    
    public ITextureRegion getWoodClickerBgndTextureRegion() {
       return woodClickerBgndTextureRegion;

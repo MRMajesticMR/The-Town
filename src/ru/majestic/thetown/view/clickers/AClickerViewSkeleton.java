@@ -1,20 +1,21 @@
 package ru.majestic.thetown.view.clickers;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import ru.majestic.thetown.view.listeners.OnClickerClickedListener;
 
-public abstract class AClickerViewSkeleton extends Sprite implements IClickerView {
+public abstract class AClickerViewSkeleton extends Rectangle implements IClickerView {
 
    protected OnClickerClickedListener onClickerClickedListener;
    
-   public AClickerViewSkeleton(float x, float y, float width, float height, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
-      super(x, y, width, height, pTextureRegion, pVertexBufferObjectManager);
+   public AClickerViewSkeleton(float x, float y, float width, float height, VertexBufferObjectManager pVertexBufferObjectManager) {
+      super(x, y, width, height, pVertexBufferObjectManager);
+      
+      setAlpha(0.0f);
    }   
    
    @Override
