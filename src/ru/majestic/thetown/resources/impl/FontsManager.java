@@ -93,7 +93,7 @@ public class FontsManager implements IFontsManager {
    }
    
    private BitmapTextureAtlas createTextureAtlas(Engine engine) {
-      return new BitmapTextureAtlas(engine.getTextureManager(), 128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+      return new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
    }   
 
 }
