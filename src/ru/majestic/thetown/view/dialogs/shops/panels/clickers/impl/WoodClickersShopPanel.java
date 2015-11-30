@@ -13,7 +13,7 @@ public class WoodClickersShopPanel extends AClickersShopPanelSkeleton {
 
    @Override
    protected boolean isUpgradeAvailable(ICargoManager cargoManager) {
-      return cargoManager.getFoodCargo().getCurrentCount() > clicker.getUpgradePrice();
+      return cargoManager.getFoodCargo().getCurrentCount().compareTo(clicker.getUpgradePrice()) >= 0;
    }
 
 }

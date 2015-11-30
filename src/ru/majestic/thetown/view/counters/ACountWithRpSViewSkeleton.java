@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.counters;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
@@ -41,12 +43,12 @@ public abstract class ACountWithRpSViewSkeleton extends Rectangle implements ICo
 
 
    @Override
-   public void changeCount(long newValue) {
+   public void changeCount(BigInteger newValue) {
       countText.setText(BigValueFormatter.format(newValue));      
    }
 
    @Override
-   public void updateResourcesPerSecondValue(int resourcesPerSceonds) {
+   public void updateResourcesPerSecondValue(BigInteger resourcesPerSceonds) {
       resourcesPerSecText.setText("+" + BigValueFormatter.format(resourcesPerSceonds) + " PS");
    }
 

@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -40,13 +42,13 @@ public class BuyGoldShopPanel extends Sprite implements IBuyGoldShopPanel, OnBuy
          buyGoldBtns[buttonIndex].attachToParent(this);
       }
       
-      buyGoldBtns[BTN_INDEX_TEN_GOLD].setGoldCount(100);
+      buyGoldBtns[BTN_INDEX_TEN_GOLD].setGoldCount(new BigInteger("100"));
       buyGoldBtns[BTN_INDEX_TEN_GOLD].setDollarsCount(0.99f);
       
-      buyGoldBtns[BTN_INDEX_HUNDRED_GOLD].setGoldCount(1000);
+      buyGoldBtns[BTN_INDEX_HUNDRED_GOLD].setGoldCount(new BigInteger("1000"));
       buyGoldBtns[BTN_INDEX_HUNDRED_GOLD].setDollarsCount(7.99f);
       
-      buyGoldBtns[BTN_INDEX_THOUSAND_GOLD].setGoldCount(10000);
+      buyGoldBtns[BTN_INDEX_THOUSAND_GOLD].setGoldCount(new BigInteger("10000"));
       buyGoldBtns[BTN_INDEX_THOUSAND_GOLD].setDollarsCount(69.99f);      
    }
    

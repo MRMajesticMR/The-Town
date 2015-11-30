@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.dialogs.shops.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.scene.Scene;
 
 import ru.majestic.thetown.game.IGameManager;
@@ -29,8 +31,11 @@ public class MarketShopDialog extends AShopDialog implements OnMarketItemBuyBtnC
       foodMarketItemPanels = new IMarketItemPanel[TOTAL_RAWS];      
       
       for(int i = 0 ; i < TOTAL_RAWS; i++) {
-         woodMarketItemPanels[i] = new WoodMarketItemPanel(0, getResoucesShopPanel().getHeight() + 4 + i * 84, this, new WoodMarketItem((int) Math.pow(10, i), (int) (10000 * Math.pow(10, i))), gameManager.getCargoManager());
-         foodMarketItemPanels[i] = new FoodMarketItemPanel(getWidth() / 2, getResoucesShopPanel().getHeight() + 4 + i * 84, this, new FoodMarketItem((int) Math.pow(10, i), (int) (10000 * Math.pow(10, i))), gameManager.getCargoManager());         
+         WoodMarketItem woodMarketItem = new WoodMarketItem(new BigInteger("10").pow(i), new BigInteger("10").pow(i).multiply(new BigInteger("10000")));
+         FoodMarketItem foodMarketItem = new FoodMarketItem(new BigInteger("10").pow(i), new BigInteger("10").pow(i).multiply(new BigInteger("10000")));
+         
+         woodMarketItemPanels[i] = new WoodMarketItemPanel(0, getResoucesShopPanel().getHeight() + 4 + i * 84, this, woodMarketItem, gameManager.getCargoManager());
+         foodMarketItemPanels[i] = new FoodMarketItemPanel(getWidth() / 2, getResoucesShopPanel().getHeight() + 4 + i * 84, this, foodMarketItem, gameManager.getCargoManager());         
          
          woodMarketItemPanels[i].setOnMarketItemBuyBtnClickedListener(this);
          foodMarketItemPanels[i].setOnMarketItemBuyBtnClickedListener(this);

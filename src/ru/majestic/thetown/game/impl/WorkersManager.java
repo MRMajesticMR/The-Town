@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game.impl;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -101,27 +102,27 @@ public class WorkersManager implements IWorkersManager {
    }
 
    @Override
-   public int getTotalHomeForWorkers() {
-      int result = 0;
+   public BigInteger getTotalHomeForWorkers() {
+      BigInteger result = new BigInteger("0");
       
       final Iterator<WorkerType> workerTypesIter = workers.keySet().iterator();
       
       while(workerTypesIter.hasNext()) {
          IWorker[] oneTypeWorkers = workers.get(workerTypesIter.next());
          for(int i = 0; i < oneTypeWorkers.length; i++)
-            result += oneTypeWorkers[i].getCurrentCount() * oneTypeWorkers[i].getHomePlaces();
+            result = result.add(oneTypeWorkers[i].getCurrentCount().multiply(oneTypeWorkers[i].getHomePlaces()));
       }
       
       return result;
    }
 
    @Override
-   public int getResourcesPerSecond(WorkerType workerType) {
-      int result = 0;
+   public BigInteger getResourcesPerSecond(WorkerType workerType) {
+      BigInteger result = new BigInteger("0");
       
       IWorker[] oneTypeWorkers = getWorkersByType(workerType);
       for(int i = 0; i < oneTypeWorkers.length; i++) {
-         result += oneTypeWorkers[i].getCurrentCount() * oneTypeWorkers[i].getResourcesPerSec(); 
+         result = result.add(oneTypeWorkers[i].getResourcesPerSec().multiply(new BigInteger(String.valueOf(oneTypeWorkers[i].getCurrentCount()))));
       }
       
       return result;

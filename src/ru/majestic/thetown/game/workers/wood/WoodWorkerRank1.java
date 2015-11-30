@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.workers.wood;
 
+import java.math.BigInteger;
+
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.game.workers.AWoodWorker;
@@ -10,7 +12,7 @@ public class WoodWorkerRank1 extends AWoodWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_WOOD_WORKER_RANK_1";
    
    public WoodWorkerRank1() {
-      super("Wood R.1", 3000, 1, 1, 1);
+      super("Wood R.1", new BigInteger("1"), new BigInteger("1"), new BigInteger("1"));
    }   
    
    @Override

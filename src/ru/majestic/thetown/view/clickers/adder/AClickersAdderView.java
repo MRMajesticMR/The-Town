@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.clickers.adder;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
@@ -35,7 +37,7 @@ public class AClickersAdderView extends Rectangle implements IClickersAdderView 
    
 
    @Override
-   public void setValue(long value) {
+   public void setValue(BigInteger value) {
       countText.setText("+" + BigValueFormatter.format(value));
    }
 

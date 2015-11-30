@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.dialogs.bonus.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -26,7 +28,7 @@ public class AddFoodBonusRewardDialog extends ABonusRewardDialog {
       attachChild(foodIcon);
    }
    
-   public void setAddFoodCount(long addFoodCount) {
+   public void setAddFoodCount(BigInteger addFoodCount) {
       foodCountTxt.setText( "+" + BigValueFormatter.format(addFoodCount));
       
       updateCounterPosition();

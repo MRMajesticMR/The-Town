@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.town.impl;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.town.ITownLevelReward;
 
 public class TownLevelReward implements ITownLevelReward {
@@ -11,18 +13,18 @@ public class TownLevelReward implements ITownLevelReward {
    }
    
    @Override
-   public long getFoodReward() {
-      return (long) Math.pow(townLevel, 3.5f);
+   public BigInteger getFoodReward() {
+      return new BigInteger(String.valueOf(townLevel)).pow(3);
    }
 
    @Override
-   public long getWoodReward() {      
-      return (long) Math.pow(townLevel, 3.5f);
+   public BigInteger getWoodReward() {
+      return new BigInteger(String.valueOf(townLevel)).pow(3);
    }
 
    @Override
-   public long getGoldReward() {
-      return (long) (townLevel / 3);
+   public BigInteger getGoldReward() {
+      return new BigInteger(String.valueOf(townLevel)).divide(new BigInteger("3"));
    }
 
 }

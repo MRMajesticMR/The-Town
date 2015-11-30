@@ -1,11 +1,13 @@
 package ru.majestic.thetown.game.workers;
 
+import java.math.BigInteger;
+
 
 
 public abstract class ADefenceWorker extends AWorker {
 
-   public ADefenceWorker(String title, float priceKoeff, int exp, int homePlace, int resourcesPerSec) {
-      super(title, priceKoeff, exp, homePlace, resourcesPerSec);
+   public ADefenceWorker(String title, BigInteger exp, BigInteger homePlace, BigInteger resourcesPerSec) {
+      super(title, exp, homePlace, resourcesPerSec);
    }
 
    @Override

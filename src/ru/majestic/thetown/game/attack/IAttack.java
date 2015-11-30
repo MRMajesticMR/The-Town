@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.attack;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.town.ITown;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,8 +13,8 @@ public interface IAttack {
    
    public long       getTimeToNextAttack  ();
    public void       update               (ITown town);
-   public int        getAttackPower       ();
+   public BigInteger getAttackPower       ();
    
-   public long       getWoodReward        ();
-   public long       getFoodReward        ();
+   public BigInteger getWoodReward        ();
+   public BigInteger getFoodReward        ();
 }

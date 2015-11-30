@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.cargo;
 
+import java.math.BigInteger;
+
 public interface ISizeLimitedCargo extends ICargo {
 
    public interface OnCargoFullListener {
@@ -11,11 +13,11 @@ public interface ISizeLimitedCargo extends ICargo {
    public void setOnCargoFullListener(OnCargoFullListener onCargoFullListener);
    public void removeOnCargoFullListener();
    
-   public int     getLevel          ();
-   public long    getSize           ();
-   public long    getUpgradePrice   ();
-   public boolean isFull            ();
-   public long    getNextLevelSize  ();
-   public void    upgrade           ();
+   public int           getLevel          ();
+   public BigInteger    getSize           ();
+   public BigInteger    getUpgradePrice   ();
+   public boolean       isFull            ();
+   public BigInteger    getNextLevelSize  ();
+   public void          upgrade           ();
    
 }

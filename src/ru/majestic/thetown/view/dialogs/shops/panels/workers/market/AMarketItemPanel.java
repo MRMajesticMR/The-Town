@@ -102,7 +102,7 @@ public abstract class AMarketItemPanel extends Sprite implements IMarketItemPane
    
    @Override
    public void update() {
-      if(cargoManager.getGoldCargo().getCurrentCount() >= marketItem.getGoldPrice()) {
+      if(cargoManager.getGoldCargo().getCurrentCount().compareTo(marketItem.getGoldPrice()) >= 0) {
          availableShadow.hide();
       } else {
          availableShadow.show();

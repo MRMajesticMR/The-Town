@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.cargo;
 
+import java.math.BigInteger;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -26,10 +28,10 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
    }
    
    @Override
-   public void add(long count) {
+   public void add(BigInteger count) {
       super.add(count);
-      if(getCurrentCount() > getSize()) {
-         remove(getCurrentCount() - getSize());
+      if(getCurrentCount().compareTo(getSize()) >= 0) {
+         remove(getCurrentCount().subtract(getSize()));
          
          if(onCargoFullListener != null)
             onCargoFullListener.onCargoFull(this);
@@ -52,12 +54,12 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
    }
 
    @Override
-   public long getSize() {
+   public BigInteger getSize() {
       return calculateSize(getLevel());
    }
 
    @Override
-   public long getUpgradePrice() {
+   public BigInteger getUpgradePrice() {
       return calculateUpgradePrice(getLevel());
    }
    
@@ -67,7 +69,7 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
    }
       
    @Override
-   public long getNextLevelSize() {
+   public BigInteger getNextLevelSize() {
       return calculateSize(getLevel() + 1);
    }
    
@@ -76,12 +78,12 @@ public abstract class ASizeLimitedCargo extends ACargo implements ISizeLimitedCa
       level++;
    }
    
-   private long calculateSize(int level) {
-      return (long) Math.pow((level * 100.0f), 1.3f);            
+   private BigInteger calculateSize(int level) {            
+      return new BigInteger(String.valueOf(level)).multiply(new BigInteger("100")).pow(2);           
    }
    
-   private long calculateUpgradePrice(int level) {
-      return (long) Math.pow((level * 100.0f), 1.0005f);
+   private BigInteger calculateUpgradePrice(int level) {
+      return new BigInteger(String.valueOf(level)).multiply(new BigInteger("100"));
    }   
 
 }

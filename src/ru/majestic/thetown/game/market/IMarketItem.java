@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.market;
 
+import java.math.BigInteger;
+
 public interface IMarketItem {
 
    public enum Type {
@@ -7,8 +9,8 @@ public interface IMarketItem {
       FOOD
    }
    
-   public Type    getItemType       ();
-   public long    getGoldPrice      ();
-   public long    getProductCount   ();
+   public Type          getItemType       ();
+   public BigInteger    getGoldPrice      ();
+   public BigInteger    getProductCount   ();
    
 }

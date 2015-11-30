@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.buildings.IBuilding;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -17,6 +19,6 @@ public interface IBuildingsManager {
    public void       save                       (Editor prefsEditor);
    
    public IBuilding  getBuilding                (int buildingType);
-   public int        getTotalHomePlacesCount    ();
+   public BigInteger getTotalHomePlacesCount    ();
    
 }

@@ -116,7 +116,7 @@ public class ACargoUpgradePanel extends Sprite implements ICargoUpgradePanel,
 
    @Override
    public void update(ISizeLimitedCargo cargo) {
-      sizeValueTxt.setText("+" + BigValueFormatter.format(cargo.getNextLevelSize() - cargo.getSize()));
+      sizeValueTxt.setText("+" + BigValueFormatter.format(cargo.getNextLevelSize().subtract(cargo.getSize())));
       priceValueTxt.setText(BigValueFormatter.format(cargo.getUpgradePrice()));
       cargoLevelTxt.setText(String.valueOf(cargo.getLevel()));
       

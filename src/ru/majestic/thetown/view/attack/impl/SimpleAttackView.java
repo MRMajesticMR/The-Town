@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.attack.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
@@ -68,7 +70,7 @@ public class SimpleAttackView extends Sprite implements IAttackView, OnClickList
    }
 
    @Override
-   public void show(boolean attackResult, long wood, long food) {
+   public void show(boolean attackResult, BigInteger wood, BigInteger food) {
       if(attackResult) {
          resultText.setText("You've been attacked!");         
          woodResultText.setText("-" + BigValueFormatter.format(wood));

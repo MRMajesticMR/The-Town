@@ -1,12 +1,14 @@
 package ru.majestic.thetown.game.bonuses.impl;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.bonuses.AGameBonus;
 import ru.majestic.thetown.game.cargo.impl.WoodCargo;
 import ru.majestic.thetown.view.dialogs.bonus.impl.AddWoodBonusRewardDialog;
 
 public class AddWoodGameBonus extends AGameBonus {
 
-   private long woodBonus;
+   private BigInteger woodBonus;
    
    private final WoodCargo woodCargo;
    
@@ -15,8 +17,8 @@ public class AddWoodGameBonus extends AGameBonus {
       this.woodBonus = calculateBonus(townLvl);
    }
    
-   private long calculateBonus(int townLvl) {
-      return (long) Math.pow((townLvl * 100), 1.4f);
+   private BigInteger calculateBonus(int townLvl) {
+      return new BigInteger(String.valueOf(townLvl)).multiply(new BigInteger("100")).pow(2);
    }
    
    public void configDialog(AddWoodBonusRewardDialog dialog) {
@@ -25,7 +27,7 @@ public class AddWoodGameBonus extends AGameBonus {
 
    @Override
    public void doubleBonus() {
-      woodBonus *= 2;
+      woodBonus = woodBonus.multiply(new BigInteger("2"));
       
    }
 

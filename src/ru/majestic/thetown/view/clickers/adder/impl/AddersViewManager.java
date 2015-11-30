@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.clickers.adder.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 
 import ru.majestic.thetown.view.clickers.adder.IAddersViewManager;
@@ -26,7 +28,7 @@ public class AddersViewManager implements IAddersViewManager {
    }
    
    @Override
-   public void showAdder(float x, float y, long value, AdderType adderType) {
+   public void showAdder(float x, float y, BigInteger value, AdderType adderType) {
       int type = -1;
       
       switch(adderType) {

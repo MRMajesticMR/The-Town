@@ -1,22 +1,22 @@
 package ru.majestic.thetown.game.workers;
 
+import java.math.BigInteger;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public abstract class AWorker implements IWorker{
 
-   private String title;
-   private float  priceKoeff;
-   private int    exp;
-   private int    homePlaces;
-   private int    currentCount;
-   private int    resourcesPerSec;
+   private String          title;
+   private BigInteger             exp;
+   private BigInteger             homePlaces;
+   private BigInteger             currentCount;
+   private BigInteger      resourcesPerSec;
    
    protected abstract String getSaveTagForCurrentCount();
    
-   public AWorker(String title, float priceKoeff, int exp, int homePlace, int resourcesPerSec) {
+   public AWorker(String title, BigInteger exp, BigInteger homePlace, BigInteger resourcesPerSec) {
       this.title        = title;
-      this.priceKoeff     = priceKoeff;
       this.exp          = exp;
       this.homePlaces   = homePlace;
       this.resourcesPerSec = resourcesPerSec;
@@ -24,12 +24,12 @@ public abstract class AWorker implements IWorker{
    
    @Override
    public void save(Editor prefsEditor) {
-      prefsEditor.putInt(getSaveTagForCurrentCount(), getCurrentCount());
+      prefsEditor.putString(getSaveTagForCurrentCount(), getCurrentCount().toString());
    }
 
    @Override
    public void load(SharedPreferences prefs) {
-      currentCount = prefs.getInt(getSaveTagForCurrentCount(), 0);
+      currentCount = new BigInteger(prefs.getString(getSaveTagForCurrentCount(), "0"));
    }
 
    @Override
@@ -38,22 +38,22 @@ public abstract class AWorker implements IWorker{
    }
 
    @Override
-   public int getFoodCost() {
-      return (int) Math.pow(priceKoeff * ((getCurrentCount() / 10.0f) + 1), 1.0005f);
+   public BigInteger getFoodCost() {
+      return getCurrentCount().divide(new BigInteger("10")).add(new BigInteger("1"));
    }
 
    @Override
-   public int getExp() {
+   public BigInteger getExp() {
       return exp;
    }
 
    @Override
-   public int getHomePlaces() {
+   public BigInteger getHomePlaces() {
       return homePlaces;
    }
 
    @Override
-   public int getCurrentCount() {
+   public BigInteger getCurrentCount() {
       return currentCount;
    }
 
@@ -64,11 +64,11 @@ public abstract class AWorker implements IWorker{
 
    @Override
    public void buy(int count) {
-      currentCount += count;
+      currentCount = currentCount.add(new BigInteger(String.valueOf(count)));
    }
 
    @Override
-   public int getResourcesPerSec() {
+   public BigInteger getResourcesPerSec() {
       return resourcesPerSec;
    }
 }

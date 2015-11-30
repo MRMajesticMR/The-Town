@@ -1,5 +1,6 @@
 package ru.majestic.thetown.game.town.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class Town implements ITown {
    private static final String TAG_FOR_SAVE_TOWN_CURRENT_LVL = "TAG_FOR_SAVE_TOWN_CURRENT_LVL";
    private static final String TAG_FOR_SAVE_TOWN_CURRENT_EXP = "TAG_FOR_SAVE_TOWN_CURRENT_EXP";   
    
-   private int currentLvl;
-   private int currentExp;
+   private int          currentLvl;
+   private BigInteger   currentExp;
    
    private List<OnTownNewLevelObtainedListener> onTownNewLevelObtainedListeners;
    
@@ -29,13 +30,13 @@ public class Town implements ITown {
    @Override
    public void load(SharedPreferences prefs) {
       currentLvl = prefs.getInt(TAG_FOR_SAVE_TOWN_CURRENT_LVL, 1);
-      currentExp = prefs.getInt(TAG_FOR_SAVE_TOWN_CURRENT_EXP, 0);
+      currentExp = new BigInteger(prefs.getString(TAG_FOR_SAVE_TOWN_CURRENT_EXP, "0"));
    }
 
    @Override
    public void save(Editor prefsEditor) {
       prefsEditor.putInt(TAG_FOR_SAVE_TOWN_CURRENT_LVL, getLvl());
-      prefsEditor.putInt(TAG_FOR_SAVE_TOWN_CURRENT_EXP, getCurrentExp());
+      prefsEditor.putString(TAG_FOR_SAVE_TOWN_CURRENT_EXP, getCurrentExp().toString());
    }
 
    @Override
@@ -44,20 +45,20 @@ public class Town implements ITown {
    }
 
    @Override
-   public int getCurrentExp() {
+   public BigInteger getCurrentExp() {
       return currentExp;
    }
 
    @Override
-   public int getExpToNextLvl() {
-      return (int) (Math.pow(currentLvl, 2.4));
+   public BigInteger getExpToNextLvl() {
+      return new BigInteger(String.valueOf(currentLvl)).pow(2);
    }
 
    @Override
-   public void addExp(int expCount) {
-      this.currentExp += expCount;
+   public void addExp(BigInteger expCount) {
+      currentExp = currentExp.add(expCount);
       
-      while(currentExp >= getExpToNextLvl()) {
+      while(currentExp.compareTo(getExpToNextLvl()) >= 0) {
          currentLvl++;
          notifyListenersOnNewLevelObtained();
       }

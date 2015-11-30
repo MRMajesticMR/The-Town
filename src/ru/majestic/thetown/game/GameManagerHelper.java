@@ -1,13 +1,15 @@
 package ru.majestic.thetown.game;
 
+import java.math.BigInteger;
+
 public class GameManagerHelper {
 
-   public static int calculateResourcesPerClickFromLvl(int lvl) {
-      return (int) (Math.pow(lvl, 1.2f));
+   public static BigInteger calculateResourcesPerClickFromLvl(int lvl) {
+      return new BigInteger(String.valueOf(lvl)).pow(2);
    }
    
-   public static int calculateUpgradeCostFromLvl(int lvl) {
-      return (int) (Math.pow(lvl, 2.1f));
+   public static BigInteger calculateUpgradeCostFromLvl(int lvl) {
+      return new BigInteger(String.valueOf(lvl)).pow(3);
    }
    
 }

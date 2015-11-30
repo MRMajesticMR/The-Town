@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.dialogs.bonus.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -26,7 +28,7 @@ public class AddWoodBonusRewardDialog extends ABonusRewardDialog {
       attachChild(woodIcon);
    }
    
-   public void setAddWoodCount(long addWoodCount) {
+   public void setAddWoodCount(BigInteger addWoodCount) {
       woodCountTxt.setText( "+" + BigValueFormatter.format(addWoodCount));
       
       updateCounterPosition();

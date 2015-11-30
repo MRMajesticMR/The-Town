@@ -1,10 +1,12 @@
 package ru.majestic.thetown.game.workers;
 
+import java.math.BigInteger;
+
 
 public abstract class AWoodWorker extends AWorker {
 
-   public AWoodWorker(String title, float priceKoeff, int exp, int homePlace, int resourcesPerSec) {
-      super(title, priceKoeff, exp, homePlace, resourcesPerSec);
+   public AWoodWorker(String title, BigInteger exp, BigInteger homePlace, BigInteger resourcesPerSec) {
+      super(title, exp, homePlace, resourcesPerSec);
    }
 
    @Override

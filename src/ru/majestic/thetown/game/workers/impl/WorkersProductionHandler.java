@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.workers.impl;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.IWorkersManager;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import ru.majestic.thetown.game.workers.IWorkersProductionHandler;
@@ -65,7 +67,7 @@ public class WorkersProductionHandler implements Runnable, IWorkersProductionHan
          long closeGameTime = context.getSharedPreferences(PREFFS_NAME, Context.MODE_PRIVATE).getLong(SAVE_TAG_CLOSE_GAME_TIME, System.currentTimeMillis());         
          int gameTopInSeconds = (int) ((System.currentTimeMillis() - closeGameTime) / 1000);         
          
-         onWokersProductionCompleteListener.onWorkersProductionComplete(workersManager.getResourcesPerSecond(WorkerType.FOOD) * gameTopInSeconds, workersManager.getResourcesPerSecond(WorkerType.WOOD) * gameTopInSeconds);
+         onWokersProductionCompleteListener.onWorkersProductionComplete(workersManager.getResourcesPerSecond(WorkerType.FOOD).multiply(new BigInteger(String.valueOf(gameTopInSeconds))) , workersManager.getResourcesPerSecond(WorkerType.WOOD).multiply(new BigInteger(String.valueOf(gameTopInSeconds))));
       }
    }
 

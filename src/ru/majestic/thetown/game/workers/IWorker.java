@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.workers;
 
+import java.math.BigInteger;
+
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import android.content.SharedPreferences;
@@ -17,12 +19,12 @@ public interface IWorker {
    public void                load              (SharedPreferences prefs);   
    
    public String              getTitle          ();
-   public int                 getFoodCost       ();
-   public int                 getExp            ();
-   public int                 getHomePlaces     ();
+   public BigInteger          getFoodCost       ();
+   public BigInteger          getExp            ();
+   public BigInteger          getHomePlaces     ();
    public ITextureRegion      getWorkerImage    ();
-   public int                 getCurrentCount   ();
-   public int                 getResourcesPerSec();
+   public BigInteger          getCurrentCount   ();
+   public BigInteger          getResourcesPerSec();
    
    public WorkerType          getType           ();
    

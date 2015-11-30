@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.impl;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.IBuildingsManager;
 import ru.majestic.thetown.game.buildings.IBuilding;
 import ru.majestic.thetown.game.buildings.impl.BuildingRank1;
@@ -44,11 +46,11 @@ public class BuildingsManager implements IBuildingsManager {
    }
 
    @Override
-   public int getTotalHomePlacesCount() {
-      int count = 0;
+   public BigInteger getTotalHomePlacesCount() {
+      BigInteger count = new BigInteger("0");
       
       for(IBuilding building: buildings) {
-         count += building.getCurrentCount() * building.getHomePlaces();
+         count = count.add(building.getHomePlaces().multiply(new BigInteger(String.valueOf(building.getCurrentCount()))));
       }
       
       return count;

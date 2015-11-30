@@ -101,8 +101,8 @@ public class ClickersShopDialog extends AShopDialog implements ClickersShopPanel
       woodCargoUpgradePanel.update(gameManager.getCargoManager().getWoodCargo());
       foodCargoUpgradePanel.update(gameManager.getCargoManager().getFoodCargo());
       
-      woodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getFoodCargo().getCurrentCount() >= gameManager.getCargoManager().getWoodCargo().getUpgradePrice());
-      foodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getWoodCargo().getCurrentCount() >= gameManager.getCargoManager().getFoodCargo().getUpgradePrice());
+      woodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getFoodCargo().getCurrentCount().compareTo(gameManager.getCargoManager().getWoodCargo().getUpgradePrice()) >= 0);
+      foodCargoUpgradePanel.setAvailable(gameManager.getCargoManager().getWoodCargo().getCurrentCount().compareTo(gameManager.getCargoManager().getFoodCargo().getUpgradePrice()) >= 0);
    }
 
    @Override

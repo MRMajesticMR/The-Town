@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.clickers.adder;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 
 public interface IAddersViewManager {
@@ -11,6 +13,6 @@ public interface IAddersViewManager {
    }
    
    public void attachAdders   (Entity parentLayer);   
-   public void showAdder      (float x, float y, long value, AdderType adderType);
+   public void showAdder      (float x, float y, BigInteger value, AdderType adderType);
    
 }

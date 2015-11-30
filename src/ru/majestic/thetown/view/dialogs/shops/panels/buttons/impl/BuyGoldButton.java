@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.dialogs.shops.panels.buttons.impl;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
@@ -74,7 +76,7 @@ public class BuyGoldButton extends Rectangle implements IBuyGoldButton {
    }
 
    @Override
-   public void setGoldCount(int goldCount) {
+   public void setGoldCount(BigInteger goldCount) {
       goldCountTxt.setText(BigValueFormatter.format(goldCount));
       
       goldIcon.setX(goldCountTxt.getX() + goldCountTxt.getWidth() + 2);

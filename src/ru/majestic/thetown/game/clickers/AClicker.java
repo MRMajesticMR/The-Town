@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.clickers;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.GameManagerHelper;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -24,12 +26,12 @@ public abstract class AClicker implements IClicker {
    }
 
    @Override
-   public int getResourcesPerClick() {
+   public BigInteger getResourcesPerClick() {
       return GameManagerHelper.calculateResourcesPerClickFromLvl(getCurrentLvl());
    }
 
    @Override
-   public int getUpgradePrice() {
+   public BigInteger getUpgradePrice() {
       return GameManagerHelper.calculateUpgradeCostFromLvl(getCurrentLvl());
    }
 

@@ -1,5 +1,7 @@
 package ru.majestic.thetown.notifications;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.R;
 import ru.majestic.thetown.activity.GameActivity;
 import ru.majestic.thetown.game.IWorkersManager;
@@ -75,7 +77,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       IWorkersManager workersManager = new WorkersManager();
       workersManager.load(context.getSharedPreferences(GameManager.PREFFS_NAME, Context.MODE_PRIVATE));
       
-      if(nextAttack.getAttackPower() > workersManager.getResourcesPerSecond(WorkerType.DEFENCE)) {      
+      if(nextAttack.getAttackPower().compareTo(workersManager.getResourcesPerSecond(WorkerType.DEFENCE)) > 0) {
          if(nextAttack.getTimeToNextAttack() - System.currentTimeMillis() < TheTownNotificationManager.TIME_TO_ATTACK_HALF_HOUR && !isNotifictionAlreadyShowed(context, SAVE_TAG_HALF_HOUR)) {
             saveNotificationShowed(context, SAVE_TAG_HALF_HOUR);
             showAttackNotificaton(context, AttackTimeType.HALF_HOUR);
@@ -118,7 +120,7 @@ public class TheTownNotificationManager extends BroadcastReceiver {
       workersProductionHandler.setOnWokersProductionCompleteListener(new OnWokersProductionCompleteListener() {
          
          @Override
-         public void onWorkersProductionComplete(int addFood, int addWood) {
+         public void onWorkersProductionComplete(BigInteger addFood, BigInteger addWood) {
             foodCargo.add(addFood);
             woodCargo.add(addWood);
          }

@@ -1,7 +1,9 @@
 package ru.majestic.thetown.view.counters;
 
+import java.math.BigInteger;
+
 public interface ICountWithRpSView extends ICountView {
 
-   public void updateResourcesPerSecondValue(int resourcesPerSecond);
+   public void updateResourcesPerSecondValue(BigInteger resourcesPerSecond);
    
 }

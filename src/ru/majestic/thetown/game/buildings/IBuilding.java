@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.buildings;
 
+import java.math.BigInteger;
+
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import android.content.SharedPreferences;
@@ -11,9 +13,9 @@ public interface IBuilding {
    public void             load              (SharedPreferences prefs);   
    
    public String           getTitle          ();
-   public int              getWoodCost       ();
-   public int              getExp            ();
-   public int              getHomePlaces     ();
+   public BigInteger       getWoodCost       ();
+   public BigInteger       getExp            ();
+   public BigInteger       getHomePlaces     ();
    public ITextureRegion   getBuildingImage  ();
    public int              getCurrentCount   ();
    

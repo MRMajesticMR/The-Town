@@ -1,22 +1,24 @@
 package ru.majestic.thetown.game.market;
 
+import java.math.BigInteger;
+
 public abstract class AMarketItem implements IMarketItem {
 
-   private long goldPrice;
-   private long productCount;
+   private BigInteger goldPrice;
+   private BigInteger productCount;
    
-   public AMarketItem(long goldPrice, long productCount) {
+   public AMarketItem(BigInteger goldPrice, BigInteger productCount) {
       this.goldPrice       = goldPrice;
       this.productCount    = productCount;
    }
 
    @Override
-   public long getGoldPrice() {
+   public BigInteger getGoldPrice() {
       return goldPrice;
    }
 
    @Override
-   public long getProductCount() {
+   public BigInteger getProductCount() {
       return productCount;
    }
 

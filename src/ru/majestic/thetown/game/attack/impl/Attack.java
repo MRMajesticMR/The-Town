@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.attack.impl;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.attack.IAttack;
 import ru.majestic.thetown.game.town.ITown;
 import android.content.SharedPreferences;
@@ -12,19 +14,19 @@ public class Attack implements IAttack {
    
    private static final int      ATTACK_PERIOD = 1000 * 60 * 60 * 3;
    
-   private long   nextAttackTime;
-   private int    attackPower;
+   private long         nextAttackTime;
+   private BigInteger   attackPower;
    
    @Override
    public void load(SharedPreferences prefs) {      
       nextAttackTime = prefs.getLong(SAVE_TAG_NEXT_ATTACK_TIME, System.currentTimeMillis() + ATTACK_PERIOD);
-      attackPower    = prefs.getInt(SAVE_TAG_ATTACK_POWER, 3);            
+      attackPower    = new BigInteger(prefs.getString(SAVE_TAG_ATTACK_POWER, "3"));            
    }
 
    @Override
    public void save(Editor prefsEditor) {
       prefsEditor.putLong(SAVE_TAG_NEXT_ATTACK_TIME, getTimeToNextAttack());
-      prefsEditor.putInt(SAVE_TAG_ATTACK_POWER, getAttackPower());
+      prefsEditor.putString(SAVE_TAG_ATTACK_POWER, getAttackPower().toString());
    }
 
    @Override
@@ -35,22 +37,22 @@ public class Attack implements IAttack {
    @Override
    public void update(ITown town) {
       nextAttackTime = System.currentTimeMillis() + ATTACK_PERIOD;
-      attackPower    = (int) (Math.pow(town.getLvl(), 2));
+      attackPower    = new BigInteger(String.valueOf(town.getLvl())).pow(2);
    }
 
    @Override
-   public int getAttackPower() {
+   public BigInteger getAttackPower() {
       return attackPower;
    }
 
    @Override
-   public long getWoodReward() {
-      return (long) Math.pow(attackPower, 3.4f) + 1000;
+   public BigInteger getWoodReward() {     
+      return new BigInteger(String.valueOf(attackPower)).pow(3).add(new BigInteger("1000"));
    }
 
    @Override
-   public long getFoodReward() {
-      return (long) Math.pow(attackPower, 3.4f) + 1000;
+   public BigInteger getFoodReward() {
+      return new BigInteger(String.valueOf(attackPower)).pow(3).add(new BigInteger("1000"));
    }
 
 }

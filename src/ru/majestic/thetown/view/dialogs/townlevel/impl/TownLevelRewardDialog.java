@@ -84,7 +84,7 @@ public class TownLevelRewardDialog extends ADialog implements OnTownNewLevelObta
    }
 
    @Override
-   public void onTownNewLevelObtained(ITownLevelReward townLevelReward) {
+   public void onTownNewLevelObtained(ITownLevelReward townLevelReward) {     
       woodResultText.setText("+" + BigValueFormatter.format(townLevelReward.getWoodReward()));
       foodResultText.setText("+" + BigValueFormatter.format(townLevelReward.getFoodReward()));      
       goldResultText.setText("+" + BigValueFormatter.format(townLevelReward.getGoldReward()));

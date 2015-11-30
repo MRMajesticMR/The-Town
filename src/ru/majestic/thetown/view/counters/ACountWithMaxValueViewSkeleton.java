@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.counters;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
@@ -15,8 +17,8 @@ public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountW
    private static final int WIDTH = 140;
    private static final int HEIGHT = 40;
 
-   private long value;
-   private long maxValue;
+   private BigInteger value;
+   private BigInteger maxValue;
 
    private Text countText;
    private Sprite counterImage;
@@ -40,20 +42,21 @@ public class ACountWithMaxValueViewSkeleton extends Rectangle implements ICountW
    }
 
    @Override
-   public void changeCount(long newValue) {
+   public void changeCount(BigInteger newValue) {
       value = newValue;
       updateView();
 
    }
 
    @Override
-   public void onMaxValueChanged(long maxValue) {
+   public void onMaxValueChanged(BigInteger maxValue) {
       this.maxValue = maxValue;
       updateView();
    }
 
    private void updateView() {
-      countText.setText(BigValueFormatter.format(value) + "/" + BigValueFormatter.format(maxValue));
+      if(value != null && maxValue != null)         
+         countText.setText(BigValueFormatter.format(value) + "/" + BigValueFormatter.format(maxValue));
    }
 
 }

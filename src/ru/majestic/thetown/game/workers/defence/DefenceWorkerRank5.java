@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game.workers.defence;
 
+import java.math.BigInteger;
+
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 import ru.majestic.thetown.game.workers.ADefenceWorker;
@@ -10,7 +12,7 @@ public class DefenceWorkerRank5 extends ADefenceWorker {
    private static final String SAVE_TAG_CURRENT_COUNT = "SAVE_TAG_CURRENT_COUNT_DEFENCE_WORKER_RANK_5";
    
    public DefenceWorkerRank5() {
-      super("Defender R.5", 30000000, 10000, 10000, 10000);
+      super("Defender R.5", new BigInteger("10000"), new BigInteger("10000"), new BigInteger("10000"));
    }   
    
    @Override

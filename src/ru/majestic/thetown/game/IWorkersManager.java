@@ -1,5 +1,7 @@
 package ru.majestic.thetown.game;
 
+import java.math.BigInteger;
+
 import ru.majestic.thetown.game.workers.IWorker;
 import ru.majestic.thetown.game.workers.IWorker.WorkerType;
 import android.content.SharedPreferences;
@@ -13,8 +15,8 @@ public interface IWorkersManager {
    public IWorker    getWorker         (IWorker.WorkerType workerType, int wokerIndex);
    public IWorker[]  getWorkersByType  (IWorker.WorkerType workerType);
    
-   public int        getTotalHomeForWorkers();
+   public BigInteger getTotalHomeForWorkers();
    
-   public int        getResourcesPerSecond(WorkerType workerType);
+   public BigInteger getResourcesPerSecond(WorkerType workerType);
    
 }

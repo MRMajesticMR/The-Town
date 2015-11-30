@@ -1,5 +1,7 @@
 package ru.majestic.thetown.view.counters;
 
+import java.math.BigInteger;
+
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
@@ -20,7 +22,7 @@ public class ACountWithRpSAndMaxValueView extends ACountWithRpSViewSkeleton impl
    }
 
    @Override
-   public void onMaxValueChanged(long maxValue) {
+   public void onMaxValueChanged(BigInteger maxValue) {
       maxValueText.setText("/" + BigValueFormatter.format(maxValue));
       
       maxValueText.setX(countText.getX() + countText.getWidth() + 2);
